@@ -19,7 +19,7 @@ import TestImage from "../../assets/images/anh-son-tung.jfif";
 import { RiVolumeUpLine } from "react-icons/ri";
 import { IoPauseOutline, IoPlayOutline } from "react-icons/io5";
 // @ts-ignore
-import TestAudio from "../../assets/audio/TestAudio.mp3";
+// import TestAudio from "../../assets/audio/TestAudio.mp3";
 
 const NavBar = () => {
   const [playClicked, setPlayClicked] = useState(false);
@@ -142,9 +142,20 @@ const NavBar = () => {
               min={0}
               max={duration}
               value={time}
+              // pause audio when dragging
+              onMouseDown={(e) => {
+                audio.pause();
+                setPlayClicked(false);
+              }}
               onChange={(e) => {
+                console.log(e.target.value);
                 setTime(parseFloat(e.target.value));
-                audio.currentTime = time;
+                audio.currentTime = parseFloat(e.target.value);
+              }}
+              // play audio when dragging is done
+              onMouseUp={(e) => {
+                audio.play();
+                setPlayClicked(true);
               }}
               className="w-full h-1 bg-[#25A56A]"
             />
