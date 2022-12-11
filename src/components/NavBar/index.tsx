@@ -1,17 +1,66 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import {
   HiOutlineLogin,
   HiOutlineMicrophone,
   HiOutlineMusicNote,
+  HiOutlinePlay,
+  HiPlay,
 } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { BiHeart, BiHomeAlt } from "react-icons/bi";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
+import { BsPlay } from "react-icons/bs";
 import MainLogo from "../../assets/images/logo/main-logo.png";
+import { RxTrackNext, RxTrackPrevious } from "react-icons/rx";
+// @ts-ignore
+import TestImage from "../../assets/images/anh-son-tung.jfif";
+import { RiVolumeUpLine } from "react-icons/ri";
+import { IoPauseOutline, IoPlayOutline } from "react-icons/io5";
+// @ts-ignore
+import TestAudio from "../../assets/audio/TestAudio.mp3";
 
 const NavBar = () => {
+  const [playClicked, setPlayClicked] = useState(false);
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [audio] = useState(
+    new Audio(
+      "http://blast.volkovdesign.com/audio/12071151_epic-cinematic-trailer_by_audiopizza_preview.mp3"
+    )
+  );
+
+  useEffect(() => {
+    audio.addEventListener("ended", () => setPlayClicked(false));
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", () => {
+      setDuration(audio.duration);
+    });
+    return () => {
+      audio.removeEventListener("ended", () => setPlayClicked(false));
+    };
+  }, []);
+
+  useEffect(() => {
+    playClicked ? audio.play() : audio.pause();
+  }, [playClicked]);
+
+  const handleTimeUpdate = () => {
+    setTime(audio.currentTime);
+    if (audio.currentTime >= audio.duration) {
+      audio.currentTime = 0;
+      setPlayClicked(false);
+    }
+  };
+
+  const convertTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time - minutes * 60);
+    const zero = seconds < 10 ? "0" : "";
+    return minutes + ":" + zero + seconds;
+  };
+
   return (
     <Fragment>
       <nav className="h-full w-[300px] fixed border border-[#222227] z-20 bg-[#16151A]">
@@ -64,8 +113,48 @@ const NavBar = () => {
           <HiOutlineLogin className="text-2xl group-hover:text-[#25A56A]" />
         </NavLink>
       </nav>
-      <nav className="fixed bottom-0 w-full z-30 h-[70px] border border-[#222227] bg-[#16151A] grid place-items-center">
-        Thanh dưới cùng nè
+      <nav className="fixed bottom-0 w-full z-30 h-[100px] px-[30px] border border-[#222227] bg-[#16151A] flex flex-row justify-between items-center">
+        <div className="basis-1/3">
+          <div className="flex flex-row gap-4 items-center">
+            <img src={TestImage} alt="test-image" className="w-[58px]" />
+            <div>
+              <h3 className="text-white font-semibold">
+                Ấn nút nhớ ... thả giấc mơ
+              </h3>
+              <span className="text-xs">Sơn Tùng MTP</span>
+            </div>
+          </div>
+        </div>
+        <div className={"flex flex-col gap-2 items-center basis-1/3 text-xl"}>
+          <div className={"flex flex-row gap-8"}>
+            <RxTrackPrevious />
+            {!playClicked ? (
+              <IoPlayOutline onClick={(e) => setPlayClicked(!playClicked)} />
+            ) : (
+              <IoPauseOutline onClick={(e) => setPlayClicked(!playClicked)} />
+            )}
+            <RxTrackNext />
+          </div>
+          <div className="w-full flex flex-row items-center gap-2 text-sm">
+            <span>{convertTime(time)}</span>
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              value={time}
+              onChange={(e) => {
+                setTime(parseFloat(e.target.value));
+                audio.currentTime = time;
+              }}
+              className="w-full h-1 bg-[#25A56A]"
+            />
+            <span>{convertTime(duration)}</span>
+          </div>
+        </div>
+        <div className="basis-1/3 flex flex-row justify-end items-center gap-4 text-xl">
+          <RiVolumeUpLine />
+          <input type={"range"} min={0} max={200} className={"h-1"} />
+        </div>
       </nav>
     </Fragment>
   );
