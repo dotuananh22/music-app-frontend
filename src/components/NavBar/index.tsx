@@ -27,7 +27,7 @@ const NavBar = () => {
   const [duration, setDuration] = useState(0);
   const [audio] = useState(
     new Audio(
-      "http://blast.volkovdesign.com/audio/12071151_epic-cinematic-trailer_by_audiopizza_preview.mp3"
+      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.mp3?alt=media&token=fc4aa098-4ce9-4304-977a-b3737a011c6e"
     )
   );
 
@@ -68,27 +68,27 @@ const NavBar = () => {
           <img src={MainLogo} alt="main-logo" className="h-[30px] pl-[30px]" />
         </div>
         <div className="pl-[30px] pt-[30px] flex flex-col gap-6">
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <BiHomeAlt className="text-2xl" />
             <span>Home</span>
           </div>
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <MdOutlinePeopleAlt className="text-2xl" />
             <span>Artists</span>
           </div>
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <HiOutlineMusicNote className="text-2xl" />
             <span>Releases</span>
           </div>
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <GoCalendar className="text-2xl" />
             <span>Releases</span>
           </div>
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <HiOutlineMicrophone className="text-2xl" />
             <span>Podcasts</span>
           </div>
-          <div className="flex flex-row gap-3 items-center text-lg">
+          <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
             <BiHeart className="text-2xl" />
             <span>My Favourite</span>
           </div>
@@ -96,14 +96,14 @@ const NavBar = () => {
       </nav>
       <nav className="flex flex-row justify-between px-8 pl-[316px] h-[70px] py-4 border fixed border-[#222227] w-full z-10 bg-[#16151A]">
         <div className="flex flex-row gap-6 items-center">
-          <p>Profile</p>
-          <p>About</p>
-          <p>Contact</p>
+          <p className="hover:text-[#25A56A] cursor-pointer">Profile</p>
+          <p className="hover:text-[#25A56A] cursor-pointer">About</p>
+          <p className="hover:text-[#25A56A] cursor-pointer">Contact</p>
         </div>
         <div className="relative flex items-center">
           <input
             type="text"
-            className="bg-[#222227] py-2 px-4 pr-20 rounded-lg"
+            className="bg-[#222227] py-2 px-4 pr-20 rounded-lg focus:border-[#25A56A]"
             placeholder="Artist, track or podcast"
           />
           <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-xl hover:text-[#25A56A] cursor-pointer" />
@@ -119,7 +119,7 @@ const NavBar = () => {
             <img src={TestImage} alt="test-image" className="w-[58px]" />
             <div>
               <h3 className="text-white font-semibold">
-                Ấn nút nhớ ... thả giấc mơ
+                Chúng ta của hiện tại
               </h3>
               <span className="text-xs">Sơn Tùng MTP</span>
             </div>
