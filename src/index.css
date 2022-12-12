@@ -23,3 +23,17 @@ input[type=range] {
 input[type=range]::before, input[type=range]::after {
   border-color: #25a56a;
 }
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255,255,255, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(255,255,255, 0);
+}

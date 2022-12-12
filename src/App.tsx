@@ -4,6 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBarPage from "./pages/NavBarPage";
 import FooterSection from "./pages/FooterSection";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               </div>
             }
           />
+          <Route path="/signin" element={<Login />} />
         </Routes>
       </div>
       <FooterSection />

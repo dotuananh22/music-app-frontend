@@ -19,7 +19,10 @@ const TopNavBar = () => {
         />
         <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-xl hover:text-[#25A56A] cursor-pointer" />
       </div>
-      <NavLink to={""} className="flex flex-row gap-2 items-center group">
+      <NavLink
+        to={"/signin"}
+        className="flex flex-row gap-2 items-center group"
+      >
         <p>Sign in</p>
         <HiOutlineLogin className="text-2xl group-hover:text-[#25A56A]" />
       </NavLink>
