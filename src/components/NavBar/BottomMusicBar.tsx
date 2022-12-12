@@ -14,6 +14,7 @@ import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 
 const BottomMusicBar = () => {
   const [playClicked, setPlayClicked] = useState(false);
+  const [repeat, setRepeat] = useState(false);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
@@ -30,9 +31,9 @@ const BottomMusicBar = () => {
       audio.volume = volume;
       setDuration(audio.duration);
     });
-    return () => {
-      audio.removeEventListener("ended", () => setPlayClicked(false));
-    };
+    // return () => {
+    //   audio.removeEventListener("ended", () => setPlayClicked(false));
+    // };
   }, []);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const BottomMusicBar = () => {
     setTime(audio.currentTime);
     if (audio.currentTime >= audio.duration) {
       audio.currentTime = 0;
-      setPlayClicked(false);
+      setPlayClicked(repeat);
     }
   };
 
@@ -68,6 +69,7 @@ const BottomMusicBar = () => {
     setVolume(0);
     audio.volume = 0;
   };
+
   return (
     <nav className="fixed bottom-0 w-full z-30 h-[100px] px-[30px] border border-[#222227] bg-[#16151A] flex flex-row justify-between items-center">
       <div className="basis-1/3">
@@ -99,7 +101,15 @@ const BottomMusicBar = () => {
             </div>
           )}
           <MdSkipNext className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
-          <RiRepeat2Fill className="w-[22px] h-[22px] cursor-pointer hover:text-[#25A56A]" />
+          <RiRepeat2Fill
+            className={`w-[22px] h-[22px] cursor-pointer hover:text-[#25A56A] ${
+              repeat && " text-[#25A56A]"
+            }`}
+            onClick={() => {
+              audio.loop = !repeat;
+              setRepeat(!repeat);
+            }}
+          />
         </div>
         <div className="w-full flex flex-row items-center gap-2 text-sm">
           <span>{convertTime(time)}</span>
@@ -114,7 +124,6 @@ const BottomMusicBar = () => {
               setPlayClicked(false);
             }}
             onChange={(e) => {
-              console.log(e.target.value);
               setTime(parseFloat(e.target.value));
               audio.currentTime = parseFloat(e.target.value);
             }}
