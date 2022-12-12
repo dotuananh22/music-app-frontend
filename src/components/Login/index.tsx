@@ -27,34 +27,39 @@ const Login = () => {
             <div className="flex flex-col gap-5">
               <input
                 type="text"
-                placeholder="Email"
-                className="bg-[#222227] h-[48px] w-[340px] border border-transparent rounded-xl"
+                placeholder="Email or Username"
+                className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A]"
               />
               <input
-                type="text"
+                type="password"
                 placeholder="Password"
-                className="bg-[#222227] h-[48px] w-[340px] border border-transparent rounded-xl"
+                className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A]"
               />
             </div>
             <div className="flex flex-row items-center">
-              <input type="checkbox" className="mr-2 w-[18px] h-[18px]" />
-              <span>Remember Me</span>
+              <input
+                type="checkbox"
+                id="rememberPassword"
+                name="rememberPassword"
+                className="mr-2 w-[18px] h-[18px]"
+              />
+              <label htmlFor="rememberPassword">Remember Me</label>
             </div>
             <div className="flex flex-col items-center gap-2 mt-4">
               <div>
-                <button className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl text-white text-sm hover-[#25A56A] hover:bg-[#222227]">
+                <button className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]">
                   SIGN IN
                 </button>
               </div>
               <div>or</div>
               <div className="flex flex-row items-center justify-between gap-4 w-[340px] mt-2">
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#3B5998] grid place-items-center text-xl text-white cursor-pointer hover:text-[#3B5998] hover:bg-[#C0C0C0]">
+                <span className="w-[100px] h-[46px] rounded-xl bg-[#3B5998] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#3B5998] hover:bg-[#C0C0C0]">
                   <FaFacebookF />
                 </span>
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#55ACEE] grid place-items-center text-xl text-white cursor-pointer hover:text-[#55ACEE] hover:bg-[#C0C0C0]">
+                <span className="w-[100px] h-[46px] rounded-xl bg-[#55ACEE] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#55ACEE] hover:bg-[#C0C0C0]">
                   <AiOutlineTwitter />
                 </span>
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#DF4A32] grid place-items-center text-xl text-white cursor-pointer hover:text-[#DF4A32] hover:bg-[#C0C0C0]">
+                <span className="w-[100px] h-[46px] rounded-xl bg-[#DF4A32] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#DF4A32] hover:bg-[#C0C0C0]">
                   <AiOutlineGoogle />
                 </span>
               </div>

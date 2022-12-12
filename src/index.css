@@ -16,6 +16,13 @@ code {
     monospace;
 }
 
+input[type=range] {
+  accent-color: #25a56a;
+}
+
+input[type=range]::before, input[type=range]::after {
+  border-color: #25a56a;
+}
 html *::-webkit-scrollbar {
     border-radius: 0;
     width: 8px;

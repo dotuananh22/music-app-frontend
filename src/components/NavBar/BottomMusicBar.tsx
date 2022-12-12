@@ -24,7 +24,7 @@ const BottomMusicBar = () => {
   );
 
   useEffect(() => {
-    audio.addEventListener("ended", () => setPlayClicked(false));
+    // audio.addEventListener("ended", () => setPlayClicked(false));
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("loadedmetadata", () => {
       audio.volume = volume;
@@ -130,9 +130,15 @@ const BottomMusicBar = () => {
       </div>
       <div className="basis-1/3 flex flex-row justify-end items-center gap-4 text-xl">
         {volume != 0 ? (
-          <RiVolumeUpLine className="cursor-pointer" onClick={setMute} />
+          <RiVolumeUpLine
+            className="cursor-pointer hover:text-[#25A56A] delay-50 transition ease-in-out"
+            onClick={setMute}
+          />
         ) : (
-          <RiVolumeMuteLine className="cursor-pointer" onClick={setUnmute} />
+          <RiVolumeMuteLine
+            className="cursor-pointer hover:text-[#25A56A] delay-50 transition ease-in-out"
+            onClick={setUnmute}
+          />
         )}
         <input
           type={"range"}
