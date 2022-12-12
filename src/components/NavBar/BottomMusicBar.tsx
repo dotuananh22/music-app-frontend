@@ -104,7 +104,7 @@ const BottomMusicBar = () => {
               audio.play();
               setPlayClicked(true);
             }}
-            className="w-full h-1 bg-[#25A56A]"
+            className="w-full h-1"
           />
           <span>{convertTime(duration)}</span>
         </div>
