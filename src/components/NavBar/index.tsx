@@ -16,7 +16,7 @@ import MainLogo from "../../assets/images/logo/main-logo.png";
 import { RxTrackNext, RxTrackPrevious } from "react-icons/rx";
 // @ts-ignore
 import TestImage from "../../assets/images/anh-son-tung.jfif";
-import { RiVolumeUpLine } from "react-icons/ri";
+import { RiVolumeMuteLine, RiVolumeUpLine } from "react-icons/ri";
 import { IoPauseOutline, IoPlayOutline } from "react-icons/io5";
 // @ts-ignore
 // import TestAudio from "../../assets/audio/TestAudio.mp3";
@@ -25,6 +25,7 @@ const NavBar = () => {
   const [playClicked, setPlayClicked] = useState(false);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.5);
   const [audio] = useState(
     new Audio(
       "http://blast.volkovdesign.com/audio/12071151_epic-cinematic-trailer_by_audiopizza_preview.mp3"
@@ -35,6 +36,7 @@ const NavBar = () => {
     audio.addEventListener("ended", () => setPlayClicked(false));
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("loadedmetadata", () => {
+      audio.volume = volume;
       setDuration(audio.duration);
     });
     return () => {
@@ -61,13 +63,18 @@ const NavBar = () => {
     return minutes + ":" + zero + seconds;
   };
 
+  const onChangeVolume = (e: any) => {
+    audio.volume = e.target.value;
+    setVolume(e.target.value);
+  };
+
   return (
     <Fragment>
-      <nav className="h-full w-[300px] fixed border border-[#222227] z-20 bg-[#16151A]">
+      <nav className="h-full w-[300px] fixed border border-[#222227] z-20 bg-[#16151A] pl-[30px]">
         <div className="h-[70px] flex items-center border border-[#222227]">
-          <img src={MainLogo} alt="main-logo" className="h-[200px]" />
+          <img src={MainLogo} alt="main-logo" className="h-[40px]" />
         </div>
-        <div className="pl-[30px] pt-[30px] flex flex-col gap-6">
+        <div className="pt-[30px] flex flex-col gap-6">
           <div className="flex flex-row gap-3 items-center text-lg">
             <BiHomeAlt className="text-2xl" />
             <span>Home</span>
@@ -163,8 +170,16 @@ const NavBar = () => {
           </div>
         </div>
         <div className="basis-1/3 flex flex-row justify-end items-center gap-4 text-xl">
-          <RiVolumeUpLine />
-          <input type={"range"} min={0} max={200} className={"h-1"} />
+          {volume !== 0 ? <RiVolumeUpLine /> : <RiVolumeMuteLine />}
+          <input
+            type={"range"}
+            min={0}
+            max={1}
+            step={0.01}
+            className={"h-1"}
+            defaultValue={0.5}
+            onChange={onChangeVolume}
+          />
         </div>
       </nav>
     </Fragment>
