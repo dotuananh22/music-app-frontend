@@ -122,7 +122,6 @@ const BottomMusicBar = () => {
           value={volume}
           step={0.01}
           className={"h-1"}
-          defaultValue={0.5}
           onChange={onChangeVolume}
         />
       </div>
