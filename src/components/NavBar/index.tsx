@@ -64,8 +64,8 @@ const NavBar = () => {
   return (
     <Fragment>
       <nav className="h-full w-[300px] fixed border border-[#222227] z-20 bg-[#16151A]">
-        <div className="h-[70px] flex items-center border border-[#222227]">
-          <img src={MainLogo} alt="main-logo" className="h-[200px]" />
+        <div className="h-[69px] flex items-center border-b border-[#222227]">
+          <img src={MainLogo} alt="main-logo" className="h-[30px] pl-[30px]" />
         </div>
         <div className="pl-[30px] pt-[30px] flex flex-col gap-6">
           <div className="flex flex-row gap-3 items-center text-lg">
