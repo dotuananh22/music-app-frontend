@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { GiPauseButton } from "react-icons/gi";
+import { FaPause, FaPlay, FaRandom } from "react-icons/fa";
 import { IoPauseOutline, IoPlayOutline } from "react-icons/io5";
-import { RiVolumeMuteLine, RiVolumeUpLine } from "react-icons/ri";
+import {
+  RiRepeat2Fill,
+  RiVolumeMuteLine,
+  RiVolumeUpLine,
+} from "react-icons/ri";
 import { RxTrackNext, RxTrackPrevious } from "react-icons/rx";
 // @ts-ignore
 import TestImage from "../../assets/images/anh-son-tung.jfif";
+import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 
 const BottomMusicBar = () => {
   const [playClicked, setPlayClicked] = useState(false);
@@ -73,14 +80,26 @@ const BottomMusicBar = () => {
         </div>
       </div>
       <div className={"flex flex-col gap-2 items-center basis-1/3 text-xl"}>
-        <div className={"flex flex-row gap-8"}>
-          <RxTrackPrevious />
+        <div className={"flex flex-row gap-8 items-center"}>
+          <FaRandom className="w-[20px] h-[20px] cursor-pointer hover:text-[#25A56A]" />
+          <MdSkipPrevious className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
           {!playClicked ? (
-            <IoPlayOutline onClick={(e) => setPlayClicked(!playClicked)} />
+            <div
+              className="w-[36px] h-[36px] rounded-full bg-white grid place-items-center cursor-pointer"
+              onClick={(e) => setPlayClicked(!playClicked)}
+            >
+              <FaPlay className="w-[14px] h-[14px] text-black" />
+            </div>
           ) : (
-            <IoPauseOutline onClick={(e) => setPlayClicked(!playClicked)} />
+            <div
+              className="w-[36px] h-[36px] rounded-full bg-white grid place-items-center cursor-pointer"
+              onClick={(e) => setPlayClicked(!playClicked)}
+            >
+              <GiPauseButton className="w-[18px] h-[18px] text-black" />
+            </div>
           )}
-          <RxTrackNext />
+          <MdSkipNext className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
+          <RiRepeat2Fill className="w-[22px] h-[22px] cursor-pointer hover:text-[#25A56A]" />
         </div>
         <div className="w-full flex flex-row items-center gap-2 text-sm">
           <span>{convertTime(time)}</span>
@@ -104,16 +123,16 @@ const BottomMusicBar = () => {
               audio.play();
               setPlayClicked(true);
             }}
-            className="w-full h-1 bg-[#25A56A]"
+            className="w-full h-1 bg-[#25A56A] cursor-pointer"
           />
           <span>{convertTime(duration)}</span>
         </div>
       </div>
       <div className="basis-1/3 flex flex-row justify-end items-center gap-4 text-xl">
         {volume != 0 ? (
-          <RiVolumeUpLine onClick={setMute} />
+          <RiVolumeUpLine className="cursor-pointer" onClick={setMute} />
         ) : (
-          <RiVolumeMuteLine onClick={setUnmute} />
+          <RiVolumeMuteLine className="cursor-pointer" onClick={setUnmute} />
         )}
         <input
           type={"range"}
@@ -121,7 +140,7 @@ const BottomMusicBar = () => {
           max={1}
           value={volume}
           step={0.01}
-          className={"h-1"}
+          className={"h-1 cursor-pointer"}
           onChange={onChangeVolume}
         />
       </div>
