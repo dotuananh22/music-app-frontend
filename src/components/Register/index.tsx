@@ -8,7 +8,7 @@ import { FaFacebook, FaFacebookF } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import MainLogo from "../../assets/images/logo/main-logo.png";
 
-const Login = () => {
+const Register = () => {
   return (
     <div>
       <div className="flex flex-row gap-2 items-center text-sm">
@@ -16,10 +16,10 @@ const Login = () => {
           <NavLink to={"/"}>Home</NavLink>
         </div>
         <AiOutlineRight className="w-[10px] h-[10px] mt-0.5" />
-        <span>Sign in</span>
+        <span>Sign up</span>
       </div>
       <div className="flex flex-col items-center mt-8">
-        <div className="flex flex-col items-center justify-center w-[420px] h-[560px] border rounded-lg border-[#222227]">
+        <div className="flex flex-col items-center justify-center w-[420px] h-[600px] border rounded-lg border-[#222227]">
           <div className="mb-8">
             <img src={MainLogo} alt="main-logo" className="h-[30px]" />
           </div>
@@ -27,7 +27,12 @@ const Login = () => {
             <div className="flex flex-col gap-5">
               <input
                 type="text"
-                placeholder="Email or Username"
+                placeholder="Name"
+                className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A] text-[#C0C0C0]"
+              />
+              <input
+                type="email"
+                placeholder="Email"
                 className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A] text-[#C0C0C0]"
               />
               <input
@@ -39,16 +44,19 @@ const Login = () => {
             <div className="flex flex-row items-center">
               <input
                 type="checkbox"
-                id="rememberPassword"
-                name="rememberPassword"
+                id="agreePolicy"
+                name="agreePolicy"
                 className="mr-2 w-[18px] h-[18px]"
               />
-              <label htmlFor="rememberPassword">Remember Me</label>
+              <label htmlFor="agreePolicy">I agree to the</label>
+              <NavLink to={"#"} className="text-[#25A56A] hover:underline ml-1">
+                Privacy Policy
+              </NavLink>
             </div>
             <div className="flex flex-col items-center gap-2 mt-4">
               <div>
                 <button className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]">
-                  SIGN IN
+                  SIGN UP
                 </button>
               </div>
               <div>or</div>
@@ -64,13 +72,10 @@ const Login = () => {
                 </span>
               </div>
               <div className="flex flex-row gap-1 items-center mt-6">
-                <span className="text-white">Don't have an account?</span>
+                <span className="text-white">Already have an account?</span>
                 <div className="text-[#25A56A] hover:underline">
-                  <NavLink to={"/signup"}>Sign up!</NavLink>
+                  <NavLink to={"/signin"}>Sign in!</NavLink>
                 </div>
-              </div>
-              <div className="text-[#25A56A] mt-2 hover:underline">
-                <NavLink to={"#"}>Forgot password?</NavLink>
               </div>
             </div>
           </div>
@@ -80,4 +85,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

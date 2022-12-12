@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBarPage from "./pages/NavBarPage";
 import FooterSection from "./pages/FooterSection";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             }
           />
           <Route path="/signin" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
         </Routes>
       </div>
       <FooterSection />
