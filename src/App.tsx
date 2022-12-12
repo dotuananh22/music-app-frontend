@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <NavBarPage />
-      <div className="pl-[316px] pt-[86px] pb-[116px] pr-[16px]">
+      <div className="pl-[316px] pt-[86px] pr-[16px]">
         <Routes>
           <Route
             path="/"
