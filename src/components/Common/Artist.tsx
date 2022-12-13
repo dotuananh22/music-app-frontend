@@ -8,7 +8,7 @@ const Artist = () => {
         <img src={DemoImage} alt="demo" />
       </div>
       <div>
-        <h5 className="text-white text-lg text-center group-hover:text-[#25A56A] transition-all duration-200 ease-in-out">
+        <h5 className="text-white text-base text-center group-hover:text-[#25A56A] transition-all duration-500 ease-in-out">
           Space Melody
         </h5>
       </div>

@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <NavBarPage />
-      <div className="pl-[316px] pt-[86px] pr-[16px]">
+      <div className="pl-[332px] pt-[102px] pr-[32px]">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<Login />} />
