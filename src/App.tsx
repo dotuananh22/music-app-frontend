@@ -6,6 +6,8 @@ import NavBarPage from "./pages/NavBarPage";
 import FooterSection from "./pages/FooterSection";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import HomePage from "./pages/HomePage";
+import ArtistPage from "pages/ArtistPage";
 
 function App() {
   return (
@@ -13,43 +15,10 @@ function App() {
       <NavBarPage />
       <div className="pl-[316px] pt-[86px] pr-[16px]">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="text-4xl">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor
-                sit, amet consectetur adipisicing elit. Deserunt fugiat delectus
-                blanditiis a odio vero exercitationem nobis, sequi sint incidunt
-                quaerat optio doloribus saepe impedit nesciunt est quo laborum
-                ex. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aspernatur dolore officiis nostrum commodi minus ea recusandae
-                saepe distinctio corporis ipsam. Consequuntur fugiat quis autem
-                dolorem! Dolores aliquam repellendus magnam odit. Lorem ipsum
-                dolor sit amet consectetur, adipisicing elit. Alias atque odio
-                sunt dicta, expedita veniam, doloremque accusantium architecto
-                aut in suscipit rem omnis fugit ducimus vitae quis delectus
-                deserunt? Officiis! Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Lorem ipsum dolor sit, amet consectetur
-                adipisicing elit. Deserunt fugiat delectus blanditiis a odio
-                vero exercitationem nobis, sequi sint incidunt quaerat optio
-                doloribus saepe impedit nesciunt est quo laborum ex. Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Aspernatur dolore
-                officiis nostrum commodi minus ea recusandae saepe distinctio
-                corporis ipsam. Consequuntur fugiat quis autem dolorem! Dolores
-                aliquam repellendus magnam odit. Lorem ipsum dolor sit amet
-                consectetur, adipisicing elit. Alias atque odio sunt dicta,
-                expedita veniam, doloremque accusantium architecto aut in
-                suscipit rem omnis fugit ducimus vitae quis delectus deserunt?
-                Officiis!
-              </div>
-            }
-          />
+          <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/artists" element={<ArtistPage />} />
         </Routes>
       </div>
       <FooterSection />
