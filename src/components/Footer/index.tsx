@@ -14,7 +14,7 @@ import { IoLogoTiktok } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col gap-4 bg-[#222227] mb-[100px] mt-[30px] ml-[300px] px-8 pt-16 pb-6">
+    <div className="flex flex-col gap-4 bg-[#222227] mb-[100px] mt-[80px] ml-[300px] px-8 pt-16 pb-6">
       <div className="flex flex-row  gap-40">
         <div className="flex flex-col gap-2">
           <img src={MainLogo} alt="main-logo" className="w-[120px] pb-2" />

@@ -14,7 +14,7 @@ const TopNavBar = () => {
       <div className="relative flex items-center">
         <input
           type="text"
-          className="bg-[#222227] py-2 px-4 pr-20 rounded-lg focus:border-[#25A56A]"
+          className="bg-[#222227] py-2 px-4 pr-20 rounded-lg focus:border-[#25A56A] border-none"
           placeholder="Artist, track or podcast"
         />
         <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-xl hover:text-[#25A56A] cursor-pointer" />
