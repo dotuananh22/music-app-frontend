@@ -28,7 +28,7 @@ const BottomMusicBar = () => {
     // audio.addEventListener("ended", () => setPlayClicked(false));
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("loadedmetadata", () => {
-      audio.volume = volume;
+      audio.volume = volume < 0 ? 0 : volume;
       setDuration(audio.duration);
     });
     // return () => {
@@ -61,12 +61,12 @@ const BottomMusicBar = () => {
   };
 
   const setUnmute = () => {
-    setVolume(0.5);
-    audio.volume = 0.5;
+    audio.volume = -volume == 0 ? 0.5 : -volume;
+    setVolume(-volume == 0 ? 0.5 : -volume);
   };
 
   const setMute = () => {
-    setVolume(0);
+    setVolume(-volume);
     audio.volume = 0;
   };
 
@@ -138,7 +138,7 @@ const BottomMusicBar = () => {
         </div>
       </div>
       <div className="basis-1/3 flex flex-row justify-end items-center gap-4 text-xl">
-        {volume != 0 ? (
+        {volume > 0 ? (
           <RiVolumeUpLine
             className="cursor-pointer hover:text-[#25A56A] delay-50 transition ease-in-out"
             onClick={setMute}

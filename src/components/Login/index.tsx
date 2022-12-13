@@ -38,12 +38,13 @@ const Login = () => {
             </div>
             <div className="flex flex-row items-center">
               <input
-                type="checkbox"
                 id="rememberPassword"
-                name="rememberPassword"
-                className="mr-2 w-[18px] h-[18px]"
+                type="checkbox"
+                className="w-5 h-5 text-[#222227] bg-[#222227] rounded border-none outline-none"
               />
-              <label htmlFor="rememberPassword">Remember Me</label>
+              <label htmlFor="rememberPassword" className="ml-2 cursor-pointer">
+                Remember Me
+              </label>
             </div>
             <div className="flex flex-col items-center gap-2 mt-4">
               <div>

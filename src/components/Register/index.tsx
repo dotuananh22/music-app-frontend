@@ -43,12 +43,13 @@ const Register = () => {
             </div>
             <div className="flex flex-row items-center">
               <input
+                id="policy"
                 type="checkbox"
-                id="agreePolicy"
-                name="agreePolicy"
-                className="mr-2 w-[18px] h-[18px]"
+                className="w-5 h-5 text-[#222227] bg-[#222227] rounded border-none outline-none"
               />
-              <label htmlFor="agreePolicy">I agree to the</label>
+              <label htmlFor="policy" className="ml-2 cursor-pointer">
+                I agree to the
+              </label>
               <NavLink to={"#"} className="text-[#25A56A] hover:underline ml-1">
                 Privacy Policy
               </NavLink>
