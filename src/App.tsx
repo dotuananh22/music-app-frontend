@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBarPage from "./pages/NavBarPage";
@@ -8,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import HomePage from "./pages/HomePage";
 import ArtistPage from "pages/ArtistPage";
+import ReleasesPage from "pages/ReleasesPage";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/artists" element={<ArtistPage />} />
+          <Route path="/releases" element={<ReleasesPage />} />
         </Routes>
       </div>
       <FooterSection />

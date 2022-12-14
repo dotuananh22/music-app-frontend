@@ -1,14 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { BsTelephone, BsYoutube } from "react-icons/bs";
-import MainLogo from "../../assets/images/logo/main-logo.png";
-import { SlSocialFacebook } from "react-icons/sl";
+import MainLogo from "assets/images/logo/main-logo.png";
 import { FaFacebookF } from "react-icons/fa";
-import { CiTwitter } from "react-icons/ci";
 import {
   AiOutlineInstagram,
   AiOutlineMail,
   AiOutlineTwitter,
-  AiOutlineYoutube,
 } from "react-icons/ai";
 import { IoLogoTiktok } from "react-icons/io5";
 
@@ -93,21 +91,31 @@ const Footer = () => {
       </div>
       <hr className="border-[#39393D]" />
       <div className="flex flex-row justify-between items-center">
-        <span>© AMusic, 2022. Created by Do Tuan Anh, Pham Quoc An.</span>
+        <span>
+          © AMusic, 2022. Created by{" "}
+          <a href="#" className="hover:text-[#25A56A]">
+            Do Tuan Anh
+          </a>
+          ,{" "}
+          <a href="#" className="hover:text-[#25A56A]">
+            Pham Quoc An
+          </a>
+          .
+        </span>
         <div className="flex flex-row gap-4">
-          <span className="w-[32px] h-[32px] rounded-full bg-[#3B5998] grid place-items-center">
+          <span className="w-[32px] h-[32px] rounded-full bg-[#3B5998] grid place-items-center cursor-pointer">
             <FaFacebookF className="text-white" />
           </span>
-          <span className="w-[32px] h-[32px] rounded-full bg-[#55ACEE] grid place-items-center">
+          <span className="w-[32px] h-[32px] rounded-full bg-[#55ACEE] grid place-items-center cursor-pointer">
             <AiOutlineTwitter className="text-white" />
           </span>
-          <span className="w-[32px] h-[32px] rounded-full bg-[#FFFFFF] grid place-items-center">
+          <span className="w-[32px] h-[32px] rounded-full bg-[#FFFFFF] grid place-items-center cursor-pointer">
             <AiOutlineInstagram className="text-black" />
           </span>
-          <span className="w-[32px] h-[32px] rounded-full bg-[#010101] grid place-items-center">
+          <span className="w-[32px] h-[32px] rounded-full bg-[#010101] grid place-items-center cursor-pointer">
             <IoLogoTiktok className="text-white" />
           </span>
-          <span className="w-[32px] h-[32px] rounded-full bg-[#FF0000] grid place-items-center">
+          <span className="w-[32px] h-[32px] rounded-full bg-[#FF0000] grid place-items-center cursor-pointer">
             <BsYoutube className="text-white" />
           </span>
         </div>

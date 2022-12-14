@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
 import Artists from "./Artists";
 import Carousel from "./Carousel";
 import NewRelease from "./NewRelease";
+import SinglesChart from "./SinglesChart";
 
 const Home = () => {
   return (
@@ -9,6 +9,7 @@ const Home = () => {
       <Carousel />
       <NewRelease />
       <Artists />
+      <SinglesChart />
     </div>
   );
 };
