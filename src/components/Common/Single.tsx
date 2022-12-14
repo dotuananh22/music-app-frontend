@@ -25,7 +25,7 @@ const Single = (props: SingleProps) => {
           </div>
         </div>
         <div>
-          <h5 className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear">
+          <h5 className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear w-[200px]">
             {props.songName}
           </h5>
           <p className="text-sm hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear truncate w-[200px]">
