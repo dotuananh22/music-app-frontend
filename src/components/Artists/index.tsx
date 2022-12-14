@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Artist from "components/Common/Artist";
 import BreadCrumb from "components/Common/BreadCrumb";
+import Pagination from "components/Common/Pagination";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { MdNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 
 const Artists = () => {
   return (
@@ -66,61 +68,7 @@ const Artists = () => {
             <Artist />
             <Artist />
           </div>
-          <nav aria-label="Page navigation example" className="mt-8">
-            <ul className="inline-flex items-center -space-x-px">
-              <li>
-                <a href="#" className="block px-3 py-2 ml-0 leading-tight">
-                  <GrFormPrevious className="color-gray-500 hover:text-white" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="px-3 py-2 leading-tight text-gray-500 hover:text-white transition-all duration-300 ease-in-out"
-                >
-                  1
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="px-3 py-2 leading-tight text-gray-500 hover:text-white transition-all duration-300 ease-in-out"
-                >
-                  2
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  className="z-10 px-3 py-2 leading-tight text-[#25A56A] font-semibold"
-                >
-                  3
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="px-3 py-2 leading-tight text-gray-500 hover:text-white transition-all duration-300 ease-in-out"
-                >
-                  4
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="px-3 py-2 leading-tight text-gray-500 hover:text-white transition-all duration-300 ease-in-out"
-                >
-                  5
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block px-3 py-2 leading-tight">
-                  <GrFormNext className="color-gray-500 hover:text-white" />
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <Pagination />
         </div>
       </div>
     </div>

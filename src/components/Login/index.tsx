@@ -1,3 +1,4 @@
+import Input from "components/Common/Input";
 import React from "react";
 import {
   AiOutlineGoogle,
@@ -25,16 +26,12 @@ const Login = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-5">
-              <input
+              <Input
+                name="username"
+                placeHolder="Username or Email"
                 type="text"
-                placeholder="Email or Username"
-                className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A] text-[#C0C0C0]"
               />
-              <input
-                type="password"
-                placeholder="Password"
-                className="bg-[#222227] h-[48px] w-full border border-transparent rounded-xl px-[20px] outline-none outline-1 delay-50 transition-all ease-linear focus:outline-[#25A56A] text-[#C0C0C0]"
-              />
+              <Input name="password" placeHolder="Password" type="password" />
             </div>
             <div className="flex flex-row items-center">
               <input
