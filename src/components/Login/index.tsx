@@ -5,9 +5,9 @@ import {
   AiOutlineRight,
   AiOutlineTwitter,
 } from "react-icons/ai";
-import { FaFacebook, FaFacebookF } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import MainLogo from "../../assets/images/logo/main-logo.png";
+import MainLogo from "assets/images/logo/main-logo.png";
 
 const Login = () => {
   return (

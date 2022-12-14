@@ -1,15 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { GiPauseButton } from "react-icons/gi";
-import { FaPause, FaPlay, FaRandom } from "react-icons/fa";
-import { IoPauseOutline, IoPlayOutline } from "react-icons/io5";
+import { FaPlay, FaRandom } from "react-icons/fa";
 import {
   RiRepeat2Fill,
   RiVolumeMuteLine,
   RiVolumeUpLine,
 } from "react-icons/ri";
-import { RxTrackNext, RxTrackPrevious } from "react-icons/rx";
 // @ts-ignore
-import TestImage from "../../assets/images/anh-son-tung.jfif";
+import TestImage from "assets/images/anh-son-tung.jfif";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 
 const BottomMusicBar = () => {

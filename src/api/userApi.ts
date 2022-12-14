@@ -1,6 +1,7 @@
-import QueryInput from "../types/QueryInput";
+/* eslint-disable import/no-anonymous-default-export */
+import QueryInput from "types/QueryInput";
 import axiosClient from "./axiosClient";
-import { authSchema } from "../schema";
+import { authSchema } from "schema";
 
 const getAll = async (query: QueryInput) => {
   return await axiosClient.get(

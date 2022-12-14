@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Artists from "./Artists";
 import Carousel from "./Carousel";
 import NewRelease from "./NewRelease";
