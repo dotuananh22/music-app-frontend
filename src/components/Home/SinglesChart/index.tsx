@@ -4,7 +4,7 @@ import NewSingles from "./NewSingles";
 
 const SinglesChart = () => {
   return (
-    <div className="mt-10 flex flex-row gap-12">
+    <div className="mt-10 grid grid-cols-3 gap-12">
       <TopSingles />
       <NewSingles />
     </div>
