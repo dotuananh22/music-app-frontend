@@ -1,6 +1,6 @@
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
-import Music from "./Music";
+import Music from "../../Common/Music";
 
 const NewRelease = () => {
   return (
