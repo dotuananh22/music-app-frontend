@@ -41,7 +41,7 @@ const Artists = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-row gap-2 items-center bg-[#222227]">
+          <div className="flex flex-row gap-2 items-center bg-[#222227] rounded-xl px-1">
             <button className="px-4 rounded-xl bg-[#25A56A] text-white text-center h-[32px]">
               Featured
             </button>
