@@ -60,8 +60,8 @@ const BottomMusicBar = () => {
   };
 
   const setUnmute = () => {
-    audio.volume = -volume == 0 ? 0.5 : -volume;
-    setVolume(-volume == 0 ? 0.5 : -volume);
+    audio.volume = -volume === 0.0 ? 0.5 : -volume;
+    setVolume(-volume === 0.0 ? 0.5 : -volume);
   };
 
   const setMute = () => {
@@ -73,7 +73,7 @@ const BottomMusicBar = () => {
     <nav className="fixed bottom-0 w-full z-30 h-[100px] px-[30px] border border-[#222227] bg-[#16151A] flex flex-row justify-between items-center">
       <div className="basis-1/3">
         <div className="flex flex-row gap-4 items-center">
-          <img src={TestImage} alt="test-image" className="w-[58px]" />
+          <img src={TestImage} alt="test" className="w-[58px]" />
           <div>
             <h3 className="text-white font-semibold">Chúng ta của hiện tại</h3>
             <span className="text-xs">Sơn Tùng MTP</span>

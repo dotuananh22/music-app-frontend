@@ -11,12 +11,44 @@ const NewSingles = () => {
         <IoMusicalNoteOutline className="text-[#25A56A] mt-1.5" />
         <span className="text-white">New singles</span>
       </div>
-      <div className="flex flex-row gap-12">
-        <div>
+      <div className="grid grid-cols-3 gap-12">
+        <div className="flex flex-col">
+          <Single
+            image={DemoImage}
+            songName="Chúng ta của hiện tại"
+            singerName="Sơn Tùng MTP Sơn image.png image.png image.png sdfsdf"
+            songTime="5:01"
+          />
           <Single
             image={DemoImage}
             songName="Chúng ta của hiện tại"
             singerName="Sơn Tùng MTP"
+            songTime="5:01"
+          />
+          <Single
+            image={DemoImage}
+            songName="Chúng ta của hiện tại"
+            singerName="Sơn Tùng MTP"
+            songTime="5:01"
+          />
+          <Single
+            image={DemoImage}
+            songName="Chúng ta của hiện tại"
+            singerName="Sơn Tùng MTP"
+            songTime="5:01"
+          />
+          <Single
+            image={DemoImage}
+            songName="Chúng ta của hiện tại"
+            singerName="Sơn Tùng MTP"
+            songTime="5:01"
+          />
+        </div>
+        <div className="flex flex-col">
+          <Single
+            image={DemoImage}
+            songName="Chúng ta của hiện tại"
+            singerName="Sơn Tùng MTP Sơn image.png image.png image.png sdfsdf"
             songTime="5:01"
           />
           <Single
