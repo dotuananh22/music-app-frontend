@@ -5,6 +5,7 @@ import { BiHeart, BiHomeAlt } from "react-icons/bi";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import MainLogo from "assets/images/logo/main-logo.png";
+import { RiPlayListFill } from "react-icons/ri";
 
 const LeftNavBar = () => {
   return (
@@ -36,13 +37,17 @@ const LeftNavBar = () => {
           <HiOutlineMusicNote className="text-2xl" />
           <span>Releases</span>
         </NavLink>
-        <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
+        {/* <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
           <GoCalendar className="text-2xl" />
           <span>Events</span>
         </div>
         <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
           <HiOutlineMicrophone className="text-2xl" />
           <span>Podcasts</span>
+        </div> */}
+        <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
+          <RiPlayListFill className="text-2xl" />
+          <span>Playlists</span>
         </div>
         <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
           <BiHeart className="text-2xl" />
