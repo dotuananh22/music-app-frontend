@@ -6,7 +6,7 @@ import React from "react";
 const Profile = () => {
   return (
     <div>
-      <BreadCrumb baseAddress="Home" mainAddress="Profile" path="/profile" />
+      <BreadCrumb baseAddress="Home" mainAddress="Profile" path="/" />
       <div className="flex flex-col gap-8 mt-12">
         <h2 className="text-4xl text-white">Profile</h2>
         <div className="grid grid-cols-2 gap-6">

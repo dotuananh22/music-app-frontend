@@ -11,6 +11,7 @@ import ReleasesPage from "pages/ReleasesPage";
 import SingerInformationPage from "pages/SingerInformationPage";
 import ProfilePage from "pages/ProfilePage";
 import PlaylistPage from "pages/PlaylistPage";
+import ContactsPage from "pages/ContactsPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/singer" element={<SingerInformationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
         </Routes>
       </div>
       <FooterSection />
