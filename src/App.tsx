@@ -25,7 +25,7 @@ function App() {
           <Route path="/releases" element={<ReleasesPage />} />
           <Route path="/singer" element={<SingerInformationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/playlists" element={<PlaylistPage />} />
         </Routes>
       </div>
       <FooterSection />

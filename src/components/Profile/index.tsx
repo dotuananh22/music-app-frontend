@@ -7,7 +7,7 @@ const Profile = () => {
   return (
     <div>
       <BreadCrumb baseAddress="Home" mainAddress="Profile" path="/profile" />
-      <div className="flex flex-col gap-8 mt-6">
+      <div className="flex flex-col gap-8 mt-12">
         <h2 className="text-4xl text-white">Profile</h2>
         <div className="grid grid-cols-2 gap-6">
           <div className={`p-6 border border-[${colors.lineColor}] rounded-lg`}>
@@ -25,20 +25,28 @@ const Profile = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="username">Email</label>
-                <Input name="email" type="text" placeHolder="Email" />
+                <label htmlFor="fullName">Full Name</label>
+                <Input name="fullName" type="text" placeHolder="Full Name" />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="username">First Name</label>
-                <Input name="firstName" type="text" placeHolder="First Name" />
+                <label htmlFor="phoneNumber">Phone Number</label>
+                <Input
+                  name="phoneNumber"
+                  type="text"
+                  placeHolder="Phone Number"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="lastName">Last Name</label>
-                <Input name="lastName" type="text" placeHolder="Last Name" />
+                <label htmlFor="email">Email</label>
+                <Input name="email" type="email" placeHolder="Email" />
               </div>
-              <div className="flex flex-col gap-2 col-span-2">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="birthday">Birthday</label>
+                <Input name="birthday" type="date" placeHolder="" />
+              </div>
+              <div className="flex flex-col gap-2">
                 <label className="block" htmlFor="file_input">
-                  Profile image
+                  Avatar
                 </label>
                 {/* File must be image */}
                 <input
@@ -50,13 +58,11 @@ const Profile = () => {
                 <p
                   className="mt-1 text-sm text-gray-500 dark:text-gray-300"
                   id="file_input_help"
-                >
-                  SVG, PNG, JPG or GIF (MAX. 800x400px).
-                </p>
+                ></p>
               </div>
             </div>
             <button
-              className={`px-16 py-3 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
+              className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
             >
               SAVE
             </button>
@@ -67,7 +73,7 @@ const Profile = () => {
             </h6>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col gap-2 col-start-1 col-end-1">
-                <label htmlFor="username">Old password</label>
+                <label htmlFor="oldPassword">Old password</label>
                 <Input
                   name="oldPassword"
                   type="password"
@@ -75,20 +81,24 @@ const Profile = () => {
                 />
               </div>
               <div className="flex flex-col gap-2 col-start-1 row-start-2">
-                <label htmlFor="username">New password</label>
+                <label htmlFor="newPassword">New password</label>
                 <Input
-                  name="email"
+                  name="newPassword"
                   type="password"
                   placeHolder="New Password"
                 />
               </div>
               <div className="flex flex-col gap-2 col-start-2 row-start-2">
-                <label htmlFor="username">Confirm New Password</label>
-                <Input name="firstName" type="text" placeHolder="First Name" />
+                <label htmlFor="confirmPassword">Confirm New Password</label>
+                <Input
+                  name="confirmPassword"
+                  type="password"
+                  placeHolder="Confirm New Password"
+                />
               </div>
             </div>
             <button
-              className={`px-16 py-3 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
+              className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
             >
               CHANGE
             </button>
