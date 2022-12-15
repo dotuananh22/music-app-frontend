@@ -45,14 +45,20 @@ const LeftNavBar = () => {
           <HiOutlineMicrophone className="text-2xl" />
           <span>Podcasts</span>
         </div> */}
-        <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
+        <NavLink
+          to={"/playlists"}
+          className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
+        >
           <RiPlayListFill className="text-2xl" />
           <span>Playlists</span>
-        </div>
-        <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
+        </NavLink>
+        <NavLink
+          to={"/favorite"}
+          className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
+        >
           <BiHeart className="text-2xl" />
           <span>My Favourite</span>
-        </div>
+        </NavLink>
       </div>
     </nav>
   );

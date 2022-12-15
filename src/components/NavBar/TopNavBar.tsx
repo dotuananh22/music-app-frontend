@@ -7,9 +7,13 @@ const TopNavBar = () => {
   return (
     <nav className="flex flex-row justify-between px-8 pl-[332px] h-[70px] py-4 border fixed border-[#222227] w-full z-10 bg-[#16151A]">
       <div className="flex flex-row gap-6 items-center">
-        <p className="hover:text-[#25A56A] cursor-pointer">Profile</p>
+        <NavLink to={"/profile"}>
+          <p className="hover:text-[#25A56A] cursor-pointer">Profile</p>
+        </NavLink>
         {/* <p className="hover:text-[#25A56A] cursor-pointer">About</p> */}
-        <p className="hover:text-[#25A56A] cursor-pointer">Contact</p>
+        <NavLink to={"/contact"}>
+          <p className="hover:text-[#25A56A] cursor-pointer">Contact</p>
+        </NavLink>
       </div>
       <div className="relative flex items-center">
         <input
