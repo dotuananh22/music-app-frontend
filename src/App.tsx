@@ -8,6 +8,9 @@ import Register from "./components/Register";
 import HomePage from "./pages/HomePage";
 import ArtistPage from "pages/ArtistPage";
 import ReleasesPage from "pages/ReleasesPage";
+import SingerInformationPage from "pages/SingerInformationPage";
+import ProfilePage from "pages/ProfilePage";
+import PlaylistPage from "pages/PlaylistPage";
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/artists" element={<ArtistPage />} />
           <Route path="/releases" element={<ReleasesPage />} />
+          <Route path="/singer" element={<SingerInformationPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/playlist" element={<PlaylistPage />} />
         </Routes>
       </div>
       <FooterSection />

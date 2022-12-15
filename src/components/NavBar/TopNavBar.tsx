@@ -5,10 +5,10 @@ import { NavLink } from "react-router-dom";
 
 const TopNavBar = () => {
   return (
-    <nav className="flex flex-row justify-between px-8 pl-[316px] h-[70px] py-4 border fixed border-[#222227] w-full z-10 bg-[#16151A]">
+    <nav className="flex flex-row justify-between px-8 pl-[332px] h-[70px] py-4 border fixed border-[#222227] w-full z-10 bg-[#16151A]">
       <div className="flex flex-row gap-6 items-center">
         <p className="hover:text-[#25A56A] cursor-pointer">Profile</p>
-        <p className="hover:text-[#25A56A] cursor-pointer">About</p>
+        {/* <p className="hover:text-[#25A56A] cursor-pointer">About</p> */}
         <p className="hover:text-[#25A56A] cursor-pointer">Contact</p>
       </div>
       <div className="relative flex items-center">
