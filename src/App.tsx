@@ -12,6 +12,7 @@ import SingerInformationPage from "pages/SingerInformationPage";
 import ProfilePage from "pages/ProfilePage";
 import PlaylistPage from "pages/PlaylistPage";
 import ContactsPage from "pages/ContactsPage";
+import FavouritePage from "pages/Favourite";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/playlists" element={<PlaylistPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/favourite" element={<FavouritePage />} />
         </Routes>
       </div>
       <FooterSection />

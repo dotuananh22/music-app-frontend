@@ -19,7 +19,7 @@ const Playlists = () => {
               <h2 className="text-3xl font-semibold mb-3">Favorite Songs</h2>
               <span className="font-semibold">100 songs</span>
             </div>
-            <NavLink to={"/favorite"}>
+            <NavLink to={"/favourite"}>
               <button
                 className={`w-[50px] h-[50px] rounded-full hover:scale-105 bg-[#1ED760] place-items-center absolute right-3 bottom-0 group-hover:bottom-3 group-hover:opacity-100 grid opacity-0 transition-all duration-200 ease-in-out`}
               >

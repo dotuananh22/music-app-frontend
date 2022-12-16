@@ -53,7 +53,7 @@ const LeftNavBar = () => {
           <span>Playlists</span>
         </NavLink>
         <NavLink
-          to={"/favorite"}
+          to={"/favourite"}
           className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
         >
           <BiHeart className="text-2xl" />
