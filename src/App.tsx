@@ -14,6 +14,7 @@ import SingerInformationPage from "pages/SingerInformationPage";
 import ProfilePage from "pages/ProfilePage";
 import ContactsPage from "pages/ContactsPage";
 import FavouritePage from "pages/Favourite";
+import PolicyPage from "pages/PolicyPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/favourite" element={<FavouritePage />} />
+          <Route path="/policy" element={<PolicyPage />} />
         </Routes>
       </div>
       <FooterSection />

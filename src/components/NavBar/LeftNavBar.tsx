@@ -42,7 +42,7 @@ const LeftNavBar = () => {
           className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
         >
           <BiLibrary className="text-2xl" />
-          <span>Your Library</span>
+          <span>My Library</span>
         </NavLink>
         {/* <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
           <GoCalendar className="text-2xl" />

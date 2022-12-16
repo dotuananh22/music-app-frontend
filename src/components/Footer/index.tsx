@@ -9,13 +9,16 @@ import {
   AiOutlineTwitter,
 } from "react-icons/ai";
 import { IoLogoTiktok } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
     <div className="flex flex-col gap-4 bg-[#222227] mb-[100px] mt-[80px] ml-[300px] px-8 pt-16 pb-6">
       <div className="flex flex-row  gap-40">
         <div className="flex flex-col gap-2">
-          <img src={MainLogo} alt="main-logo" className="w-[120px] pb-2" />
+          <NavLink to={"/"}>
+            <img src={MainLogo} alt="main-logo" className="w-[120px] pb-2" />
+          </NavLink>
           <p>AMusic - Listen music anywhere</p>
           <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-2 pt-3">

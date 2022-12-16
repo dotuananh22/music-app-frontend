@@ -12,7 +12,7 @@ const Library = () => {
     <div>
       <BreadCrumb baseAddress="Home" mainAddress="Library" path="/" />
       <div className="flex flex-col gap-8 mt-10">
-        <h2 className="text-4xl text-white">Your Library</h2>
+        <h2 className="text-4xl text-white">My Library</h2>
         <div className="grid grid-cols-5 gap-6">
           <div className="gradient-color col-span-2 rounded-lg relative group">
             <div className="absolute text-white bottom-4 left-4">

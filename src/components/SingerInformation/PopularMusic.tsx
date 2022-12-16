@@ -15,7 +15,7 @@ const PopularMusic = () => {
             songName="Chúng ta của hiện tại"
             views="99,000,100"
             songTime="5:01"
-            favorite={false}
+            favorite={true}
           />
         </li>
         <li className="py-3 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">

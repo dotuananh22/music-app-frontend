@@ -39,7 +39,10 @@ const Register = () => {
               <label htmlFor="policy" className="ml-2 cursor-pointer">
                 I agree to the
               </label>
-              <NavLink to={"#"} className="text-[#25A56A] hover:underline ml-1">
+              <NavLink
+                to={"/policy"}
+                className="text-[#25A56A] hover:underline ml-1"
+              >
                 Privacy Policy
               </NavLink>
             </div>

@@ -1,6 +1,6 @@
 import React from "react";
 // @ts-ignore
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
 
 interface SubFavouriteSongsProps {
@@ -32,9 +32,13 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
         <p>{props.dateAdded}</p>
       </div>
       <div className="flex flex-row items-center gap-8 basis-1/4 justify-end">
-        <AiOutlineHeart
-          className={`hover:text-[${colors.greenColor}] text-xl`}
-        />
+        {props.favorite ? (
+          <AiFillHeart className={`text-[${colors.greenColor}] text-xl`} />
+        ) : (
+          <AiOutlineHeart
+            className={`hover:text-[${colors.greenColor}] text-xl`}
+          />
+        )}
         <span>{props.songTime}</span>
       </div>
     </div>
