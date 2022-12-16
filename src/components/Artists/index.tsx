@@ -7,7 +7,7 @@ import React from "react";
 
 const Artists = () => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6">
       <BreadCrumb path="/" baseAddress="Home" mainAddress="Artists" />
       <div className="flex flex-col gap-8 mt-6">
         <h2 className="text-4xl text-white">Artists</h2>
