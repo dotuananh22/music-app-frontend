@@ -31,15 +31,15 @@ const Policy = () => {
             therefore always free from repetition, injected humour, or
             non-characteristic words etc.
           </p>
-          <ol>
+          <ol className={"flex flex-col text-justify"}>
             <li>
-              <h4 className="font-semibold text-white">
+              <h4 className="font-semibold text-white inline-block">
                 Determination of personal information of users
               </h4>
-              <ol>
+              <ol className={"pl-[15px]"}>
                 <li>
                   If you are going to use a passage of Lorem Ipsum:
-                  <ol>
+                  <ol className={"pl-[15px]"}>
                     <li>
                       All the Lorem Ipsum generators on the Internet tend to
                       repeat predefined chunks as necessary, making this the
@@ -72,10 +72,10 @@ const Policy = () => {
             </li>
 
             <li>
-              <h4 className="font-semibold text-white">
+              <h4 className="font-semibold text-white inline-block">
                 Reasons for collecting and processing user personal information
               </h4>
-              <ol>
+              <ol className={"pl-[15px]"}>
                 <li>
                   It is a long established fact that a reader will be distracted
                   by the readable content of a page when looking at its layout.
@@ -86,7 +86,7 @@ const Policy = () => {
                   All the Lorem Ipsum generators on the Internet tend to repeat
                   predefined chunks as necessary, making this the first true
                   generator on the Internet:
-                  <ol>
+                  <ol className={"pl-[15px]"}>
                     <li>
                       It has survived not only five centuries, but also the leap
                       into electronic typesetting, remaining essentially

@@ -14,6 +14,9 @@ const TopNavBar = () => {
         <NavLink to={"/contacts"}>
           <p className="hover:text-[#25A56A] cursor-pointer">Contacts</p>
         </NavLink>
+        <NavLink to={"/policy"}>
+          <p className="hover:text-[#25A56A] cursor-pointer">Policy</p>
+        </NavLink>
       </div>
       <div className="relative flex items-center">
         <input
