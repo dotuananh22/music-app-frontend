@@ -1,8 +1,8 @@
 import Playlists from "components/Playlists";
 import React from "react";
 
-const PlaylistPage = () => {
+const PlaylistsPage = () => {
   return <Playlists />;
 };
 
-export default PlaylistPage;
+export default PlaylistsPage;
