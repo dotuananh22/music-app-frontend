@@ -9,9 +9,9 @@ import { NavLink } from "react-router-dom";
 
 const Library = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <BreadCrumb baseAddress="Home" mainAddress="Library" path="/" />
-      <div className="flex flex-col gap-8 mt-10">
+      <div className="flex flex-col gap-8 mt-6">
         <h2 className="text-4xl text-white">My Library</h2>
         <div className="grid grid-cols-5 gap-6">
           <div className="gradient-color col-span-2 rounded-lg relative group">

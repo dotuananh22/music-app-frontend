@@ -77,5 +77,20 @@ body {
   background: #1D976C;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #1D976C, #5cf594);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #1D976C, #5cf594); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+}
+
+ol {
+  counter-reset: li; /* Initiate a counter */
+  list-style: none;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  margin: 10px 0;
+}
+
+ol li::before {
+  content: counters(li, ".") ". "; /* Increment the counter */
+  counter-increment: li;
 }
