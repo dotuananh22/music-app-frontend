@@ -50,7 +50,7 @@ const Profile = () => {
                 </label>
                 {/* File must be image */}
                 <input
-                  className="block w-full text-sm text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                  className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
                   id="file_input"
                   type="file"
                   accept="image/*"
