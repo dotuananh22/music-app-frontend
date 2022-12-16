@@ -1,7 +1,7 @@
 import React from "react";
 import { HiOutlineMicrophone, HiOutlineMusicNote } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
-import { BiHeart, BiHomeAlt } from "react-icons/bi";
+import { BiHeart, BiHomeAlt, BiLibrary } from "react-icons/bi";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import MainLogo from "assets/images/logo/main-logo.png";
@@ -36,6 +36,13 @@ const LeftNavBar = () => {
         >
           <HiOutlineMusicNote className="text-2xl" />
           <span>Releases</span>
+        </NavLink>
+        <NavLink
+          to={"/library"}
+          className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
+        >
+          <BiLibrary className="text-2xl" />
+          <span>My Library</span>
         </NavLink>
         {/* <div className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer">
           <GoCalendar className="text-2xl" />

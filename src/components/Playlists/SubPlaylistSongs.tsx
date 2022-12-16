@@ -3,7 +3,7 @@ import React from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
 
-interface SubFavouriteSongsProps {
+interface SubPlaylistSongsProps {
   rank: number;
   image: string;
   songName: string;
@@ -13,7 +13,7 @@ interface SubFavouriteSongsProps {
   songTime: string;
 }
 
-const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
+const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
   return (
     <div className="flex flex-row justify-between items-center">
       <div className={`flex flex-row gap-4 items-center basis-2/4`}>
@@ -45,4 +45,4 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
   );
 };
 
-export default SubFavouriteSongs;
+export default SubPlaylistSongs;

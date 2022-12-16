@@ -1,10 +1,10 @@
 import React from "react";
 // @ts-ignore
 import ProfileImage from "assets/images/anh-son-tung.jfif";
-import SubFavouriteSongs from "./SubFavouriteSongs";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import SubPlaylistSongs from "./SubPlaylistSongs";
 
-const FavouriteSongs = () => {
+const PlaylistSongs = () => {
   return (
     <div className="flex flex-col gap-4 py-2 pt-4">
       <div className="flex flex-row justify-between items-center border-b border-[#222227] p-4">
@@ -16,7 +16,7 @@ const FavouriteSongs = () => {
       </div>
       <ul className={`flex flex-col`}>
         <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubFavouriteSongs
+          <SubPlaylistSongs
             rank={1}
             image={ProfileImage}
             songName="Chúng ta của hiện tại"
@@ -27,18 +27,18 @@ const FavouriteSongs = () => {
           />
         </li>
         <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubFavouriteSongs
+          <SubPlaylistSongs
             rank={2}
             image={ProfileImage}
             songName="Chúng ta của hiện tại"
             singerName="Sơn Tùng MTP"
             dateAdded="25/11/2022"
             songTime="5:01"
-            favorite={true}
+            favorite={false}
           />
         </li>
         <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubFavouriteSongs
+          <SubPlaylistSongs
             rank={3}
             image={ProfileImage}
             songName="Chúng ta của hiện tại"
@@ -49,25 +49,25 @@ const FavouriteSongs = () => {
           />
         </li>
         <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubFavouriteSongs
+          <SubPlaylistSongs
             rank={4}
             image={ProfileImage}
             songName="Chúng ta của hiện tại"
             singerName="Sơn Tùng MTP"
             dateAdded="25/11/2022"
             songTime="5:01"
-            favorite={true}
+            favorite={false}
           />
         </li>
         <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubFavouriteSongs
+          <SubPlaylistSongs
             rank={5}
             image={ProfileImage}
             songName="Chúng ta của hiện tại"
             singerName="Sơn Tùng MTP"
             dateAdded="25/11/2022"
             songTime="5:01"
-            favorite={true}
+            favorite={false}
           />
         </li>
       </ul>
@@ -75,4 +75,4 @@ const FavouriteSongs = () => {
   );
 };
 
-export default FavouriteSongs;
+export default PlaylistSongs;
