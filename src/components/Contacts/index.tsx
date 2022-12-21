@@ -1,13 +1,26 @@
 import BreadCrumb from "components/Common/BreadCrumb";
-import Input from "components/Common/Input";
+import Input from "components/Common/InputFormik";
 import colors from "constants/color";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
 import { BsYoutube } from "react-icons/bs";
 import { FaFacebookF } from "react-icons/fa";
 import { IoLogoTiktok } from "react-icons/io5";
 
 const Contacts = () => {
+  const [contactBody, setContactBody] = useState({
+    name: "",
+    email: "",
+    subject: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContactBody({
+      ...contactBody,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div>
       <BreadCrumb baseAddress="Home" mainAddress="Contacts" path="/" />
@@ -21,13 +34,13 @@ const Contacts = () => {
               >
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex flex-col gap-2">
-                    <Input name="name" type="text" placeHolder="Name" />
+                    {/* <Input name="name" type="text" placeHolder="Name" value={contactBody.name} handleChange={handleChange} /> */}
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Input name="email" type="email" placeHolder="Email" />
+                    {/* <Input name="email" type="email" placeHolder="Email" value={contactBody.email} handleChange={handleChange} /> */}
                   </div>
                   <div className="col-span-2">
-                    <Input name="subject" type="text" placeHolder="Subject" />
+                    {/* <Input name="subject" type="text" placeHolder="Subject" value={contactBody.subject} handleChange={handleChange} /> */}
                   </div>
                   <div className="col-span-2">
                     <textarea

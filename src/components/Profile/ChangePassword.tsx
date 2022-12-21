@@ -1,8 +1,21 @@
-import Input from "components/Common/Input";
+import Input from "components/Common/InputFormik";
 import colors from "constants/color";
-import React from "react";
+import React, { useState } from "react";
 
 const ChangePassword = () => {
+  const [changePasswordBody, setChangePasswordBody] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChangePasswordBody({
+      ...changePasswordBody,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div
       className={`p-6 border border-[${colors.lineColor}] rounded-lg basis-1/3`}
@@ -11,27 +24,33 @@ const ChangePassword = () => {
       <div className="grid grid-cols-1 gap-4 mb-4">
         <div className="flex flex-col gap-2">
           <label htmlFor="oldPassword">Old password</label>
-          <Input
+          {/* <Input
             name="oldPassword"
             type="password"
             placeHolder="Old password"
-          />
+            value={changePasswordBody.oldPassword}
+            handleChange={handleChange}
+          /> */}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="newPassword">New password</label>
-          <Input
+          {/* <Input
             name="newPassword"
             type="password"
             placeHolder="New Password"
-          />
+            value={changePasswordBody.newPassword}
+            handleChange={handleChange}
+          /> */}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="confirmPassword">Confirm New Password</label>
-          <Input
+          {/* <Input
             name="confirmPassword"
             type="password"
             placeHolder="Confirm New Password"
-          />
+            value={changePasswordBody.confirmPassword}
+            handleChange={handleChange}
+          /> */}
         </div>
       </div>
       <button

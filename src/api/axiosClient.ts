@@ -2,10 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import config from "config";
 
 const axiosClient = axios.create({
-  baseURL: config.API_URL,
+  baseURL: "http://localhost:4000/api",
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosClient.interceptors.request.use(
@@ -27,7 +28,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     // Handle errors
-    throw error;
+    return error.response.data;
   }
 );
 
