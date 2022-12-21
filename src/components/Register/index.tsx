@@ -1,5 +1,5 @@
-import Input from "components/Common/Input";
-import React from "react";
+import Input from "components/Common/InputFormik";
+import React, { useState } from "react";
 import {
   AiOutlineGoogle,
   AiOutlineRight,
@@ -10,6 +10,16 @@ import { NavLink } from "react-router-dom";
 import MainLogo from "assets/images/logo/main-logo.png";
 
 const Register = () => {
+  const [registerBody, setRegisterBody] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterBody({ ...registerBody, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
       <div className="flex flex-row gap-2 items-center text-sm">
@@ -26,9 +36,26 @@ const Register = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-5">
-              <Input type="text" name="fullName" placeHolder="Name" />
-              <Input type="email" name="email" placeHolder="Email" />
-              <Input type="password" name="password" placeHolder="Password" />
+              {/* <Input
+                type="text"
+                name="fullName"
+                placeHolder="Name"
+                value={registerBody.fullName}
+                handleChange={handleChange}
+              /> */}
+              {/* <Input
+                type="text"
+                name="username"
+                placeHolder="Username"
+                value={registerBody.username}
+                handleChange={handleChange}
+              />
+              <Input
+                type="password"
+                placeHolder="Password"
+                value={registerBody.password}
+                handleChange={handleChange}
+              /> */}
             </div>
             <div className="flex flex-row items-center">
               <input
