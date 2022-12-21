@@ -21,6 +21,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useDispatch } from "react-redux";
 import authThunk from "features/auth/authThunk";
 import { AppDispatch } from "app/store";
+import NotFoundPage from "pages/NotFoundPage";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +67,7 @@ function App() {
             }
           />
           <Route path="/policy" element={<PolicyPage />} />
-          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
       <FooterSection />
