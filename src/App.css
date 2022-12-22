@@ -68,29 +68,45 @@ body {
 }
 
 .gradient-green-color {
-  background: #11998e;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #1bdf66, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #1bdf66, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+  background: #11998e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #1bdf66,
+    #11998e
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #1bdf66,
+    #11998e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .gradient-green-color-2 {
-  background: #1D976C;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #1D976C, #5cf594);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #1D976C, #5cf594); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #1d976c; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #1d976c,
+    #5cf594
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #1d976c,
+    #5cf594
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-ol {
+.policy ol {
   counter-reset: li; /* Initiate a counter */
   list-style: none;
 }
 
-li {
+.policy li {
   display: list-item;
   text-align: -webkit-match-parent;
   margin: 10px 0;
 }
 
-ol li::before {
+.policy ol li::before {
   content: counters(li, ".") ". "; /* Increment the counter */
   counter-increment: li;
 }

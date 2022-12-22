@@ -33,6 +33,10 @@ const updateUser = async (body: userSchema.UserUpdateInput) => {
   return await axiosClient.put("/auth", body);
 };
 
+const logout = async (): Promise<ApiResponse<User>> => {
+  return await axiosClient.post("/auth/logout");
+};
+
 // const deleteUser = async (params: userSchema.UserDeleteInput["params"]) => {
 //   return await axiosClient.delete(`/admin/user/${params.id}`);
 // };
@@ -47,6 +51,7 @@ export default {
   loginWithUsernameAndPassword,
   registerWithUsernameAndPassword,
   updateUser,
+  logout,
   // deleteUser,
   // restoreUser,
 };

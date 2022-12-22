@@ -37,7 +37,22 @@ const login = createAsyncThunk(
   }
 );
 
+const logout = createAsyncThunk("auth/logout", async (_: void, thunkApi) => {
+  try {
+    const response: ApiResponse<User> = await userApi.logout();
+
+    if (!response.success) {
+      return thunkApi.rejectWithValue(response.message);
+    }
+
+    return response.message;
+  } catch (error: any) {
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
 export default {
   login,
+  logout,
   getUser,
 };

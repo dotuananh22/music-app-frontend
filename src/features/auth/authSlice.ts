@@ -60,6 +60,20 @@ const authSlice = createSlice({
       state.user = null;
       state.loggedIn = false;
     });
+
+    // logout
+    builder.addCase(authThunk.logout.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(authThunk.logout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = null;
+      state.loggedIn = false;
+    });
+    builder.addCase(authThunk.logout.rejected, (state, action) => {
+      state.loading = false;
+      toast.error(action.payload as string);
+    });
   },
 });
 

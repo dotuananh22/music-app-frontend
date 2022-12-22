@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBarPage from "./pages/NavBarPage";
@@ -22,57 +23,80 @@ import { useDispatch } from "react-redux";
 import authThunk from "features/auth/authThunk";
 import { AppDispatch } from "app/store";
 import NotFoundPage from "pages/NotFoundPage";
+import songThunk from "features/song/songThunk";
+import { SkeletonTheme } from "react-loading-skeleton";
+import singerThunk from "features/singer/singerThunk";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(authThunk.getUser());
+    Promise.all([
+      dispatch(
+        songThunk.getAllSongs({
+          limit: 12,
+          skip: 0,
+          sort: "publishTime",
+          order: "desc",
+        })
+      ),
+      dispatch(
+        singerThunk.getAllSingers({
+          limit: 12,
+          skip: 0,
+          sort: "debutYear",
+          order: "desc",
+        })
+      ),
+    ]);
   }, []);
   return (
-    <Router>
-      <NavBarPage />
-      <div className="pl-[332px] pt-[102px] pr-[32px]">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signin" element={<Login />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/artists" element={<ArtistPage />} />
-          <Route path="/releases" element={<ReleasesPage />} />
-          <Route path="/library" element={<LibraryPage />} />
-          <Route
-            path="/playlists"
-            element={
-              <ProtectedRoute>
-                <PlaylistsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/singer" element={<SingerInformationPage />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/contacts" element={<ContactsPage />} />
-          <Route
-            path="/favourite"
-            element={
-              <ProtectedRoute>
-                <FavouritePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/policy" element={<PolicyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-      <FooterSection />
-      <ToastContainer />
-    </Router>
+    <SkeletonTheme baseColor="#222227" highlightColor="#16151A">
+      <Router>
+        <NavBarPage />
+        <div className="pl-[332px] pt-[102px] pr-[32px]">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/artists" element={<ArtistPage />} />
+            <Route path="/releases" element={<ReleasesPage />} />
+            <Route path="/library" element={<LibraryPage />} />
+            <Route
+              path="/playlists"
+              element={
+                <ProtectedRoute>
+                  <PlaylistsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/singer" element={<SingerInformationPage />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route
+              path="/favourite"
+              element={
+                <ProtectedRoute>
+                  <FavouritePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/policy" element={<PolicyPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+        <FooterSection />
+        <ToastContainer />
+      </Router>
+    </SkeletonTheme>
   );
 }
 

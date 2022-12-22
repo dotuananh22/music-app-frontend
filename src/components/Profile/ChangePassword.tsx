@@ -54,7 +54,7 @@ const ChangePassword = () => {
         </div>
       </div>
       <button
-        className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
+        className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold transition ease-linear delay-50 hover:text-[${colors.greenColor}] hover:bg-[#222227]`}
       >
         CHANGE
       </button>
