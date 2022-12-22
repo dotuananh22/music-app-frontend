@@ -15,6 +15,7 @@ const Releases = () => {
         <SubNavBar />
         <div className="flex flex-col gap-4 items-center">
           <div className="grid grid-cols-6 gap-8">
+            {/* <Music />
             <Music />
             <Music />
             <Music />
@@ -25,10 +26,9 @@ const Releases = () => {
             <Music />
             <Music />
             <Music />
-            <Music />
-            <Music />
+            <Music /> */}
           </div>
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
       <NewSingles />

@@ -1,4 +1,5 @@
 type User = {
+  _id: string;
   username: string;
   password: string;
   fullName: string;
@@ -7,7 +8,7 @@ type User = {
   role: "admin" | "user";
   email: string;
   phoneNumber: string;
-  following: string;
+  following: number;
 };
 
 export default User;

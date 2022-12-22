@@ -5,7 +5,7 @@ const Policy = () => {
   return (
     <div>
       <BreadCrumb baseAddress="Home" mainAddress="Privacy policy" path="/" />
-      <div>
+      <div className="policy">
         <div className="flex flex-col gap-6 mt-12 text-justify">
           <h2 className="text-4xl text-white">Privacy policy</h2>
           <p>

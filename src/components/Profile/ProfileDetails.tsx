@@ -107,6 +107,7 @@ const ProfileDetails = () => {
                   {/*@ts-ignore*/}
                   {({ field, form, meta }) => (
                     <input
+                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
                       id="imageUrl"
                       name="imageUrl"
                       onChange={field.onChange}
@@ -118,7 +119,7 @@ const ProfileDetails = () => {
               </div>
             </div>
             <button
-              className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold`}
+              className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold transition ease-linear delay-50 hover:text-[${colors.greenColor}] hover:bg-[#222227]`}
               type="submit"
             >
               SAVE
