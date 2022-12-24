@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import singerApi from "api/singerApi";
 import QueryInput from "types/QueryInput";
+import Singer from "types/singer/Singer";
 
 const getAllSingers = createAsyncThunk(
   "singer/getAllSingers",
-  async (query: QueryInput, thunkApi) => {
+  async (query: QueryInput<Singer>, thunkApi) => {
     try {
       const response = await singerApi.getAllSingers(query);
 

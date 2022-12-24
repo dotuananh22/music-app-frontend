@@ -3,14 +3,18 @@ import ApiResponse from "../../types/ApiResponse";
 import User from "../../types/user/User";
 import userApi from "../../api/userApi";
 import { userSchema } from "schema";
+import setAuthToken from "utils/setAuthToken";
 
 const getUser = createAsyncThunk("auth/getUser", async (_: void, thunkApi) => {
   try {
-    const response: ApiResponse<User> = await userApi.getUser();
+    const response: ApiResponse<User & { token: string }> =
+      await userApi.getUser();
 
     if (!response.success || !response.data) {
       return thunkApi.rejectWithValue(response.message);
     }
+
+    setAuthToken(response.data.token);
 
     return response.data;
   } catch (error: any) {

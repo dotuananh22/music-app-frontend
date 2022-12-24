@@ -7,7 +7,7 @@ import Song from "types/song/Song";
 
 const getAllSongs = createAsyncThunk(
   "song/getAllSongs",
-  async (query: QueryInput, thunkApi) => {
+  async (query: QueryInput<Song<string>>, thunkApi) => {
     try {
       const response: ApiResponse<Song<Singer>[]> = await songApi.getAllSongs(
         query

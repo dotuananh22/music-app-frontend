@@ -30,6 +30,22 @@ const authSlice = createSlice({
     // loginFailure: (state, action) => {
     //   state.loading = false;
     // },
+
+    getUserLoading: (state) => {
+      state.loading = true;
+    },
+
+    getUserSuccess: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+      state.loggedIn = true;
+    },
+
+    getUserFailure: (state) => {
+      state.loading = false;
+      state.user = null;
+      state.loggedIn = false;
+    },
   },
   extraReducers: (builder) => {
     // login
@@ -72,7 +88,8 @@ const authSlice = createSlice({
     });
     builder.addCase(authThunk.logout.rejected, (state, action) => {
       state.loading = false;
-      toast.error(action.payload as string);
+      state.user = null;
+      state.loggedIn = false;
     });
   },
 });

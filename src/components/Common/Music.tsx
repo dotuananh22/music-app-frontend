@@ -18,8 +18,6 @@ const Music = (props: MusicProps) => {
     return singers.map((singer: Singer) => singer.nickname).join(", ");
   };
 
-  console.log(props.song);
-
   return (
     <div className="flex flex-col gap-2">
       <div className="overflow-hidden rounded-lg relative group">

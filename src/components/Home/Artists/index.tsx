@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 
 const Artists = () => {
   const singer = useSelector((state: IRootState) => state.singer);
-  console.log(singer.singers);
 
   return (
     <div className="flex flex-col gap-8 mt-6">

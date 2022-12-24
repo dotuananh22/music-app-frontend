@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 
 const NewRelease = () => {
   const song = useSelector((state: IRootState) => state.song);
-  console.log(song.songs);
   return (
     <div className="flex flex-col gap-8 mt-6">
       <div className="flex flex-row justify-between items-center">
