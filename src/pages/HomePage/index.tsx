@@ -8,24 +8,22 @@ import { AppDispatch } from "app/store";
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    Promise.all([
-      dispatch(
-        songThunk.getAllSongs({
-          limit: 12,
-          skip: 0,
-          sort: "publishTime",
-          order: "desc",
-        })
-      ),
-      dispatch(
-        singerThunk.getAllSingers({
-          limit: 12,
-          skip: 0,
-          sort: "debutYear",
-          order: "desc",
-        })
-      ),
-    ]);
+    dispatch(
+      songThunk.getAllSongs({
+        limit: 12,
+        skip: 0,
+        sort: ["publishTime"],
+        order: [-1],
+      })
+    );
+    dispatch(
+      singerThunk.getAllSingers({
+        limit: 12,
+        skip: 0,
+        sort: ["debutYear"],
+        order: [-1],
+      })
+    );
   }, []);
 
   return <Home />;

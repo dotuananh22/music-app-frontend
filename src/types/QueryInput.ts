@@ -1,8 +1,8 @@
-type QueryInput = {
+type QueryInput<T> = {
   limit: number;
-  sort: string;
-  skip: number;
-  order?: string;
+  sort: (keyof T)[] | [];
+  skip: number | 0;
+  order: number[] | [];
 };
 
 export default QueryInput;

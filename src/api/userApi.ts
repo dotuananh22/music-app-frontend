@@ -5,13 +5,14 @@ import { userSchema } from "schema";
 import ApiResponse from "types/ApiResponse";
 import User from "types/user/User";
 
-const getAll = async (query: QueryInput) => {
+const getAll = async (query: QueryInput<User>) => {
   return await axiosClient.get(
     `/admin/user?limit=${query.limit}&skip=${query.skip}&sort=${query.sort}`
   );
 };
 
-const getUser = async (): Promise<ApiResponse<User>> => {
+const getUser = async (): Promise<ApiResponse<User & { token: string }>> => {
+  console.log("Get user api");
   return await axiosClient.get("/auth", {
     withCredentials: true,
   });

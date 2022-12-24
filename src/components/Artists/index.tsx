@@ -26,8 +26,8 @@ const Artists = () => {
       singerThunk.getAllSingers({
         limit: pagination.limit,
         skip: pagination.skip,
-        sort: "publishTime",
-        order: "desc",
+        sort: ["debutYear"],
+        order: [-1],
       })
     );
   }, [pagination.limit, pagination.skip, dispatch]);

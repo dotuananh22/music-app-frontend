@@ -83,12 +83,16 @@ const TopNavBar = () => {
               showDropdown ? "block" : "hidden"
             } w-44 rounded-lg shadow overflow-hidden bg-[#222227]`}
           >
-            <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-              <NavLink to={"/profile"}>Profile</NavLink>
-            </li>
-            <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-              <NavLink to={"/library"}>My library</NavLink>
-            </li>
+            <NavLink to={"/profile"}>
+              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                Profile
+              </li>
+            </NavLink>
+            <NavLink to={"/library"}>
+              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                My library
+              </li>
+            </NavLink>
             <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
               My favourite
             </li>

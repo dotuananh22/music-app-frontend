@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -30,26 +30,8 @@ import singerThunk from "features/singer/singerThunk";
 function App() {
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(authThunk.getUser());
-    Promise.all([
-      dispatch(
-        songThunk.getAllSongs({
-          limit: 12,
-          skip: 0,
-          sort: "publishTime",
-          order: "desc",
-        })
-      ),
-      dispatch(
-        singerThunk.getAllSingers({
-          limit: 12,
-          skip: 0,
-          sort: "debutYear",
-          order: "desc",
-        })
-      ),
-    ]);
   }, []);
   return (
     <SkeletonTheme baseColor="#222227" highlightColor="#16151A">
