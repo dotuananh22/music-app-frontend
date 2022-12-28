@@ -10,6 +10,7 @@ import {
 // @ts-ignore
 import TestImage from "assets/images/anh-son-tung.jfif";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import noImage from "assets/images/no-image.jpg";
 
 const BottomMusicBar = () => {
   const [playClicked, setPlayClicked] = useState(false);
@@ -73,7 +74,14 @@ const BottomMusicBar = () => {
     <nav className="fixed bottom-0 w-full z-30 h-[100px] px-[30px] border border-[#222227] bg-[#16151A] flex flex-row justify-between items-center">
       <div className="basis-1/3">
         <div className="flex flex-row gap-4 items-center">
-          <img src={TestImage} alt="test" className="w-[58px]" />
+          <img
+            src={TestImage || noImage}
+            alt="test"
+            className="w-[58px]"
+            onError={(e) => {
+              e.currentTarget.src = noImage;
+            }}
+          />
           <div>
             <h3 className="text-white font-semibold">Chúng ta của hiện tại</h3>
             <span className="text-xs">Sơn Tùng MTP</span>

@@ -4,6 +4,7 @@ import ProfileImage from "assets/images/anh-son-tung.jfif";
 import Banner from "assets/images/banner/banner1.jpg";
 import { BsFillCheckCircleFill, BsFillPlayFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
+import noImage from "assets/images/no-image.jpg";
 
 const Information = () => {
   return (
@@ -12,9 +13,12 @@ const Information = () => {
         <div className="basis-1/4 flex flex-col gap-2 items-center text-white">
           <div className="flex flex-col gap-3 items-center">
             <img
-              src={ProfileImage}
+              src={ProfileImage || noImage}
               alt="profile"
               className="w-32 h-32 rounded-full"
+              onError={(e) => {
+                e.currentTarget.src = noImage;
+              }}
             />
             <h2 className="text-base uppercase font-semibold flex flex-row items-center gap-1.5">
               Sơn Tùng M-TP{" "}
@@ -31,7 +35,14 @@ const Information = () => {
           </div>
         </div>
         <div className="basis-3/4">
-          <img src={Banner} alt="Banner" className="w-full" />
+          <img
+            src={Banner || noImage}
+            alt="Banner"
+            className="w-full"
+            onError={(e) => {
+              e.currentTarget.src = noImage;
+            }}
+          />
         </div>
       </div>
       <div className="flex flex-row gap-10 items-center">

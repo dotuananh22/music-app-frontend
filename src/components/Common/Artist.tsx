@@ -1,5 +1,5 @@
 import React from "react";
-import DemoImage from "assets/images/demo-image.jpg";
+import noImage from "assets/images/no-image.jpg";
 import Singer from "types/singer/Singer";
 
 interface ArtistProps {
@@ -15,10 +15,10 @@ const Artist = (props: ArtistProps) => {
       group-hover:before:bg-gradient-to-t before:from-[#25A56A]/30 before:to-black/5 before:transition-all before:duration-500 before:ease-in-out overflow-hidden rounded-lg"
       >
         <img
-          src={props.singer.imageUrl || DemoImage}
+          src={props.singer.imageUrl || noImage}
           alt="demo"
           onError={(e) => {
-            e.currentTarget.src = DemoImage;
+            e.currentTarget.src = noImage;
           }}
         />
       </div>

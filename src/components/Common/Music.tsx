@@ -1,5 +1,5 @@
 import React from "react";
-import DemoImage from "assets/images/demo-image.jpg";
+import noImage from "assets/images/no-image.jpg";
 import { IoPlayOutline } from "react-icons/io5";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
@@ -15,11 +15,11 @@ const Music = (props: MusicProps) => {
     <div className="flex flex-col gap-2">
       <div className="overflow-hidden rounded-lg relative group">
         <img
-          src={props.song.imageUrl || DemoImage}
+          src={props.song.imageUrl || noImage}
           alt="demo"
           className="group-hover:scale-110 transition-all duration-300 ease-linear"
           onError={(e) => {
-            e.currentTarget.src = DemoImage;
+            e.currentTarget.src = noImage;
           }}
         />
         <div className="absolute group-hover:opacity-100 grid w-full h-full bg-black/30 opacity-0 top-0 left-0 place-items-center text-3xl hover:scale-110 transition-all duration-300 ease-linear">
