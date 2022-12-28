@@ -1,12 +1,11 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
-import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
 
 interface SubNavBarProps {
-  handleSort: (sort: keyof Song<string>) => void;
-  sort: (keyof Song<string>)[];
+  handleSort: (sort: keyof Singer) => void;
+  sort: (keyof Singer)[];
 }
 
 const SubNavBar = (props: SubNavBarProps) => {
@@ -41,33 +40,33 @@ const SubNavBar = (props: SubNavBarProps) => {
       <div className="flex flex-row gap-2 items-center bg-[#222227] rounded-xl px-1">
         <button
           className={`px-4 rounded-xl ${
-            props.sort[0] === "likes"
+            props.sort[0] === "follower"
               ? "bg-[#25A56A] text-white"
               : "hover:text-white"
           } text-center h-[32px]`}
-          onClick={() => props.handleSort("likes")}
+          onClick={() => props.handleSort("follower")}
         >
-          Like
+          Follower
         </button>
         <button
           className={`px-4 rounded-xl ${
-            props.sort[0] === "listens"
+            props.sort[0] === "debutYear"
               ? "bg-[#25A56A] text-white"
               : "hover:text-white"
           } text-center h-[32px]`}
-          onClick={() => props.handleSort("listens")}
+          onClick={() => props.handleSort("debutYear")}
         >
-          Popular
+          Debut Year
         </button>
         <button
           className={`px-4 rounded-xl ${
-            props.sort[0] === "publishTime"
+            props.sort[0] === "birthday"
               ? "bg-[#25A56A] text-white"
               : "hover:text-white"
           } text-center h-[32px]`}
-          onClick={() => props.handleSort("publishTime")}
+          onClick={() => props.handleSort("birthday")}
         >
-          Newest
+          Birthday
         </button>
       </div>
     </div>
