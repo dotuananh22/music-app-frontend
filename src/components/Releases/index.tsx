@@ -12,6 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import Song from "types/song/Song";
 import QueryInput from "types/QueryInput";
 import KeyOfArray from "types/KeyOfArray";
+import SongType from "types/song/SongType";
 
 const Releases = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +27,12 @@ const Releases = () => {
   });
 
   useEffect(() => {
-    dispatch(songThunk.getAllSongs(pagination));
+    dispatch(
+      songThunk.getAllSongs({
+        query: pagination,
+        type: SongType.ALL,
+      })
+    );
   }, [pagination.skip, pagination.sort, pagination.order]);
 
   const handlePagination = (page: number) => {
@@ -52,14 +58,14 @@ const Releases = () => {
         <SubNavBar handleSort={handleSort} sort={pagination.sort} />
         <div className="flex flex-col gap-4 items-center">
           <div className="grid grid-cols-6 gap-8">
-            {song.loading ? (
+            {song.loading.getAllSongs ? (
               <>
                 <Skeleton height={"200px"} />
                 <Skeleton height={"200px"} />
                 <Skeleton height={"200px"} />
               </>
             ) : (
-              song.songs.map((song) => (
+              song.songs.allSongs.map((song) => (
                 <Music key={song._id} id={song._id} song={song} />
               ))
             )}

@@ -20,14 +20,14 @@ const NewRelease = () => {
         </NavLink>
       </div>
       <div className="grid grid-cols-6 gap-8">
-        {song.loading ? (
+        {song.loading.getAllNewSingleSongs ? (
           <>
             <Skeleton height={"200px"} />
             <Skeleton height={"200px"} />
             <Skeleton height={"200px"} />
           </>
         ) : (
-          song.songs.map((song, index) => (
+          song.songs.newSingleSongs.map((song, index) => (
             <Music id={song._id} song={song} key={index} />
           ))
         )}
