@@ -2,6 +2,7 @@ import React from "react";
 // @ts-ignore
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
+import noImage from "assets/images/no-image.jpg";
 
 interface SubFavouriteSongsProps {
   rank: number;
@@ -18,7 +19,14 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
     <div className="flex flex-row justify-between items-center">
       <div className={`flex flex-row gap-4 items-center basis-2/4`}>
         <span>{props.rank}</span>
-        <img src={props.image} alt="music" className="h-10 w-10" />
+        <img
+          src={props.image || noImage}
+          alt="music"
+          className="h-10 w-10"
+          onError={(e) => {
+            e.currentTarget.src = noImage;
+          }}
+        />
         <div>
           <p className={`text-white font-semibold truncate w-[300px]`}>
             {props.songName}

@@ -93,12 +93,16 @@ const TopNavBar = () => {
                 My library
               </li>
             </NavLink>
-            <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-              My favourite
-            </li>
-            <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-              Playlist
-            </li>
+            <NavLink to={"/favourite"}>
+              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                My favourite
+              </li>
+            </NavLink>
+            <NavLink to={"/playlists"}>
+              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                Playlist
+              </li>
+            </NavLink>
             <li
               className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
               onClick={() => handleLogout()}

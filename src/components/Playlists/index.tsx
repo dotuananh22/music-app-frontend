@@ -6,6 +6,7 @@ import PlaylistSongs from "./PlaylistSongs";
 // @ts-ignore
 import ProfileImage from "assets/images/anh-son-tung.jfif";
 import { FiMoreHorizontal } from "react-icons/fi";
+import noImage from "assets/images/no-image.jpg";
 
 const Playlists = () => {
   return (
@@ -13,9 +14,12 @@ const Playlists = () => {
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
         <div className="gradient-green-color-2 opacity-80 w-[220px] h-[220px] shadow-xl grid place-items-center">
           <img
-            src={ProfileImage}
+            src={ProfileImage || noImage}
             alt="image"
             className="w-full h-full object-contain"
+            onError={(e) => {
+              e.currentTarget.src = noImage;
+            }}
           />
         </div>
         <div className="flex flex-col gap-8 text-white">

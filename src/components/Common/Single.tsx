@@ -1,5 +1,6 @@
 import React from "react";
 import { IoPlayOutline } from "react-icons/io5";
+import noImage from "assets/images/no-image.jpg";
 
 interface SingleProps {
   image: string;
@@ -14,7 +15,10 @@ const Single = (props: SingleProps) => {
       <div className="flex flex-row gap-4 items-center">
         <div className="overflow-hidden rounded-lg relative w-[48px] h-[48px] group">
           <img
-            src={props.image}
+            src={props.image || noImage}
+            onError={(e) => {
+              e.currentTarget.src = noImage;
+            }}
             alt="demo"
             className="group-hover:scale-110 transition-all duration-300 ease-linear"
           />
