@@ -22,12 +22,7 @@ root.render(
 
 const { dispatch } = store;
 
-const notCheckUrl = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/logout",
-  "/token/refresh-auth",
-];
+const checkUrl = ["/auth"];
 
 axiosClient.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
@@ -50,7 +45,7 @@ axiosClient.interceptors.response.use(
     console.log(originalRequest.url);
     if (
       error.response.status === 401 &&
-      !notCheckUrl.includes(originalRequest.url) &&
+      checkUrl.includes(originalRequest.url) &&
       !originalRequest._retry
     ) {
       // handle the case where the user is not authenticated

@@ -3,6 +3,7 @@ import DemoImage from "assets/images/demo-image.jpg";
 import { IoPlayOutline } from "react-icons/io5";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
+import joinSingers from "utils/joinSingers";
 
 interface MusicProps {
   id: string;
@@ -10,14 +11,6 @@ interface MusicProps {
 }
 
 const Music = (props: MusicProps) => {
-  const joinSingers = (singers: (Singer | string)[]) => {
-    if (typeof singers[0] === "string") {
-      return singers.join(", ");
-    }
-    // @ts-ignore
-    return singers.map((singer: Singer) => singer.nickname).join(", ");
-  };
-
   return (
     <div className="flex flex-col gap-2">
       <div className="overflow-hidden rounded-lg relative group">
