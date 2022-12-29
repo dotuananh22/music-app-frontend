@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "app/store";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import FavoriteType from "types/favorite/FavoriteType";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 interface SubFavouriteSongsProps {
   id: string;
@@ -33,7 +34,7 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
 
   return (
     <div className="flex flex-row justify-between items-center">
-      <div className={`flex flex-row gap-4 items-center basis-2/4`}>
+      <div className={`flex flex-row gap-4 items-center basis-1/2`}>
         <span>{props.rank}</span>
         <img
           src={props.image || noImage}
@@ -55,7 +56,7 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
       <div className="basis-1/4 text-center">
         <p>{props.dateAdded}</p>
       </div>
-      <div className="flex flex-row items-center gap-8 basis-1/4 justify-end">
+      <div className="flex flex-row items-center gap-8 basis-1/6 justify-end">
         {props.favorite ? (
           <AiFillHeart
             className={`text-[${colors.greenColor}] text-xl`}
@@ -67,6 +68,9 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
           />
         )}
         <span>{props.songTime}</span>
+      </div>
+      <div className="flex basis-1/12 justify-end">
+        <FiMoreHorizontal className="text-xl" />
       </div>
     </div>
   );

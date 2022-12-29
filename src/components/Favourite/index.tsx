@@ -28,7 +28,7 @@ const Favourite = () => {
           <h3 className="text-6xl font-bold">Favourite Songs</h3>
           <div className="flex flex-row gap-2 items-end text-sm">
             <span className="font-semibold">
-              {favorite.favorites.favoriteSongs?.songs.length} songs
+              {favorite.favorites.favoriteSongs?.songs.length || 0} songs
             </span>
             <span className="text-[6px]">&#9898;</span>
             <span className="">
@@ -40,12 +40,20 @@ const Favourite = () => {
           </div>
         </div>
       </div>
-      <button
-        className={`mt-8 ml-8 w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
-      >
-        <BsFillPlayFill className="text-black text-3xl" />
-      </button>
-      <FavouriteSongs />
+      {favorite.favorites.favoriteSongs?.songs ? (
+        <>
+          <button
+            className={`mt-8 ml-8 w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+          >
+            <BsFillPlayFill className="text-black text-3xl" />
+          </button>
+          <FavouriteSongs />
+        </>
+      ) : (
+        <div className="pt-8 text-xl font-semibold">
+          There are no songs in your favorite playlist.
+        </div>
+      )}
     </div>
   );
 };

@@ -12,7 +12,7 @@ interface PlaylistProps {
 const PlayList = (props: PlaylistProps) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden">
+    <div className="flex flex-col gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden h-[250px]">
       <div className="w-full relative">
         <img
           src={props.image || noImage}
