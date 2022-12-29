@@ -16,9 +16,23 @@ const getAllFavoriteSongs = async (): Promise<
   return await axiosClient.get("/favorite/song");
 };
 
+const addFavoriteSong = async (
+  songId: string
+): Promise<ApiResponse<Song<Singer>>> => {
+  return await axiosClient.put("/favorite/song", { songId });
+};
+
+const removeFavoriteSong = async (
+  songId: string
+): Promise<ApiResponse<Song<Singer>>> => {
+  return await axiosClient.delete("/favorite/song", { data: { songId } });
+};
+
 const favoriteApi = {
   getAllFavoriteSongIds,
   getAllFavoriteSongs,
+  addFavoriteSong,
+  removeFavoriteSong,
 };
 
 export default favoriteApi;

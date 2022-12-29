@@ -30,17 +30,13 @@ const FavouriteSongs = () => {
         {favorite.favorites.favoriteSongs?.songs.map((song, index) => (
           <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
             <SubFavouriteSongs
+              id={song._id}
               rank={index + 1}
-              image={get(song, "imageUrl", ProfileImage)}
-              songName={get(song, "name", "")}
-              singerName={joinSingers(get(song, "singers", []))}
-              dateAdded={moment(get(song, "createdAt", "")).format(
-                "DD/MM/YYYY"
-              )}
-              songTime={moment
-                .unix(get(song, "songTime", 0))
-                .utc()
-                .format("mm:ss")}
+              image={song.imageUrl}
+              songName={song.name}
+              singerName={joinSingers(song.singers)}
+              dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}
+              songTime={moment.unix(song.songTime).utc().format("mm:ss")}
               favorite={true}
             />
           </li>

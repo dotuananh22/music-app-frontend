@@ -3,8 +3,13 @@ import React from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
 import noImage from "assets/images/no-image.jpg";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "app/store";
+import favoriteThunk from "features/favorite/favoriteThunk";
+import FavoriteType from "types/favorite/FavoriteType";
 
 interface SubFavouriteSongsProps {
+  id: string;
   rank: number;
   image: string;
   songName: string;
@@ -15,6 +20,17 @@ interface SubFavouriteSongsProps {
 }
 
 const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const removeFromFavorite = (id: string) => {
+    dispatch(
+      favoriteThunk.removeFavoriteSong({
+        type: FavoriteType.RemoveFavoriteSongs,
+        songId: id,
+      })
+    );
+  };
+
   return (
     <div className="flex flex-row justify-between items-center">
       <div className={`flex flex-row gap-4 items-center basis-2/4`}>
@@ -41,7 +57,10 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
       </div>
       <div className="flex flex-row items-center gap-8 basis-1/4 justify-end">
         {props.favorite ? (
-          <AiFillHeart className={`text-[${colors.greenColor}] text-xl`} />
+          <AiFillHeart
+            className={`text-[${colors.greenColor}] text-xl`}
+            onClick={() => removeFromFavorite(props.id)}
+          />
         ) : (
           <AiOutlineHeart
             className={`hover:text-[${colors.greenColor}] text-xl`}

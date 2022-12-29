@@ -1,24 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import Favorite from "types/favorite/Favorite";
+import FavoriteType from "types/favorite/FavoriteType";
 import Singer from "types/singer/Singer";
 import Song from "types/song/Song";
 import favoriteThunk from "./favoriteThunk";
+import { remove } from "lodash";
 
 type FavoriteState = {
   loading: {
     getFavoriteSongs: boolean;
+    getFavoriteSongIds: boolean;
   };
   favorites: {
-    favoriteSongs: Favorite<Song<Singer> | string> | null;
+    favoriteSongs: Favorite<Song<Singer>> | null;
+    favoriteSongIds: Favorite<string> | null;
   };
 };
 
 const initialState: FavoriteState = {
   loading: {
     getFavoriteSongs: false,
+    getFavoriteSongIds: false,
   },
   favorites: {
     favoriteSongs: null,
+    favoriteSongIds: null,
   },
 };
 
@@ -28,17 +35,17 @@ const favoriteSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(favoriteThunk.getAllFavoriteSongIds.pending, (state) => {
-      state.loading.getFavoriteSongs = true;
+      state.loading.getFavoriteSongIds = true;
     });
     builder.addCase(
       favoriteThunk.getAllFavoriteSongIds.fulfilled,
       (state, action) => {
-        state.loading.getFavoriteSongs = false;
-        state.favorites.favoriteSongs = action.payload;
+        state.loading.getFavoriteSongIds = false;
+        state.favorites.favoriteSongIds = action.payload;
       }
     );
     builder.addCase(favoriteThunk.getAllFavoriteSongIds.rejected, (state) => {
-      state.loading.getFavoriteSongs = false;
+      state.loading.getFavoriteSongIds = false;
     });
 
     builder.addCase(favoriteThunk.getAllFavoriteSongs.pending, (state) => {
@@ -53,6 +60,66 @@ const favoriteSlice = createSlice({
     );
     builder.addCase(favoriteThunk.getAllFavoriteSongs.rejected, (state) => {
       state.loading.getFavoriteSongs = false;
+    });
+
+    builder.addCase(
+      favoriteThunk.addFavoriteSong.fulfilled,
+      (state, action) => {
+        switch (action.meta.arg.type) {
+          case FavoriteType.AddToFavoriteIds:
+            if (!state.favorites.favoriteSongIds) return;
+            state.favorites.favoriteSongIds.songs.push(action.payload._id);
+            state.favorites.favoriteSongIds.totalTime +=
+              action.payload.songTime;
+            break;
+          case FavoriteType.AddToFavoriteSongs:
+            if (!state.favorites.favoriteSongs) return;
+            state.favorites.favoriteSongs.songs.push(action.payload);
+            state.favorites.favoriteSongs.totalTime += action.payload.songTime;
+            break;
+          default:
+            break;
+        }
+      }
+    );
+    builder.addCase(favoriteThunk.addFavoriteSong.rejected, (state) => {
+      toast.error("Add favorite song failed");
+    });
+
+    builder.addCase(
+      favoriteThunk.removeFavoriteSong.fulfilled,
+      (state, action) => {
+        switch (action.meta.arg.type) {
+          case FavoriteType.RemoveFavoriteIds:
+            if (!state.favorites.favoriteSongIds) return;
+
+            remove(state.favorites.favoriteSongIds.songs || [], (songId) => {
+              return songId === action.payload._id;
+            });
+            state.favorites.favoriteSongIds.totalTime -=
+              action.payload.songTime;
+
+            break;
+          case FavoriteType.RemoveFavoriteSongs:
+            if (!state.favorites.favoriteSongs) return;
+
+            remove(
+              state.favorites.favoriteSongs.songs || [],
+              (song: Song<Singer>) => {
+                return song._id === action.payload._id;
+              }
+            );
+
+            state.favorites.favoriteSongs.totalTime -= action.payload.songTime;
+
+            break;
+          default:
+            break;
+        }
+      }
+    );
+    builder.addCase(favoriteThunk.removeFavoriteSong.rejected, (state) => {
+      toast.error("Remove favorite song failed");
     });
   },
 });

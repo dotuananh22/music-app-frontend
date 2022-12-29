@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import favoriteApi from "api/favoriteApi";
+import FavoriteType from "types/favorite/FavoriteType";
 
 const getAllFavoriteSongIds = createAsyncThunk(
   "favorite/getAllFavoriteSongIds",
@@ -35,7 +36,61 @@ const getAllFavoriteSongs = createAsyncThunk(
   }
 );
 
+const addFavoriteSong = createAsyncThunk(
+  "favorite/addFavoriteSong",
+  async (
+    {
+      songId,
+      type,
+    }: {
+      songId: string;
+      type: FavoriteType;
+    },
+    thunkApi
+  ) => {
+    try {
+      const response = await favoriteApi.addFavoriteSong(songId);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+const removeFavoriteSong = createAsyncThunk(
+  "favorite/removeFavoriteSong",
+  async (
+    {
+      songId,
+      type,
+    }: {
+      songId: string;
+      type: FavoriteType;
+    },
+    thunkApi
+  ) => {
+    try {
+      const response = await favoriteApi.removeFavoriteSong(songId);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export default {
   getAllFavoriteSongIds,
   getAllFavoriteSongs,
+  addFavoriteSong,
+  removeFavoriteSong,
 };

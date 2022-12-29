@@ -30,6 +30,7 @@ const PlaylistSongs = (props: playlistSongsProp) => {
           props.songs.map((song, index) => (
             <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
               <SubPlaylistSongs
+                id={song._id}
                 rank={index + 1}
                 image={ProfileImage}
                 songName={song.name}
@@ -37,7 +38,7 @@ const PlaylistSongs = (props: playlistSongsProp) => {
                 dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}
                 songTime={moment.unix(song.songTime).utc().format("mm:ss")}
                 favorite={
-                  favorite.favorites.favoriteSongs?.songs.includes(
+                  favorite.favorites.favoriteSongIds?.songs.includes(
                     song._id
                   ) as boolean
                 }
