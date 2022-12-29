@@ -46,8 +46,20 @@ const songSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(songThunk.getAllSongs.pending, (state) => {
-      state.loading.getAllSongs = true;
+    builder.addCase(songThunk.getAllSongs.pending, (state, action) => {
+      switch (action.meta.arg.type) {
+        case SongType.ALL:
+          state.loading.getAllSongs = true;
+          break;
+        case SongType.TOP_SINGLE:
+          state.loading.getAllTopSingleSongs = true;
+          break;
+        case SongType.NEW_SINGLE:
+          state.loading.getAllNewSingleSongs = true;
+          break;
+        default:
+          break;
+      }
     });
     builder.addCase(songThunk.getAllSongs.fulfilled, (state, action) => {
       switch (action.payload.type) {
@@ -71,7 +83,19 @@ const songSlice = createSlice({
       }
     });
     builder.addCase(songThunk.getAllSongs.rejected, (state, action) => {
-      state.loading.getAllSongs = false;
+      switch (action.meta.arg.type) {
+        case SongType.ALL:
+          state.loading.getAllSongs = false;
+          break;
+        case SongType.TOP_SINGLE:
+          state.loading.getAllTopSingleSongs = true;
+          break;
+        case SongType.NEW_SINGLE:
+          state.loading.getAllNewSingleSongs = true;
+          break;
+        default:
+          break;
+      }
       toast.error(action.payload as string);
     });
   },

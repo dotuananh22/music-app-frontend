@@ -2,11 +2,15 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "features/auth/authSlice";
 import songReducer from "features/song/songSlice";
 import singerReducer from "features/singer/singerSlice";
+import playlistReducer from "features/playlist/playlistSlice";
+import favoriteReducer from "features/favorite/favoriteSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   song: songReducer,
   singer: singerReducer,
+  playlist: playlistReducer,
+  favorite: favoriteReducer,
 });
 
 const store = configureStore({

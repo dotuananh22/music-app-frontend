@@ -1,13 +1,24 @@
 import BreadCrumb from "components/Common/BreadCrumb";
-import React from "react";
+import React, { useEffect } from "react";
 
 // @ts-ignore
 import LibraryImage from "assets/images/anh-son-tung.jfif";
 import { BsFillPlayFill } from "react-icons/bs";
 import PlayList from "./PlayList";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import playlistThunk from "features/playlist/playlistThunk";
+import { AppDispatch, IRootState } from "app/store";
+import Skeleton from "react-loading-skeleton";
 
 const Library = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const playlist = useSelector((state: IRootState) => state.playlist);
+
+  useEffect(() => {
+    dispatch(playlistThunk.getAllPlaylists());
+  }, []);
+
   return (
     <div className="flex flex-col gap-6">
       <BreadCrumb baseAddress="Home" mainAddress="Library" path="/" />
@@ -27,14 +38,22 @@ const Library = () => {
               </button>
             </NavLink>
           </div>
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
-          <PlayList image={LibraryImage} name="M-TP" createdBy="Tuấn Anh Sky" />
+          {playlist.loading.getAllPlaylists ? (
+            <>
+              <Skeleton height={"250px"} />
+              <Skeleton height={"250px"} />
+              <Skeleton height={"250px"} />
+            </>
+          ) : (
+            playlist.playlists.allPlaylists.map((playlist) => (
+              <PlayList
+                key={playlist._id}
+                id={playlist._id}
+                image={playlist.imageUrl}
+                name={playlist.name}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

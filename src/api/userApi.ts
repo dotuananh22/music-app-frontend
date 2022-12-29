@@ -12,7 +12,6 @@ const getAll = async (query: QueryInput<User>) => {
 };
 
 const getUser = async (): Promise<ApiResponse<User & { token: string }>> => {
-  console.log("Get user api");
   return await axiosClient.get("/auth", {
     withCredentials: true,
   });

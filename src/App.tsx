@@ -44,9 +44,16 @@ function App() {
             <Route path="/signup" element={<Register />} />
             <Route path="/artists" element={<ArtistPage />} />
             <Route path="/releases" element={<ReleasesPage />} />
-            <Route path="/library" element={<LibraryPage />} />
             <Route
-              path="/playlists"
+              path="/library"
+              element={
+                <ProtectedRoute>
+                  <LibraryPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/playlist/:id"
               element={
                 <ProtectedRoute>
                   <PlaylistsPage />
