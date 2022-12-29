@@ -1,9 +1,8 @@
 import BreadCrumb from "components/Common/BreadCrumb";
 import React, { useEffect } from "react";
 
-// @ts-ignore
-import LibraryImage from "assets/images/anh-son-tung.jfif";
 import { BsFillPlayFill } from "react-icons/bs";
+import { IoMdAdd } from "react-icons/io";
 import PlayList from "./PlayList";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +24,7 @@ const Library = () => {
       <div className="flex flex-col gap-8 mt-6">
         <h2 className="text-4xl text-white">My Library</h2>
         <div className="grid grid-cols-5 gap-6">
-          <div className="gradient-color col-span-2 rounded-lg relative group">
+          <div className="gradient-color col-span-2 rounded-lg relative group h-[250px]">
             <div className="absolute text-white bottom-4 left-4">
               <h2 className="text-3xl font-semibold mb-3">Favorite Songs</h2>
               <span className="font-semibold">100 songs</span>
@@ -54,6 +53,12 @@ const Library = () => {
               />
             ))
           )}
+          <div
+            title="Create new playlist"
+            className="flex flex-col items-center justify-center gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden h-[250px]"
+          >
+            <IoMdAdd className="text-8xl" />
+          </div>
         </div>
       </div>
     </div>

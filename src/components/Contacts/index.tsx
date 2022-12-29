@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import BreadCrumb from "components/Common/BreadCrumb";
 import Input from "components/Common/InputFormik";
 import colors from "constants/color";

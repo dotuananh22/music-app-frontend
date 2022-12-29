@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PlaylistSongs from "./PlaylistSongs";
-// @ts-ignore
-import ProfileImage from "assets/images/anh-son-tung.jfif";
 import { FiMoreHorizontal } from "react-icons/fi";
 import noImage from "assets/images/no-image.jpg";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,6 +1,6 @@
+/* eslint-disable import/no-anonymous-default-export */
 import ApiResponse from "types/ApiResponse";
 import QueryInput from "types/QueryInput";
-import Singer from "types/singer/Singer";
 import GetAllSongResponse from "types/song/GetAllSongResponse";
 import Song from "types/song/Song";
 import axiosClient from "./axiosClient";

@@ -11,7 +11,6 @@ import { AppDispatch, IRootState } from "app/store";
 import Skeleton from "react-loading-skeleton";
 import Song from "types/song/Song";
 import QueryInput from "types/QueryInput";
-import KeyOfArray from "types/KeyOfArray";
 import SongType from "types/song/SongType";
 
 const Releases = () => {

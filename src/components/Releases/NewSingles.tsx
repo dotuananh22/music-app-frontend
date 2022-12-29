@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { IoMusicalNoteOutline } from "react-icons/io5";
 import Single from "components/Common/Single";
-import DemoImage from "assets/images/demo-image.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import songThunk from "features/song/songThunk";
 import { AppDispatch, IRootState } from "app/store";
