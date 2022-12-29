@@ -3,8 +3,19 @@ import React from "react";
 import ProfileImage from "assets/images/anh-son-tung.jfif";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import SubPlaylistSongs from "./SubPlaylistSongs";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
+import joinSingers from "utils/joinSingers";
+import moment from "moment";
+import { useSelector } from "react-redux";
+import { IRootState } from "app/store";
 
-const PlaylistSongs = () => {
+interface playlistSongsProp {
+  songs: Song<Singer>[] | undefined;
+}
+
+const PlaylistSongs = (props: playlistSongsProp) => {
+  const favorite = useSelector((state: IRootState) => state.favorite);
   return (
     <div className="flex flex-col gap-4 py-2 pt-4">
       <div className="flex flex-row justify-between items-center border-b border-[#222227] p-4">
@@ -15,61 +26,25 @@ const PlaylistSongs = () => {
         </div>
       </div>
       <ul className={`flex flex-col`}>
-        <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPlaylistSongs
-            rank={1}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            singerName="Sơn Tùng MTP"
-            dateAdded="25/11/2022"
-            songTime="5:01"
-            favorite={true}
-          />
-        </li>
-        <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPlaylistSongs
-            rank={2}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            singerName="Sơn Tùng MTP"
-            dateAdded="25/11/2022"
-            songTime="5:01"
-            favorite={false}
-          />
-        </li>
-        <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPlaylistSongs
-            rank={3}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            singerName="Sơn Tùng MTP"
-            dateAdded="25/11/2022"
-            songTime="5:01"
-            favorite={true}
-          />
-        </li>
-        <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPlaylistSongs
-            rank={4}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            singerName="Sơn Tùng MTP"
-            dateAdded="25/11/2022"
-            songTime="5:01"
-            favorite={false}
-          />
-        </li>
-        <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPlaylistSongs
-            rank={5}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            singerName="Sơn Tùng MTP"
-            dateAdded="25/11/2022"
-            songTime="5:01"
-            favorite={false}
-          />
-        </li>
+        {props.songs &&
+          props.songs.map((song, index) => (
+            <li className="py-2 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
+              <SubPlaylistSongs
+                id={song._id}
+                rank={index + 1}
+                image={ProfileImage}
+                songName={song.name}
+                singerName={joinSingers(song.singers)}
+                dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}
+                songTime={moment.unix(song.songTime).utc().format("mm:ss")}
+                favorite={
+                  favorite.favorites.favoriteSongIds?.songs.includes(
+                    song._id
+                  ) as boolean
+                }
+              />
+            </li>
+          ))}
       </ul>
     </div>
   );

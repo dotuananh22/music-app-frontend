@@ -1,12 +1,23 @@
-import React from "react";
+import { AppDispatch, IRootState } from "app/store";
+import favoriteThunk from "features/favorite/favoriteThunk";
+import moment from "moment";
+import React, { useEffect } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import calculateHoursSongs from "utils/calculateHoursSongs";
 import FavouriteSongs from "./FavouriteSongs";
 
 // @ts-ignore
 
 const Favourite = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const favorite = useSelector((state: IRootState) => state.favorite);
+  useEffect(() => {
+    dispatch(favoriteThunk.getAllFavoriteSongs());
+  }, []);
+
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
@@ -16,11 +27,16 @@ const Favourite = () => {
         <div className="flex flex-col gap-6 text-white">
           <h3 className="text-6xl font-bold">Favourite Songs</h3>
           <div className="flex flex-row gap-2 items-end text-sm">
-            <NavLink to={"#"} className="font-semibold hover:underline">
-              Tuấn Anh Sky
-            </NavLink>
+            <span className="font-semibold">
+              {favorite.favorites.favoriteSongs?.songs.length} songs
+            </span>
             <span className="text-[6px]">&#9898;</span>
-            <span className="font-semibold">22 songs</span>
+            <span className="">
+              {moment
+                .unix(favorite.favorites.favoriteSongs?.totalTime || 0)
+                .utc()
+                .format("mm:ss")}
+            </span>
           </div>
         </div>
       </div>

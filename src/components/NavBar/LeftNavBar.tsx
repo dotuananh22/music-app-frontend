@@ -49,13 +49,13 @@ const LeftNavBar = () => {
               <BiLibrary className="text-2xl" />
               <span>My Library</span>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={"/playlists"}
               className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
             >
               <RiPlayListFill className="text-2xl" />
               <span>Playlists</span>
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to={"/favourite"}
               className="flex flex-row gap-3 items-center text-lg hover:text-[#25A56A] cursor-pointer"
