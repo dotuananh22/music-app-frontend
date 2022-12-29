@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Single from "components/Common/Single";
-import React, { useEffect } from "react";
+import React from "react";
 import { IoMusicalNoteOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, IRootState } from "app/store";
-import songThunk from "features/song/songThunk";
+import { useSelector } from "react-redux";
+import { IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
-import SongType from "types/song/SongType";
 import Skeleton from "react-loading-skeleton";
 
 const NewSingles = () => {

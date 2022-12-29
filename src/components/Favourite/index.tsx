@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AppDispatch, IRootState } from "app/store";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import moment from "moment";
@@ -5,8 +6,6 @@ import React, { useEffect } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import calculateHoursSongs from "utils/calculateHoursSongs";
 import FavouriteSongs from "./FavouriteSongs";
 
 // @ts-ignore

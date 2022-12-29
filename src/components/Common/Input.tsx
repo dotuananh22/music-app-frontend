@@ -1,4 +1,3 @@
-import { FormikProps, FieldInputProps } from "formik";
 import React from "react";
 
 interface InputProps {

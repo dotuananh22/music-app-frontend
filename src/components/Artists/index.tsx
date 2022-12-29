@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { AppDispatch, IRootState } from "app/store";
 import Artist from "components/Common/Artist";
@@ -61,18 +62,6 @@ const Artists = () => {
                 <Artist key={singer._id} id={singer._id} singer={singer} />
               ))
             )}
-            {/* <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist /> */}
           </div>
           <Pagination
             totalPage={singer.pagination.totalPages}

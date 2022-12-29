@@ -1,12 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 // @ts-ignore
-import ProfileImage from "assets/images/anh-son-tung.jfif";
 import SubFavouriteSongs from "./SubFavouriteSongs";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { AppDispatch, IRootState } from "app/store";
-import { get } from "lodash";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
 

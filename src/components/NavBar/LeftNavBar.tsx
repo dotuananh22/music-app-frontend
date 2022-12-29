@@ -1,11 +1,9 @@
 import React from "react";
-import { HiOutlineMicrophone, HiOutlineMusicNote } from "react-icons/hi";
+import { HiOutlineMusicNote } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { BiHeart, BiHomeAlt, BiLibrary } from "react-icons/bi";
 import { MdOutlinePeopleAlt } from "react-icons/md";
-import { GoCalendar } from "react-icons/go";
 import MainLogo from "assets/images/logo/main-logo.png";
-import { RiPlayListFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { IRootState } from "app/store";
 

@@ -32,18 +32,6 @@ const Artists = () => {
             <Artist id={singer._id} singer={singer} key={index} />
           ))
         )}
-
-        {/* <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist />
-        <Artist /> */}
       </div>
     </div>
   );
