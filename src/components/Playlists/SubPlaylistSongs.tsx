@@ -85,8 +85,8 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
     //     </div>
     //   </div>
     // </div>
-    <tr>
-      <td className="p-2">1</td>
+    <tr className="hover:bg-[#2C2F32] cursor-pointer group">
+      <td className="p-2 rounded-l-md">{props.rank}</td>
       <td className="flex flex-row gap-4 items-center p-2">
         <img
           src={props.image || noImage}
@@ -124,23 +124,35 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
       <td className="text-center p-2">
         <span className="text-center">{props.songTime}</span>
       </td>
-      <td className="p-2">
+      <td className="pr-2 py-2 rounded-r-md">
         <div className="justify-end items-center flex">
-          <div className="inline-block relative">
+          <div className="hidden group-hover:inline-block relative">
             <FiMoreHorizontal
               className="text-xl cursor-pointer"
               onClick={() => setShowDropdown(!showDropdown)}
             />
             <ul
-              className={`absolute right-0 bg-[#222227] w-44 rounded-sm ${
+              className={`absolute right-0 bg-[#222227] w-52 rounded-sm text-sm ${
                 !showDropdown && "hidden"
               }`}
             >
+              {!props.favorite ? (
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={() => handleAddToFavorite(props.id)}
+                >
+                  Add to your Favourite
+                </li>
+              ) : (
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={() => handleRemoveFromFavorite(props.id)}
+                >
+                  Remove from your Favourite
+                </li>
+              )}
               <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-                Add to Favourite
-              </li>
-              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-                Remove
+                Remove from this playlist
               </li>
             </ul>
           </div>
