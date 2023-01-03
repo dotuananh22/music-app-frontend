@@ -16,7 +16,11 @@ const Library = () => {
 
   useEffect(() => {
     dispatch(playlistThunk.getAllPlaylists());
-  }, []);
+  }, [dispatch]);
+
+  const handleCreateNewPlaylist = () => {
+    dispatch(playlistThunk.createPlaylist(`Playlist ${playlist.playlists.allPlaylists.length + 1}`))
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -53,12 +57,12 @@ const Library = () => {
               />
             ))
           )}
-          <div
+          {!playlist.loading.getAllPlaylists && <div
             title="Create new playlist"
-            className="flex flex-col items-center justify-center gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden h-[250px]"
-          >
+            className="flex flex-col items-center justify-center gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden height-[250px]
+          " onClick={handleCreateNewPlaylist}>
             <IoMdAdd className="text-8xl" />
-          </div>
+          </div>}
         </div>
       </div>
     </div>

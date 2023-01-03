@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import PlaylistSongs from "./PlaylistSongs";
@@ -10,16 +10,27 @@ import playlistThunk from "features/playlist/playlistThunk";
 import { AppDispatch, IRootState } from "app/store";
 import calculateHoursSongs from "utils/calculateHoursSongs";
 import favoriteThunk from "features/favorite/favoriteThunk";
+import { FaTimes } from "react-icons/fa";
+import NoImage from "assets/images/no-image.jpg";
+import Input from "components/Common/Input";
+import { FastField, Formik } from "formik";
+import { playlistSchema } from "schema";
+import InputFormik from "components/Common/InputFormik";
 
 const Playlists = () => {
   const param = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const playlist = useSelector((state: IRootState) => state.playlist);
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
 
   useEffect(() => {
     dispatch(playlistThunk.getOnePlaylist(param.id as string));
     dispatch(favoriteThunk.getAllFavoriteSongIds());
-  }, []);
+  }, [dispatch]);
+
+  const handleChangeName = () => {
+    setShowPlaylistModal(true);
+  };
 
   return (
     <div>
@@ -37,9 +48,88 @@ const Playlists = () => {
         <div className="flex flex-col gap-8 text-white">
           <div>
             <span className="font-semibold text-sm">PLAYLIST</span>
-            <h3 className="text-7xl font-bold uppercase">
+            <h3
+              className="text-7xl font-bold uppercase cursor-pointer"
+              onClick={handleChangeName}
+            >
               {playlist.playlists.onePlaylist?.name}
             </h3>
+            <div
+              id="defaultModal"
+              tabIndex={-1}
+              aria-hidden="true"
+              className={`${
+                showPlaylistModal ? "fixed" : "hidden"
+              } top-0 left-0 right-0 bottom-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-black/20`}
+              onClick={(e) => {
+                // hide object when click outside
+
+                setShowPlaylistModal(false);
+              }}
+            >
+              {!playlist.loading.getOnePlaylist && (
+                <Formik
+                  initialValues={{
+                    name: playlist.playlists.onePlaylist?.name,
+                    id: param.id,
+                  }}
+                  validationSchema={playlistSchema.updatePlaylistBody}
+                  onSubmit={(values) => console.log(values)}
+                >
+                  {(formikProps) => {
+                    const { values, errors, touched } = formikProps;
+                    return (
+                      <div
+                        className="relative max-w-xl w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-black text-white flex flex-col gap-4"
+                        id="modalContent"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <div className="flex justify-between items-center">
+                          <h2 className="text-2xl">Edit playlist</h2>
+                          <button onClick={() => setShowPlaylistModal(false)}>
+                            <FaTimes className="text-2xl" />
+                          </button>
+                        </div>
+                        <div className="flex flex-row gap-4 h-[180px]">
+                          <div>
+                            <img
+                              src={NoImage}
+                              alt="no image"
+                              className={"h-[180px] rounded-xl"}
+                            />
+                          </div>
+                          <div className="flex flex-col gap-4 flex-1">
+                            <FastField
+                              name="name"
+                              component={InputFormik}
+                              type="text"
+                              disabled={false}
+                              placeholder={"Name"}
+                              title={touched.name && errors.name}
+                            />
+                            <textarea
+                              name="message"
+                              placeholder="Type your message"
+                              className="block pl-5 w-full min-h-[120px] text-white bg-[#222227] rounded-lg outline-none border-none resize-none"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end">
+                          <button
+                            className="px-8 py-2 bg-white text-black rounded-full ml-auto"
+                            type="submit"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  }}
+                </Formik>
+              )}
+            </div>
           </div>
           <div className="flex flex-row gap-2 items-end text-sm">
             {/* <NavLink to={"#"} className="font-bold hover:underline">
