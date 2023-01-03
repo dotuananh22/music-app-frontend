@@ -80,16 +80,18 @@ const Playlists = () => {
                     const { values, errors, touched } = formikProps;
                     return (
                       <div
-                        className="relative max-w-xl w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-black text-white flex flex-col gap-4"
+                        className="relative max-w-xl w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
                         id="modalContent"
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
                       >
-                        <div className="flex justify-between items-center">
-                          <h2 className="text-2xl">Edit playlist</h2>
+                        <div className="flex justify-between items-center mb-4">
+                          <h2 className="text-xl font-semibold">
+                            Edit your playlist
+                          </h2>
                           <button onClick={() => setShowPlaylistModal(false)}>
-                            <FaTimes className="text-2xl" />
+                            <FaTimes className="text-xl m-1" />
                           </button>
                         </div>
                         <div className="flex flex-row gap-4 h-[180px]">
@@ -110,18 +112,18 @@ const Playlists = () => {
                               title={touched.name && errors.name}
                             />
                             <textarea
-                              name="message"
-                              placeholder="Type your message"
-                              className="block pl-5 w-full min-h-[120px] text-white bg-[#222227] rounded-lg outline-none border-none resize-none"
+                              name="description"
+                              placeholder="Add an description"
+                              className="block pl-5 w-full min-h-[120px] text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
                             />
                           </div>
                         </div>
                         <div className="flex justify-end">
                           <button
-                            className="px-8 py-2 bg-white text-black rounded-full ml-auto"
+                            className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
                             type="submit"
                           >
-                            Save
+                            SAVE
                           </button>
                         </div>
                       </div>
@@ -146,15 +148,23 @@ const Playlists = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-8 items-center mt-8 ml-8">
-        <button
-          className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
-        >
-          <BsFillPlayFill className="text-black text-3xl" />
-        </button>
-        <FiMoreHorizontal className="text-3xl cursor-pointer" />
-      </div>
-      <PlaylistSongs songs={playlist.playlists.onePlaylist?.songs} />
+      {playlist.playlists.onePlaylist?.songs.length !== 0 ? (
+        <>
+          <div className="flex flex-row gap-8 items-center mt-8 ml-8">
+            <button
+              className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+            >
+              <BsFillPlayFill className="text-black text-3xl" />
+            </button>
+            <FiMoreHorizontal className="text-3xl cursor-pointer" />
+          </div>
+          <PlaylistSongs songs={playlist.playlists.onePlaylist?.songs} />
+        </>
+      ) : (
+        <div className="pt-8 text-xl font-semibold">
+          There are no songs in {playlist.playlists.onePlaylist.name}.
+        </div>
+      )}
     </div>
   );
 };

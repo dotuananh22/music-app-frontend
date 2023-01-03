@@ -50,17 +50,17 @@ const PlaylistSongs = (props: playlistSongsProp) => {
     //   ))}
     //   </ul>
     // </div>
-    <table className="table-auto w-full">
+    <table className="table-auto w-full mt-8">
       <thead>
-        <tr className="border-b border-white">
+        <tr className="border-b border-[#222227]">
           <th className="w-[20px] p-2"></th>
-          <th className="text-left w-1/2 p-2">TITLE</th>
-          <th className="p-2 text-left">DATE ADDED</th>
+          <th className="text-left w-1/2 p-2 text-sm">TITLE</th>
+          <th className="p-2 text-left text-sm">DATE ADDED</th>
           <th className="p-2 w-[20px]"></th>
-          <th className="w-[100px] p-2">
+          <th className="w-[100px] p-2 text-lg">
             <AiOutlineClockCircle className="m-auto" />
           </th>
-          <th className="p-2 w-[20px]"></th>
+          <th className="p-2 w-[30px]"></th>
         </tr>
       </thead>
       <tbody>
