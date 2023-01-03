@@ -39,7 +39,7 @@ const Favourite = () => {
           </div>
         </div>
       </div>
-      {favorite.favorites.favoriteSongs?.songs ? (
+      {favorite.favorites.favoriteSongs?.songs.length !== 0 ? (
         <>
           <button
             className={`mt-8 ml-8 w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}

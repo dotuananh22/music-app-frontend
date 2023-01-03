@@ -57,6 +57,21 @@ const playlistSlice = createSlice({
       state.loading.getOnePlaylist = false;
       toast.error(action.payload as string);
     });
+
+    builder.addCase(playlistThunk.createPlaylist.fulfilled, (state, action) => {
+      state.playlists.allPlaylists = [action.payload, ...state.playlists.allPlaylists];
+    });
+    builder.addCase(playlistThunk.createPlaylist.rejected, (state, action) => {
+      toast.error(action.payload as string);
+    })
+
+    builder.addCase(playlistThunk.updatePlaylist.fulfilled, (state, action) => {
+      const index = state.playlists.allPlaylists.findIndex((playlist) => playlist._id === action.meta.arg.id);
+      state.playlists.allPlaylists[index] = action.payload;
+    });
+    builder.addCase(playlistThunk.updatePlaylist.rejected, (state, action) => {
+      toast.error(action.payload as string);
+    })
   },
 });
 
