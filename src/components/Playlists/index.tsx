@@ -4,15 +4,14 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import PlaylistSongs from "./PlaylistSongs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 import { useDispatch, useSelector } from "react-redux";
 import playlistThunk from "features/playlist/playlistThunk";
 import { AppDispatch, IRootState } from "app/store";
 import calculateHoursSongs from "utils/calculateHoursSongs";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { FaTimes } from "react-icons/fa";
-import NoImage from "assets/images/no-image.jpg";
-import Input from "components/Common/Input";
+import NoImage from "assets/images/no-image.png";
 import { FastField, Formik } from "formik";
 import { playlistSchema } from "schema";
 import InputFormik from "components/Common/InputFormik";
@@ -35,7 +34,7 @@ const Playlists = () => {
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
-        <div className="gradient-green-color-2 opacity-80 w-[220px] h-[220px] shadow-xl grid place-items-center">
+        <div className="w-[220px] h-[220px] shadow-xl grid place-items-center">
           <img
             src={playlist.playlists.onePlaylist?.imageUrl || noImage}
             alt="image"

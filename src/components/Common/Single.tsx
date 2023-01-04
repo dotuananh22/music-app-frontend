@@ -1,6 +1,6 @@
 import React from "react";
 import { IoPlayOutline } from "react-icons/io5";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 
 interface SingleProps {
   image: string;

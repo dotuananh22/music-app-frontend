@@ -1,10 +1,10 @@
 import React from "react";
 // @ts-ignore
-import ProfileImage from "assets/images/anh-son-tung.jfif";
+import NoImage from "assets/images/no-image.png";
 import Banner from "assets/images/banner/banner1.jpg";
 import { BsFillCheckCircleFill, BsFillPlayFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 
 const Information = () => {
   return (
@@ -13,7 +13,7 @@ const Information = () => {
         <div className="basis-1/4 flex flex-col gap-2 items-center text-white">
           <div className="flex flex-col gap-3 items-center">
             <img
-              src={ProfileImage || noImage}
+              src={NoImage || noImage}
               alt="profile"
               className="w-32 h-32 rounded-full"
               onError={(e) => {

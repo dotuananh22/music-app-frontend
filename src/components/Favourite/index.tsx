@@ -5,6 +5,7 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import FavouriteSongs from "./FavouriteSongs";
 
@@ -13,6 +14,7 @@ import FavouriteSongs from "./FavouriteSongs";
 const Favourite = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favorite = useSelector((state: IRootState) => state.favorite);
+
   useEffect(() => {
     dispatch(favoriteThunk.getAllFavoriteSongs());
   }, []);
@@ -41,11 +43,14 @@ const Favourite = () => {
       </div>
       {favorite.favorites.favoriteSongs?.songs.length !== 0 ? (
         <>
-          <button
-            className={`mt-8 ml-8 w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
-          >
-            <BsFillPlayFill className="text-black text-3xl" />
-          </button>
+          <div className="flex flex-row gap-8 items-center mt-8 ml-8">
+            <button
+              className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+            >
+              <BsFillPlayFill className="text-black text-3xl" />
+            </button>
+            <FiMoreHorizontal className="text-3xl cursor-pointer" />
+          </div>
           <FavouriteSongs />
         </>
       ) : (

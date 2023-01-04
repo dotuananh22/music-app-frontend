@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-// @ts-ignore
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 import { useDispatch, useSelector } from "react-redux";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { AppDispatch, IRootState } from "app/store";
@@ -136,16 +135,28 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
               <FiMoreHorizontal
                 className="text-xl cursor-pointer"
                 onClick={() => {
-                  if (props.indexDropdown != props.rank)
+                  if (props.indexDropdown !== props.rank)
                     props.setIndexDropdown(props.rank);
                   else props.setIndexDropdown(0);
                 }}
               />
               <ul
                 className={`absolute right-0 bg-[#222227] w-52 rounded-sm text-sm ${
-                  props.indexDropdown != props.rank && "hidden"
+                  props.indexDropdown !== props.rank && "hidden"
                 }`}
               >
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={() => onShowModal()}
+                >
+                  Add to other playlists
+                </li>
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={handleRemoveFromPlaylist}
+                >
+                  Remove from this playlist
+                </li>
                 {!props.favorite ? (
                   <li
                     className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
@@ -161,18 +172,6 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
                     Remove from your Favourite
                   </li>
                 )}
-                <li
-                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
-                  onClick={handleRemoveFromPlaylist}
-                >
-                  Remove from this playlist
-                </li>
-                <li
-                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
-                  onClick={() => onShowModal()}
-                >
-                  Add to another playlists
-                </li>
               </ul>
             </div>
           </div>
@@ -212,7 +211,7 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
                 <Skeleton height={"20px"} />
               </>
             ) : playlist.playlists.playlistsNotContainSong.length == 0 ? (
-              <p>You don't have any playlist</p>
+              <p>Already on all your playlists.</p>
             ) : (
               playlist.playlists.playlistsNotContainSong.map((item, index) => (
                 <div className="flex items-center mb-4">
@@ -220,13 +219,13 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
                     id={`default-checkbox-${index}`}
                     type="checkbox"
                     value={item._id}
-                    className="w-4 h-4 text-green-600 bg-red-900 rounded focus:ring-blue-500 focus:ring-2"
+                    className={`w-4 h-4 text-[${colors.greenColor}] bg-[#222227] rounded focus:ring-green-500 focus:ring-2`}
                     onChange={(e) => {
                       if (e.target.checked) {
                         setPlaylists([...playlists, item._id]);
                       } else {
                         setPlaylists(
-                          playlists.filter((playlist) => playlist != item._id)
+                          playlists.filter((playlist) => playlist !== item._id)
                         );
                       }
                     }}
@@ -242,13 +241,20 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
             )}
           </div>
           <div className="flex justify-end">
-            {playlist.playlists.playlistsNotContainSong.length !== 0 && (
+            {playlist.playlists.playlistsNotContainSong.length !== 0 ? (
               <button
                 className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
                 type="submit"
                 onClick={handleAddSongToPlaylists}
               >
                 SAVE
+              </button>
+            ) : (
+              <button
+                className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                onClick={() => setShowModal(false)}
+              >
+                OK
               </button>
             )}
           </div>
