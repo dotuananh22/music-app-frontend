@@ -1,6 +1,6 @@
 import React from "react";
 import { BsFillPlayFill } from "react-icons/bs";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 import { useNavigate } from "react-router-dom";
 
 interface PlaylistProps {

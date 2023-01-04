@@ -1,5 +1,5 @@
 import React from "react";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 import Singer from "types/singer/Singer";
 
 interface ArtistProps {

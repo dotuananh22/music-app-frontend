@@ -72,7 +72,7 @@ const Library = () => {
           {!playlist.loading.getAllPlaylists && (
             <div
               title="Create new playlist"
-              className="flex flex-col items-center justify-center gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden height-[250px] cursor-pointer
+              className="h-[250px] flex flex-col items-center justify-center gap-3 p-4 rounded-md bg-[#202020] hover:bg-[#282828] group overflow-hidden height-[250px] cursor-pointer
           "
               onClick={handleCreateNewPlaylist}
             >

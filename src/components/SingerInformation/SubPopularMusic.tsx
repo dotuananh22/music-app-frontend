@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import colors from "constants/color";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 
 interface SubPopularMusicProps {
   rank: number;

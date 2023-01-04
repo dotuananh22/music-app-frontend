@@ -7,10 +7,8 @@ import {
   RiVolumeMuteLine,
   RiVolumeUpLine,
 } from "react-icons/ri";
-// @ts-ignore
-import TestImage from "assets/images/anh-son-tung.jfif";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
-import noImage from "assets/images/no-image.jpg";
+import noImage from "assets/images/no-image.png";
 import { useSelector } from "react-redux";
 import { IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";

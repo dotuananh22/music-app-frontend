@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// @ts-ignore
-import ProfileImage from "assets/images/anh-son-tung.jfif";
-import { AiFillHeart, AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import SubPlaylistSongs from "./SubPlaylistSongs";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
@@ -9,8 +7,6 @@ import joinSingers from "utils/joinSingers";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { IRootState } from "app/store";
-import colors from "constants/color";
-import { FiMoreHorizontal } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 
 interface playlistSongsProp {
@@ -21,6 +17,7 @@ const PlaylistSongs = (props: playlistSongsProp) => {
   const favorite = useSelector((state: IRootState) => state.favorite);
   const param = useParams();
   const [indexDropdown, setIndexDropdown] = useState(0);
+
   return (
     <table className="table-auto w-full mt-8">
       <thead>
@@ -42,7 +39,7 @@ const PlaylistSongs = (props: playlistSongsProp) => {
               id={song._id}
               playlistId={param.id as string}
               rank={index + 1}
-              image={ProfileImage}
+              image={song.imageUrl}
               songName={song.name}
               singerName={joinSingers(song.singers)}
               dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}

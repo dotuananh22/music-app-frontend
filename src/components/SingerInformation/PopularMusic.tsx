@@ -1,6 +1,6 @@
 import React from "react";
 // @ts-ignore
-import ProfileImage from "assets/images/anh-son-tung.jfif";
+import ProfileImage from "assets/images/no-image.png";
 import SubPopularMusic from "./SubPopularMusic";
 
 const PopularMusic = () => {
