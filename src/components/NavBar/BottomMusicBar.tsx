@@ -11,18 +11,25 @@ import {
 import TestImage from "assets/images/anh-son-tung.jfif";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import noImage from "assets/images/no-image.jpg";
+import { useSelector } from "react-redux";
+import { IRootState } from "app/store";
+import joinSingers from "utils/joinSingers";
 
 const BottomMusicBar = () => {
+  const song = useSelector((state: IRootState) => state.song);
   const [playClicked, setPlayClicked] = useState(false);
   const [repeat, setRepeat] = useState(false);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [audio] = useState(
-    new Audio(
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.mp3?alt=media&token=fc4aa098-4ce9-4304-977a-b3737a011c6e"
-    )
-  );
+  const [audio] = useState(new Audio(song.song.chosenSong?.songUrl));
+
+  useEffect(() => {
+    setPlayClicked(false);
+    audio.src = song.song.chosenSong?.songUrl || "";
+
+    setDuration(audio.duration ? audio.duration : 0);
+  }, [song.song.chosenSong?.songUrl]);
 
   useEffect(() => {
     // audio.addEventListener("ended", () => setPlayClicked(false));
@@ -75,7 +82,7 @@ const BottomMusicBar = () => {
       <div className="basis-1/3">
         <div className="flex flex-row gap-4 items-center">
           <img
-            src={TestImage || noImage}
+            src={song.song.chosenSong?.imageUrl || noImage}
             alt="test"
             className="w-[58px]"
             onError={(e) => {
@@ -83,8 +90,12 @@ const BottomMusicBar = () => {
             }}
           />
           <div>
-            <h3 className="text-white font-semibold">Chúng ta của hiện tại</h3>
-            <span className="text-xs">Sơn Tùng MTP</span>
+            <h3 className="text-white font-semibold">
+              {song.song.chosenSong?.name}
+            </h3>
+            <span className="text-xs">
+              {joinSingers(song.song.chosenSong?.singers || [])}
+            </span>
           </div>
         </div>
       </div>
