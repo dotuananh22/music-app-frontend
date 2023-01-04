@@ -17,6 +17,9 @@ interface SongState {
     topSingleSongs: Song<Singer | string>[];
     newSingleSongs: Song<Singer | string>[];
   };
+  song: {
+    chosenSong: Song<Singer> | null;
+  };
   pagination: PaginationResponse;
 }
 
@@ -31,6 +34,9 @@ const initialState: SongState = {
     topSingleSongs: [],
     newSingleSongs: [],
   },
+  song: {
+    chosenSong: null,
+  },
   pagination: {
     page: 0,
     limit: 0,
@@ -44,7 +50,11 @@ const initialState: SongState = {
 const songSlice = createSlice({
   name: "song",
   initialState,
-  reducers: {},
+  reducers: {
+    setChosenSong(state, action) {
+      state.song.chosenSong = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(songThunk.getAllSongs.pending, (state, action) => {
       switch (action.meta.arg.type) {
@@ -101,4 +111,5 @@ const songSlice = createSlice({
   },
 });
 
+export const { setChosenSong } = songSlice.actions;
 export default songSlice.reducer;

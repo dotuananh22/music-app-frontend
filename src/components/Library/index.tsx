@@ -9,13 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import playlistThunk from "features/playlist/playlistThunk";
 import { AppDispatch, IRootState } from "app/store";
 import Skeleton from "react-loading-skeleton";
+import favoriteThunk from "features/favorite/favoriteThunk";
 
 const Library = () => {
   const dispatch = useDispatch<AppDispatch>();
   const playlist = useSelector((state: IRootState) => state.playlist);
+  const favorite = useSelector((state: IRootState) => state.favorite);
 
   useEffect(() => {
     dispatch(playlistThunk.getAllPlaylists());
+    dispatch(favoriteThunk.getAllFavoriteSongIds());
   }, [dispatch]);
 
   const handleCreateNewPlaylist = () => {
@@ -35,7 +38,12 @@ const Library = () => {
           <div className="gradient-color col-span-2 rounded-lg relative group h-[250px]">
             <div className="absolute text-white bottom-4 left-4">
               <h2 className="text-3xl font-semibold mb-3">Favorite Songs</h2>
-              <span className="font-semibold">100 songs</span>
+              <span className="font-semibold">
+                {favorite.loading.getFavoriteSongIds
+                  ? 0
+                  : favorite.favorites.favoriteSongIds?.songs.length}{" "}
+                songs
+              </span>
             </div>
             <NavLink to={"/favourite"}>
               <button
