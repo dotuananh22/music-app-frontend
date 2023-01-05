@@ -14,8 +14,13 @@ const getAllSingers = async (
   );
 };
 
+const getOneSinger = async (id: string): Promise<ApiResponse<Singer>> => {
+  return await axiosClient.get(`/singer/${id}`);
+};
+
 const singerApi = {
   getAllSingers,
+  getOneSinger,
 };
 
 export default singerApi;

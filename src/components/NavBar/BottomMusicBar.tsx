@@ -20,16 +20,31 @@ const BottomMusicBar = () => {
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const [loadingAudio, setLoadingAudio] = useState(false);
   const [audio] = useState(new Audio(song.song.chosenSong?.songUrl));
 
   useEffect(() => {
     setPlayClicked(false);
+    setLoadingAudio(true);
+    audio.load();
     audio.src = song.song.chosenSong?.songUrl || "";
-
+    audio.addEventListener("canplaythrough", () => {
+      setLoadingAudio(false);
+      audio.duration && audio.play();
+      audio.duration && setPlayClicked(true);
+    });
     setDuration(audio.duration ? audio.duration : 0);
+    return () => {
+      audio.removeEventListener("canplaythrough", () => setLoadingAudio(false));
+    };
   }, [song.song.chosenSong?.songUrl]);
 
   useEffect(() => {
+    const repeatStorage = localStorage.getItem("repeat");
+    const volumeStorage = localStorage.getItem("volume");
+    setVolume(volumeStorage ? parseFloat(volumeStorage) : 0.5);
+    setRepeat(repeatStorage ? repeatStorage === "true" : false);
+    audio.loop = repeatStorage ? repeatStorage === "true" : false;
     // audio.addEventListener("ended", () => setPlayClicked(false));
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("loadedmetadata", () => {
@@ -63,16 +78,19 @@ const BottomMusicBar = () => {
   const onChangeVolume = (e: any) => {
     audio.volume = e.target.value;
     setVolume(e.target.value);
+    localStorage.setItem("volume", e.target.value);
   };
 
   const setUnmute = () => {
     audio.volume = -volume === 0.0 ? 0.5 : -volume;
     setVolume(-volume === 0.0 ? 0.5 : -volume);
+    localStorage.setItem("volume", audio.volume.toString());
   };
 
   const setMute = () => {
     setVolume(-volume);
     audio.volume = 0;
+    localStorage.setItem("volume", audio.volume.toString());
   };
 
   return (
@@ -124,6 +142,7 @@ const BottomMusicBar = () => {
             onClick={() => {
               audio.loop = !repeat;
               setRepeat(!repeat);
+              localStorage.setItem("repeat", (!repeat).toString());
             }}
           />
         </div>
@@ -148,6 +167,7 @@ const BottomMusicBar = () => {
               audio.play();
               setPlayClicked(true);
             }}
+            disabled={duration === 0 || loadingAudio}
             className="w-full h-1 bg-[#25A56A] cursor-pointer"
           />
           <span>{convertTime(duration)}</span>

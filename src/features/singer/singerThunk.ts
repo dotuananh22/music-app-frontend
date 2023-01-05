@@ -20,6 +20,24 @@ const getAllSingers = createAsyncThunk(
   }
 );
 
+const getOneSinger = createAsyncThunk(
+  "singer/getOneSinger",
+  async (id: string, thunkApi) => {
+    try {
+      const response = await singerApi.getOneSinger(id);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export default {
   getAllSingers,
+  getOneSinger,
 };

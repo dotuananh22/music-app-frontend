@@ -52,13 +52,13 @@ const Artists = () => {
         <SubNavBar handleSort={handleSort} sort={pagination.sort} />
         <div className="flex flex-col gap-4 items-center">
           <div className="grid grid-cols-6 gap-8">
-            {singer.loading ? (
+            {singer.loading.loadingSingers ? (
               <>
                 <Skeleton height={"180px"} />
                 <Skeleton height={"180px"} />
               </>
             ) : (
-              singer.singers.map((singer) => (
+              singer.singers.getAllSingers.map((singer) => (
                 <Artist key={singer._id} id={singer._id} singer={singer} />
               ))
             )}

@@ -61,6 +61,7 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
         songId: id,
       })
     );
+    props.setIndexDropdown(0);
   };
 
   return (

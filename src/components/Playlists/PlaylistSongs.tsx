@@ -36,14 +36,9 @@ const PlaylistSongs = (props: playlistSongsProp) => {
         {props.songs &&
           props.songs.map((song, index) => (
             <SubPlaylistSongs
-              id={song._id}
+              song={song}
               playlistId={param.id as string}
               rank={index + 1}
-              image={song.imageUrl}
-              songName={song.name}
-              singerName={joinSingers(song.singers)}
-              dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}
-              songTime={moment.unix(song.songTime).utc().format("mm:ss")}
               favorite={
                 favorite.favorites.favoriteSongIds?.songs.includes(
                   song._id

@@ -44,14 +44,7 @@ const TopSingles = () => {
         </div>
       ) : (
         song.songs.topSingleSongs.map((song) => {
-          return (
-            <Single
-              image={song.imageUrl}
-              singerName={joinSingers(song.singers)}
-              songName={song.name}
-              songTime={moment.unix(song.songTime).utc().format("mm:ss")}
-            />
-          );
+          return <Single song={song} />;
         })
       )}
     </div>

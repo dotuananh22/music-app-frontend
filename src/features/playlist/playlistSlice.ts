@@ -11,6 +11,7 @@ interface PlaylistState {
     getAllPlaylists: boolean;
     getOnePlaylist: boolean;
     getPlaylistsNotContainSong: boolean;
+    updatePlaylist: boolean;
   };
   playlists: {
     allPlaylists: Playlist<string | Song<string>>[];
@@ -24,6 +25,7 @@ const initialState: PlaylistState = {
     getAllPlaylists: false,
     getOnePlaylist: false,
     getPlaylistsNotContainSong: false,
+    updatePlaylist: false,
   },
   playlists: {
     allPlaylists: [],
@@ -126,14 +128,23 @@ const playlistSlice = createSlice({
     });
 
     // Update playlist
+    builder.addCase(playlistThunk.updatePlaylist.pending, (state) => {
+      state.loading.updatePlaylist = true;
+    });
     builder.addCase(playlistThunk.updatePlaylist.fulfilled, (state, action) => {
-      const index = state.playlists.allPlaylists.findIndex(
-        (playlist) => playlist._id === action.meta.arg.id
-      );
-      state.playlists.allPlaylists[index] = action.payload;
+      const { name, imageUrl, description } = action.payload;
+      if (!state.playlists.onePlaylist) return;
+      state.playlists.onePlaylist = {
+        ...state.playlists.onePlaylist,
+        name,
+        imageUrl,
+        description,
+      };
+      state.loading.updatePlaylist = false;
     });
     builder.addCase(playlistThunk.updatePlaylist.rejected, (state, action) => {
       toast.error(action.payload as string);
+      state.loading.updatePlaylist = false;
     });
   },
 });

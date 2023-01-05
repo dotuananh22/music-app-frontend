@@ -12,7 +12,7 @@ import calculateHoursSongs from "utils/calculateHoursSongs";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { FaTimes } from "react-icons/fa";
 import NoImage from "assets/images/no-image.png";
-import { FastField, Formik } from "formik";
+import { FastField, Form, Formik } from "formik";
 import { playlistSchema } from "schema";
 import InputFormik from "components/Common/InputFormik";
 
@@ -29,6 +29,18 @@ const Playlists = () => {
 
   const handleChangeName = () => {
     setShowPlaylistModal(true);
+  };
+
+  const handleSubmit = (values: any) => {
+    dispatch(
+      playlistThunk.updatePlaylist({
+        id: values.id,
+        name: values.name,
+        description: values.description,
+        imageUrl: values.imageUrl,
+      })
+    );
+    !playlist.loading.updatePlaylist && setShowPlaylistModal(false);
   };
 
   return (
@@ -71,14 +83,17 @@ const Playlists = () => {
                   initialValues={{
                     name: playlist.playlists.onePlaylist?.name,
                     id: param.id,
+                    imageUrl: playlist.playlists.onePlaylist?.imageUrl,
+                    description: playlist.playlists.onePlaylist?.description,
                   }}
                   validationSchema={playlistSchema.updatePlaylistBody}
-                  onSubmit={(values) => console.log(values)}
+                  onSubmit={(values) => handleSubmit(values)}
                 >
                   {(formikProps) => {
-                    const { values, errors, touched } = formikProps;
+                    const { values, errors, touched, isSubmitting } =
+                      formikProps;
                     return (
-                      <div
+                      <Form
                         className="relative max-w-xl w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
                         id="modalContent"
                         onClick={(e) => {
@@ -96,9 +111,12 @@ const Playlists = () => {
                         <div className="flex flex-row gap-4 h-[180px]">
                           <div>
                             <img
-                              src={NoImage}
+                              src={values.imageUrl || NoImage}
                               alt="no image"
                               className={"h-[180px] rounded-xl"}
+                              onError={(e) => {
+                                e.currentTarget.src = NoImage;
+                              }}
                             />
                           </div>
                           <div className="flex flex-col gap-4 flex-1">
@@ -110,11 +128,23 @@ const Playlists = () => {
                               placeholder={"Name"}
                               title={touched.name && errors.name}
                             />
-                            <textarea
-                              name="description"
-                              placeholder="Add an description"
-                              className="block pl-5 w-full min-h-[120px] text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
-                            />
+                            <FastField name="description">
+                              {({
+                                field,
+                                form,
+                                meta,
+                              }: {
+                                field: any;
+                                form: any;
+                                meta: any;
+                              }) => (
+                                <textarea
+                                  {...field}
+                                  placeholder="Add an description"
+                                  className="block pl-5 w-full min-h-[120px] text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
+                                />
+                              )}
+                            </FastField>
                           </div>
                         </div>
                         <div className="flex justify-end">
@@ -122,10 +152,12 @@ const Playlists = () => {
                             className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
                             type="submit"
                           >
-                            SAVE
+                            {playlist.loading.updatePlaylist
+                              ? "UPDATING..."
+                              : "Save"}
                           </button>
                         </div>
-                      </div>
+                      </Form>
                     );
                   }}
                 </Formik>
