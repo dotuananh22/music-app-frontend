@@ -10,17 +10,17 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
 import playlistThunk from "features/playlist/playlistThunk";
 import Skeleton from "react-loading-skeleton";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
+import joinSingers from "utils/joinSingers";
+import moment from "moment";
+import { setChosenSong } from "features/song/songSlice";
 
 interface SubPlaylistSongsProps {
-  id: string;
   rank: number;
+  song: Song<Singer | string>;
   playlistId: string;
-  image: string;
-  songName: string;
-  singerName: string;
-  dateAdded: string;
   favorite: boolean;
-  songTime: string;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -52,14 +52,14 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
 
   const onShowModal = () => {
     setShowModal(true);
-    dispatch(playlistThunk.getPlaylistsNotContainSong(props.id));
+    dispatch(playlistThunk.getPlaylistsNotContainSong(props.song._id));
   };
 
   const handleRemoveFromPlaylist = () => {
     dispatch(
       playlistThunk.removeSongFromPlaylist({
         playlistId: props.playlistId,
-        songIds: [props.id],
+        songIds: [props.song._id],
       })
     );
     props.setIndexDropdown(0);
@@ -70,7 +70,7 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
       return dispatch(
         playlistThunk.addSongsToPlaylist({
           playlistId,
-          songIds: [props.id],
+          songIds: [props.song._id],
         })
       );
     });
@@ -90,11 +90,14 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
         onMouseLeave={() => {
           props.setIndexDropdown(0);
         }}
+        onClick={() => {
+          dispatch(setChosenSong(props.song));
+        }}
       >
         <td className="p-2 rounded-l-md">{props.rank}</td>
         <td className="flex flex-row gap-4 items-center p-2">
           <img
-            src={props.image || noImage}
+            src={props.song.imageUrl || noImage}
             alt="music"
             className="h-10 w-10"
             onError={(e) => {
@@ -103,31 +106,35 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              {props.songName}
+              {props.song.name}
             </p>
             <p className={`text-[#c0c0c0] truncate w-[300px]`}>
-              {props.singerName}
+              {joinSingers(props.song.singers)}
             </p>
           </div>
         </td>
-        <td className="p-2">{props.dateAdded}</td>
+        <td className="p-2">
+          {moment(props.song.createdAt).format("DD/MM/YYYY")}
+        </td>
         <td>
           <div className="flex justify-center p-2 cursor-pointer">
             {props.favorite ? (
               <AiFillHeart
                 className={`text-[${colors.greenColor}] text-xl`}
-                onClick={() => handleRemoveFromFavorite(props.id)}
+                onClick={() => handleRemoveFromFavorite(props.song._id)}
               />
             ) : (
               <AiOutlineHeart
                 className={`hover:text-[${colors.greenColor}] text-xl`}
-                onClick={() => handleAddToFavorite(props.id)}
+                onClick={() => handleAddToFavorite(props.song._id)}
               />
             )}
           </div>
         </td>
         <td className="text-center p-2">
-          <span className="text-center">{props.songTime}</span>
+          <span className="text-center">
+            {moment.unix(props.song.songTime).utc().format("mm:ss")}
+          </span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
           <div className="justify-end items-center flex">
@@ -160,14 +167,14 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
                 {!props.favorite ? (
                   <li
                     className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
-                    onClick={() => handleAddToFavorite(props.id)}
+                    onClick={() => handleAddToFavorite(props.song._id)}
                   >
                     Add to your Favourite
                   </li>
                 ) : (
                   <li
                     className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
-                    onClick={() => handleRemoveFromFavorite(props.id)}
+                    onClick={() => handleRemoveFromFavorite(props.song._id)}
                   >
                     Remove from your Favourite
                   </li>

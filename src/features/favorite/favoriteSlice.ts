@@ -118,9 +118,12 @@ const favoriteSlice = createSlice({
         }
       }
     );
-    builder.addCase(favoriteThunk.removeFavoriteSong.rejected, (state) => {
-      toast.error("Remove favorite song failed");
-    });
+    builder.addCase(
+      favoriteThunk.removeFavoriteSong.rejected,
+      (state, action) => {
+        toast.error(action.payload as string);
+      }
+    );
   },
 });
 

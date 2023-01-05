@@ -42,7 +42,11 @@ const addSongsToPlaylist = async (
 const updatePlaylist = async (
   input: playlistSchema.UpdatePlaylistInput
 ): Promise<ApiResponse<Playlist<Song<string>>>> => {
-  return await axiosClient.put(`/playlist/${input.id}`);
+  return await axiosClient.put(`/playlist/${input.id}`, {
+    name: input.name,
+    description: input.description,
+    imageUrl: input.imageUrl,
+  });
 };
 
 const getOnePlaylist = async (

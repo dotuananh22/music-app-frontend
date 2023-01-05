@@ -1,6 +1,7 @@
 import React from "react";
 import noImage from "assets/images/no-image.png";
 import Singer from "types/singer/Singer";
+import { useNavigate } from "react-router-dom";
 
 interface ArtistProps {
   id: string;
@@ -8,8 +9,12 @@ interface ArtistProps {
 }
 
 const Artist = (props: ArtistProps) => {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col gap-2 cursor-pointer group">
+    <div
+      className="flex flex-col gap-2 cursor-pointer group"
+      onClick={() => navigate(`/artist/${props.id}`)}
+    >
       <div
         className="relative before:absolute before:top-0 before:left-0 before:w-full before:h-full before:opacity-0 group-hover:before:opacity-100 
       group-hover:before:bg-gradient-to-t before:from-[#25A56A]/30 before:to-black/5 before:transition-all before:duration-500 before:ease-in-out overflow-hidden rounded-lg"

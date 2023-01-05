@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 
 const Artists = () => {
   const singer = useSelector((state: IRootState) => state.singer);
-
   return (
     <div className="flex flex-col gap-8 mt-6">
       <div className="flex flex-row justify-between items-center">
@@ -21,14 +20,14 @@ const Artists = () => {
         </NavLink>
       </div>
       <div className="grid grid-cols-6 gap-8">
-        {singer.loading ? (
+        {singer.loading.loadingSingers ? (
           <>
             <Skeleton height={"200px"} />
             <Skeleton height={"200px"} />
             <Skeleton height={"200px"} />
           </>
         ) : (
-          singer.singers.map((singer, index) => (
+          singer.singers.getAllSingers.map((singer, index) => (
             <Artist id={singer._id} singer={singer} key={index} />
           ))
         )}

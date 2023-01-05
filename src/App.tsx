@@ -60,7 +60,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/singer" element={<SingerInformationPage />} />
+            <Route path="/artist/:id" element={<SingerInformationPage />} />
             <Route
               path="/profile"
               element={

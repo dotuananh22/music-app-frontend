@@ -27,15 +27,7 @@ const NewSingles = () => {
         </div>
       ) : (
         song.songs.newSingleSongs.map(
-          (song, i) =>
-            i < 5 && (
-              <Single
-                image={song.imageUrl}
-                singerName={joinSingers(song.singers)}
-                songName={song.name}
-                songTime={moment.unix(song.songTime).utc().format("mm:ss")}
-              />
-            )
+          (song, i) => i < 5 && <Single song={song} />
         )
       )}
     </div>
