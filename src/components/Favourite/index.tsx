@@ -2,7 +2,7 @@
 import { AppDispatch, IRootState } from "app/store";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -14,6 +14,7 @@ import FavouriteSongs from "./FavouriteSongs";
 const Favourite = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favorite = useSelector((state: IRootState) => state.favorite);
+  const [showMoreOptionModal, setShowMoreOptionModal] = useState(false);
 
   useEffect(() => {
     dispatch(favoriteThunk.getAllFavoriteSongs());
@@ -49,7 +50,27 @@ const Favourite = () => {
             >
               <BsFillPlayFill className="text-black text-3xl" />
             </button>
-            <FiMoreHorizontal className="text-3xl cursor-pointer" />
+            <div
+              className="flex flex-col"
+              onMouseLeave={() => setShowMoreOptionModal(false)}
+              onClick={() => setShowMoreOptionModal(!showMoreOptionModal)}
+            >
+              <FiMoreHorizontal className="relative text-3xl cursor-pointer" />
+              <div className="w-40" onClick={(e) => e.stopPropagation()}>
+                <ul
+                  className={`bg-[#222227] w-40 rounded-sm text-sm ${
+                    showMoreOptionModal ? "absolute" : "hidden"
+                  }`}
+                >
+                  <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                    Edit favourite
+                  </li>
+                  <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                    Remove favourite
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <FavouriteSongs />
         </>

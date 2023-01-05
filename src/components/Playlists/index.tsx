@@ -21,6 +21,7 @@ const Playlists = () => {
   const dispatch = useDispatch<AppDispatch>();
   const playlist = useSelector((state: IRootState) => state.playlist);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [showMoreOptionModal, setShowMoreOptionModal] = useState(false);
 
   useEffect(() => {
     dispatch(playlistThunk.getOnePlaylist(param.id as string));
@@ -56,11 +57,11 @@ const Playlists = () => {
             }}
           />
         </div>
-        <div className="flex flex-col gap-8 text-white">
+        <div className="flex flex-col gap-8 text-white w-[800px]">
           <div>
             <span className="font-semibold text-sm">PLAYLIST</span>
             <h3
-              className="text-7xl font-bold uppercase cursor-pointer"
+              className="text-6xl font-bold uppercase cursor-pointer truncate"
               onClick={handleChangeName}
             >
               {playlist.playlists.onePlaylist?.name}
@@ -164,18 +165,21 @@ const Playlists = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row gap-2 items-end text-sm">
-            {/* <NavLink to={"#"} className="font-bold hover:underline">
-              Tuấn Anh Sky
-            </NavLink> */}
-            {/* <span className="text-[6px]">&#9898;</span> */}
-            <span className="font-semibold">
-              {playlist.playlists.onePlaylist?.songs.length} songs
-            </span>
-            <span className="text-[6px]">&#9898;</span>
-            <span className="">
-              {calculateHoursSongs(playlist.playlists.onePlaylist?.songs)}
-            </span>
+          <div className="flex flex-col">
+            <div className="text-base">
+              <h3>
+                <i>{playlist.playlists.onePlaylist?.description}</i>
+              </h3>
+            </div>
+            <div className="flex flex-row gap-2 items-end text-sm">
+              <span className="font-semibold">
+                {playlist.playlists.onePlaylist?.songs.length} songs
+              </span>
+              <span className="text-[6px]">&#9898;</span>
+              <span className="">
+                {calculateHoursSongs(playlist.playlists.onePlaylist?.songs)}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -187,7 +191,30 @@ const Playlists = () => {
             >
               <BsFillPlayFill className="text-black text-3xl" />
             </button>
-            <FiMoreHorizontal className="text-3xl cursor-pointer" />
+            <div
+              className="flex flex-col"
+              onMouseLeave={() => setShowMoreOptionModal(false)}
+              onClick={() => setShowMoreOptionModal(!showMoreOptionModal)}
+            >
+              <FiMoreHorizontal className="relative text-3xl cursor-pointer" />
+              <div className="w-40" onClick={(e) => e.stopPropagation()}>
+                <ul
+                  className={`bg-[#222227] w-40 rounded-sm text-sm ${
+                    showMoreOptionModal ? "absolute" : "hidden"
+                  }`}
+                >
+                  <li
+                    className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                    onClick={handleChangeName}
+                  >
+                    Edit playlist
+                  </li>
+                  <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                    Remove playlist
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <PlaylistSongs songs={playlist.playlists.onePlaylist?.songs} />
         </>
