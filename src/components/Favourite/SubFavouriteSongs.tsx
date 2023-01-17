@@ -126,10 +126,11 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
             <div className="hidden group-hover:inline-block relative">
               <FiMoreHorizontal
                 className="text-xl cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
                   if (props.indexDropdown !== props.rank)
                     props.setIndexDropdown(props.rank);
                   else props.setIndexDropdown(0);
+                  e.stopPropagation();
                 }}
               />
               <ul
