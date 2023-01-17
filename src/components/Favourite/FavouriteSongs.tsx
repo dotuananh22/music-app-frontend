@@ -37,13 +37,9 @@ const FavouriteSongs = () => {
           <SubFavouriteSongs
             id={song._id}
             rank={index + 1}
-            image={song.imageUrl}
-            songName={song.name}
-            singerName={joinSingers(song.singers)}
-            dateAdded={moment(song.createdAt).format("DD/MM/YYYY")}
-            songTime={moment.unix(song.songTime).utc().format("mm:ss")}
             favorite={true}
             indexDropdown={indexDropdown}
+            song={song}
             setIndexDropdown={setIndexDropdown}
           />
         ))}

@@ -6,6 +6,7 @@ import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import { useDispatch } from "react-redux";
 import { setChosenSong } from "features/song/songSlice";
+import { useNavigate } from "react-router-dom";
 
 interface MusicProps {
   id: string;
@@ -14,6 +15,7 @@ interface MusicProps {
 
 const Music = (props: MusicProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleChooseSong = () => {
     dispatch(setChosenSong(props.song));
   };
@@ -38,7 +40,12 @@ const Music = (props: MusicProps) => {
         </div>
       </div>
       <div>
-        <h5 className="text-white text-base truncate">{props.song.name}</h5>
+        <h5
+          className="text-white text-base truncate cursor-pointer hover:text-[#25A56A]"
+          onClick={() => navigate(`/song/${props.song._id}`)}
+        >
+          {props.song.name}
+        </h5>
         <p className="truncate text-sm" title={joinSingers(props.song.singers)}>
           {joinSingers(props.song.singers)}
         </p>

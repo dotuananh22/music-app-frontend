@@ -29,6 +29,24 @@ const getAllSongs = createAsyncThunk(
   }
 );
 
+const getSongById = createAsyncThunk(
+  "song/getSongById",
+  async (id: string, thunkApi) => {
+    try {
+      const response: ApiResponse<Song<Singer>> = await songApi.getSongById(id);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export default {
   getAllSongs,
+  getSongById,
 };

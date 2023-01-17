@@ -29,8 +29,16 @@ const registerWithUsernameAndPassword = async (
   return await axiosClient.post("/auth/register", body);
 };
 
-const updateUser = async (body: userSchema.UserUpdateInput) => {
+const updateUser = async (
+  body: userSchema.UserUpdateInput
+): Promise<ApiResponse<User>> => {
   return await axiosClient.put("/auth", body);
+};
+
+const updateUserPassword = async (
+  body: userSchema.UserUpdatePasswordInput
+): Promise<ApiResponse<undefined>> => {
+  return await axiosClient.put("/auth/password", body);
 };
 
 const logout = async (): Promise<ApiResponse<User>> => {
@@ -51,6 +59,7 @@ export default {
   loginWithUsernameAndPassword,
   registerWithUsernameAndPassword,
   updateUser,
+  updateUserPassword,
   logout,
   // deleteUser,
   // restoreUser,

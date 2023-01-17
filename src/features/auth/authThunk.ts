@@ -55,8 +55,46 @@ const logout = createAsyncThunk("auth/logout", async (_: void, thunkApi) => {
   }
 });
 
+const update = createAsyncThunk(
+  "auth/update",
+  async (user: userSchema.UserUpdateInput, thunkApi) => {
+    try {
+      const response: ApiResponse<User> = await userApi.updateUser(user);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+const updateUserPassword = createAsyncThunk(
+  "auth/updatePassword",
+  async (user: userSchema.UserUpdatePasswordInput, thunkApi) => {
+    try {
+      const response: ApiResponse<undefined> = await userApi.updateUserPassword(
+        user
+      );
+
+      if (!response.success) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.message;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export default {
   login,
   logout,
   getUser,
+  update,
+  updateUserPassword,
 };
