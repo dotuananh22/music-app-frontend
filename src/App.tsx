@@ -26,6 +26,7 @@ import NotFoundPage from "pages/NotFoundPage";
 import songThunk from "features/song/songThunk";
 import { SkeletonTheme } from "react-loading-skeleton";
 import singerThunk from "features/singer/singerThunk";
+import DetailSongPage from "pages/DetailSongPage";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -44,6 +45,7 @@ function App() {
             <Route path="/signup" element={<Register />} />
             <Route path="/artists" element={<ArtistPage />} />
             <Route path="/releases" element={<ReleasesPage />} />
+            <Route path="/song/:id" element={<DetailSongPage />} />
             <Route
               path="/library"
               element={

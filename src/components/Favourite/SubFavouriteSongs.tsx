@@ -10,22 +10,25 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import playlistThunk from "features/playlist/playlistThunk";
 import { FaTimes } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
+import joinSingers from "utils/joinSingers";
+import moment from "moment";
+import { setChosenSong } from "features/song/songSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 
 interface SubFavouriteSongsProps {
   id: string;
   rank: number;
-  image: string;
-  songName: string;
-  singerName: string;
-  dateAdded: string;
   favorite: boolean;
-  songTime: string;
   indexDropdown: number;
+  song: Song<Singer>;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const playlist = useSelector((state: IRootState) => state.playlist);
   const [playlists, setPlaylists] = useState<string[]>([]);
 
@@ -64,6 +67,10 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
     props.setIndexDropdown(0);
   };
 
+  const handleChosenSong = () => {
+    dispatch(setChosenSong(props.song));
+  };
+
   return (
     <>
       <tr
@@ -71,11 +78,12 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
         onMouseLeave={() => {
           props.setIndexDropdown(0);
         }}
+        onClick={handleChosenSong}
       >
         <td className="p-2 rounded-l-md">{props.rank}</td>
         <td className="flex flex-row gap-4 items-center p-2">
           <img
-            src={props.image || noImage}
+            src={props.song.imageUrl || noImage}
             alt="music"
             className="h-10 w-10"
             onError={(e) => {
@@ -84,14 +92,16 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              {props.songName}
+              {props.song.name}
             </p>
             <p className={`text-[#c0c0c0] truncate w-[300px]`}>
-              {props.singerName}
+              {joinSingers(props.song.singers)}
             </p>
           </div>
         </td>
-        <td className="p-2">{props.dateAdded}</td>
+        <td className="p-2">
+          {moment(props.song.createdAt).format("DD/MM/YYYY")}
+        </td>
         <td>
           <div className="flex justify-center p-2 cursor-pointer">
             {props.favorite ? (
@@ -107,7 +117,9 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
           </div>
         </td>
         <td className="text-center p-2">
-          <span className="text-center">{props.songTime}</span>
+          <span className="text-center">
+            {moment.unix(props.song.songTime).utc().format("mm:ss")}
+          </span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
           <div className="justify-end items-center flex">

@@ -1,4 +1,6 @@
-import { date, object, string, TypeOf } from "yup";
+import { date, object, ref, string, TypeOf } from "yup";
+
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,32}$/;
 
 const userLoginSchema = object({
   username: string().required("Username is required"),
@@ -6,7 +8,7 @@ const userLoginSchema = object({
   password: string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,32}$/,
+      PASSWORD_REGEX,
       "Password must be from 6 to 32 characters, one uppercase, one lowercase and one number"
     ),
 });
@@ -20,8 +22,40 @@ const userUpdateSchema = object({
   phoneNumber: string().required(),
 });
 
-export type UserLoginInput = TypeOf<typeof userLoginSchema>;
-export type UserRegisterInput = TypeOf<typeof userRegisterSchema>;
-export type UserUpdateInput = TypeOf<typeof userUpdateSchema>;
+const updateUserPasswordSchema = object({
+  oldPassword: string()
+    .required("Old password is required")
+    .matches(
+      PASSWORD_REGEX,
+      "Password must be from 6 to 32 characters, one uppercase, one lowercase and one number"
+    ),
+  newPassword: string()
+    .required("New password is required")
+    .matches(
+      PASSWORD_REGEX,
+      "Password must be from 6 to 32 characters, one uppercase, one lowercase and one number"
+    ),
+  // set confirm password to be equal to new password
+  confirmPassword: string()
+    .required("Confirm password is required")
+    .oneOf([ref("newPassword"), null], "Passwords must match"),
+});
 
-export { userLoginSchema, userRegisterSchema, userUpdateSchema };
+type UserLoginInput = TypeOf<typeof userLoginSchema>;
+type UserRegisterInput = TypeOf<typeof userRegisterSchema>;
+type UserUpdateInput = TypeOf<typeof userUpdateSchema>;
+type UserUpdatePasswordInput = TypeOf<typeof updateUserPasswordSchema>;
+
+export {
+  userLoginSchema,
+  userRegisterSchema,
+  userUpdateSchema,
+  updateUserPasswordSchema,
+};
+
+export type {
+  UserLoginInput,
+  UserRegisterInput,
+  UserUpdateInput,
+  UserUpdatePasswordInput,
+};

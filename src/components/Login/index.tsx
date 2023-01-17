@@ -13,12 +13,12 @@ import authThunk from "../../features/auth/authThunk";
 import { Formik, Form, Field, FastField } from "formik";
 import * as Yup from "yup";
 import { userSchema } from "schema";
-import { AppDispatch } from "app/store";
+import { AppDispatch, IRootState } from "app/store";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const auth = useSelector((state: any) => state.auth);
+  const auth = useSelector((state: IRootState) => state.auth);
 
   if (auth.loggedIn) {
     navigate("/");
@@ -62,7 +62,7 @@ const Login = () => {
                       component={InputFormik}
                       type="text"
                       placeholder={"Username or Email"}
-                      disabled={auth.loading}
+                      disabled={auth.loading.login}
                       title={touched.username && errors.username}
                     />
 
@@ -78,7 +78,7 @@ const Login = () => {
                       component={InputFormik}
                       type="password"
                       placeholder="Password"
-                      disabled={auth.loading}
+                      disabled={auth.loading.login}
                       title={touched.password && errors.password}
                     />
                   </div>
@@ -98,7 +98,7 @@ const Login = () => {
                   <div className="flex flex-col items-center gap-2 mt-4">
                     <div>
                       <button className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]">
-                        {auth.loading ? "LOGGING IN" : "SIGN IN"}
+                        {auth.loading.login ? "LOGGING IN" : "SIGN IN"}
                       </button>
                     </div>
                     <div>or</div>

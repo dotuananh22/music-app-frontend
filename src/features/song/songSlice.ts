@@ -11,6 +11,7 @@ interface SongState {
     getAllSongs: boolean;
     getAllTopSingleSongs: boolean;
     getAllNewSingleSongs: boolean;
+    getSongById: boolean;
   };
   songs: {
     allSongs: Song<Singer | string>[];
@@ -19,6 +20,7 @@ interface SongState {
   };
   song: {
     chosenSong: Song<Singer> | null;
+    songById: Song<Singer> | null;
   };
   pagination: PaginationResponse;
 }
@@ -28,6 +30,7 @@ const initialState: SongState = {
     getAllSongs: false,
     getAllTopSingleSongs: false,
     getAllNewSingleSongs: false,
+    getSongById: false,
   },
   songs: {
     allSongs: [],
@@ -36,6 +39,7 @@ const initialState: SongState = {
   },
   song: {
     chosenSong: null,
+    songById: null,
   },
   pagination: {
     page: 0,
@@ -106,6 +110,19 @@ const songSlice = createSlice({
         default:
           break;
       }
+      toast.error(action.payload as string);
+    });
+
+    // get song by id
+    builder.addCase(songThunk.getSongById.pending, (state, action) => {
+      state.loading.getSongById = true;
+    });
+    builder.addCase(songThunk.getSongById.fulfilled, (state, action) => {
+      state.loading.getSongById = false;
+      state.song.songById = action.payload;
+    });
+    builder.addCase(songThunk.getSongById.rejected, (state, action) => {
+      state.loading.getSongById = false;
       toast.error(action.payload as string);
     });
   },

@@ -1,19 +1,23 @@
-import { IRootState } from "app/store";
+import { AppDispatch, IRootState } from "app/store";
 import Input from "components/Common/Input";
 import InputFormik from "components/Common/InputFormik";
 import colors from "constants/color";
+import authThunk from "features/auth/authThunk";
 import { FastField, Form, Formik } from "formik";
 import moment from "moment";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userSchema } from "schema";
 
 const ProfileDetails = () => {
   const auth = useSelector((state: IRootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
-  if (auth.loading) return <div>Loading</div>;
+  if (auth.loading.getUser) return <div>Loading</div>;
 
-  console.log(auth.user);
+  const handleSubmit = (values: userSchema.UserUpdateInput) => {
+    dispatch(authThunk.update(values));
+  };
 
   return (
     <Formik
@@ -27,12 +31,11 @@ const ProfileDetails = () => {
       }}
       validationSchema={userSchema.userUpdateSchema}
       onSubmit={(values) => {
-        console.log(values);
+        handleSubmit(values);
       }}
     >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
-        console.log({ values, errors, touched });
         return (
           <Form
             className={`p-6 border border-[${colors.lineColor}] rounded-lg basis-2/3`}
@@ -57,7 +60,7 @@ const ProfileDetails = () => {
                   component={InputFormik}
                   type="text"
                   placeholder="Full name"
-                  disabled={auth.loading}
+                  disabled={auth.loading.getUser}
                   title={errors.fullName}
                 />
                 {/* <Input name="fullName" type="text" placeHolder="Full Name" handleChange={handleChange} value={profileDetailsBody.fullName} /> */}
@@ -69,7 +72,7 @@ const ProfileDetails = () => {
                   component={InputFormik}
                   type="text"
                   placeholder="Phone number"
-                  disabled={auth.loading}
+                  disabled={auth.loading.getUser}
                   title={errors.phoneNumber}
                 />
               </div>
@@ -80,7 +83,7 @@ const ProfileDetails = () => {
                   component={InputFormik}
                   type="text"
                   placeholder="Email"
-                  disabled={auth.loading}
+                  disabled={auth.loading.getUser}
                   title={errors.email}
                 />
                 {/* <Input name="email" type="email" placeHolder="Email" value={profileDetailsBody.email} handleChange={handleChange} /> */}
@@ -91,8 +94,8 @@ const ProfileDetails = () => {
                   name="birthday"
                   component={InputFormik}
                   type="date"
-                  placeholder="Birthday"
-                  disabled={auth.loading}
+                  patern="dd/mm/yyyy"
+                  disabled={auth.loading.getUser}
                   value={values.birthday}
                   title={errors.birthday}
                 />
@@ -122,7 +125,7 @@ const ProfileDetails = () => {
               className={`px-16 py-3 mt-4 bg-[${colors.greenColor}] w-auto rounded-lg text-white font-semibold transition ease-linear delay-50 hover:text-[${colors.greenColor}] hover:bg-[#222227]`}
               type="submit"
             >
-              SAVE
+              {auth.loading.updateUser ? "LOADING" : "SAVE"}
             </button>
           </Form>
         );
