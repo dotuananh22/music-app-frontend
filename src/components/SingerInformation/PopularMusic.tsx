@@ -25,7 +25,7 @@ const PopularMusic = (props: popularMusicProp) => {
           <tr className="border-b border-[#222227]">
             <th className="w-[20px] p-2"></th>
             <th className="text-left w-1/2 p-2 text-sm">TITLE</th>
-            <th className="p-2 text-left text-sm">DATE ADDED</th>
+            <th className="p-2 text-left text-sm">PUBLISH TIME</th>
             <th className="p-2 w-[20px]"></th>
             <th className="w-[100px] p-2 text-lg">
               <AiOutlineClockCircle className="m-auto" />

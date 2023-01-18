@@ -6,6 +6,7 @@ import Singer from "types/singer/Singer";
 import Song from "types/song/Song";
 import favoriteThunk from "./favoriteThunk";
 import { remove } from "lodash";
+import songApi from "api/songApi";
 
 type FavoriteState = {
   loading: {
@@ -71,11 +72,13 @@ const favoriteSlice = createSlice({
             state.favorites.favoriteSongIds.songs.push(action.payload._id);
             state.favorites.favoriteSongIds.totalTime +=
               action.payload.songTime;
+            songApi.updateLike(action.payload._id, 1);
             break;
           case FavoriteType.AddToFavoriteSongs:
             if (!state.favorites.favoriteSongs) return;
             state.favorites.favoriteSongs.songs.push(action.payload);
             state.favorites.favoriteSongs.totalTime += action.payload.songTime;
+            songApi.updateLike(action.payload._id, 1);
             break;
           default:
             break;
@@ -98,6 +101,7 @@ const favoriteSlice = createSlice({
             });
             state.favorites.favoriteSongIds.totalTime -=
               action.payload.songTime;
+            songApi.updateLike(action.payload._id, -1);
 
             break;
           case FavoriteType.RemoveFavoriteSongs:
@@ -111,6 +115,7 @@ const favoriteSlice = createSlice({
             );
 
             state.favorites.favoriteSongs.totalTime -= action.payload.songTime;
+            songApi.updateLike(action.payload._id, -1);
 
             break;
           default:

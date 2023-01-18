@@ -72,6 +72,20 @@ const authSlice = createSlice({
       toast.error(action.payload as string);
     });
 
+    // register
+    builder.addCase(authThunk.register.pending, (state) => {
+      state.loading.login = true;
+    });
+    builder.addCase(authThunk.register.fulfilled, (state, action) => {
+      state.loading.login = false;
+      // state.user = action.payload;
+      // state.loggedIn = true;
+    });
+    builder.addCase(authThunk.register.rejected, (state, action) => {
+      state.loading.login = false;
+      toast.error(action.payload as string);
+    });
+
     // getUser
     builder.addCase(authThunk.getUser.pending, (state) => {
       state.loading.getUser = true;

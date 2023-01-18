@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GiPauseButton } from "react-icons/gi";
 import { FaPlay, FaRandom } from "react-icons/fa";
 import {
@@ -12,6 +11,8 @@ import noImage from "assets/images/no-image.png";
 import { useSelector } from "react-redux";
 import { IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";
+import Skeleton from "react-loading-skeleton";
+import { ImSpinner2 } from "react-icons/im";
 
 const BottomMusicBar = () => {
   const song = useSelector((state: IRootState) => state.song);
@@ -33,6 +34,7 @@ const BottomMusicBar = () => {
       audio.duration && audio.play();
       audio.duration && setPlayClicked(true);
     });
+    audio.addEventListener("error", () => setLoadingAudio(false));
     setDuration(audio.duration ? audio.duration : 0);
     return () => {
       audio.removeEventListener("canplaythrough", () => setLoadingAudio(false));
@@ -119,12 +121,16 @@ const BottomMusicBar = () => {
         <div className={"flex flex-row gap-8 items-center"}>
           <FaRandom className="w-[20px] h-[20px] cursor-pointer hover:text-[#25A56A]" />
           <MdSkipPrevious className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
-          {!playClicked ? (
+          {!playClicked || loadingAudio ? (
             <div
               className="w-[36px] h-[36px] rounded-full bg-white grid place-items-center cursor-pointer"
               onClick={(e) => setPlayClicked(!playClicked)}
             >
-              <FaPlay className="w-[14px] h-[14px] text-black" />
+              {!loadingAudio ? (
+                <FaPlay className="w-[14px] h-[14px] text-black" />
+              ) : (
+                <ImSpinner2 className="text-[#25A56A] animate-spin" />
+              )}
             </div>
           ) : (
             <div
@@ -200,3 +206,5 @@ const BottomMusicBar = () => {
 };
 
 export default BottomMusicBar;
+
+// how to hash tailwindcss classes in React

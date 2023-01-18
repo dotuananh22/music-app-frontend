@@ -5,6 +5,8 @@ import QueryInput from "types/QueryInput";
 import Singer from "types/singer/Singer";
 import GetAllSongInput from "types/song/GetAllSongInput";
 import GetAllSongResponse from "types/song/GetAllSongResponse";
+import GetAllSongBySingerIdInput from "types/song/GetAllSongsBySingerIdInput";
+import GetSongsBySingerIdResponse from "types/song/GetSongsBySingerIdResponse";
 import Song from "types/song/Song";
 import SongType from "types/song/SongType";
 
@@ -23,6 +25,48 @@ const getAllSongs = createAsyncThunk(
         data: response.data,
         type: songQuery.type,
       };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+const getAllSongsBySingerId = createAsyncThunk(
+  "song/getAllSongsBySingerId",
+  async (songQuery: GetAllSongBySingerIdInput, thunkApi) => {
+    try {
+      const response: ApiResponse<GetSongsBySingerIdResponse> =
+        await songApi.getAllSongsBySingerId(
+          songQuery.query,
+          songQuery.singerId as string
+        );
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+const getReleasesSongsBySingerId = createAsyncThunk(
+  "song/getReleasesSongsBySingerId",
+  async (songQuery: GetAllSongBySingerIdInput, thunkApi) => {
+    try {
+      const response: ApiResponse<GetSongsBySingerIdResponse> =
+        await songApi.getAllSongsBySingerId(
+          songQuery.query,
+          songQuery.singerId as string
+        );
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -49,4 +93,6 @@ const getSongById = createAsyncThunk(
 export default {
   getAllSongs,
   getSongById,
+  getAllSongsBySingerId,
+  getReleasesSongsBySingerId,
 };
