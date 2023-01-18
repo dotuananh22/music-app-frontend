@@ -29,7 +29,24 @@ const login = createAsyncThunk(
       const response: ApiResponse<User> =
         await userApi.loginWithUsernameAndPassword(loginBody);
 
-      console.log(response);
+      if (!response.success || !response.data) {
+        return thunkAPI.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+const register = createAsyncThunk(
+  "auth/register",
+  async (registerBody: userSchema.UserLoginInput, thunkAPI) => {
+    try {
+      const response: ApiResponse<User> =
+        await userApi.registerWithUsernameAndPassword(registerBody);
+
       if (!response.success || !response.data) {
         return thunkAPI.rejectWithValue(response.message);
       }
@@ -94,6 +111,7 @@ const updateUserPassword = createAsyncThunk(
 export default {
   login,
   logout,
+  register,
   getUser,
   update,
   updateUserPassword,

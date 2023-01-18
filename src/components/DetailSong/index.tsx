@@ -22,6 +22,7 @@ import colors from "constants/color";
 import playlistThunk from "features/playlist/playlistThunk";
 import { BiDownload } from "react-icons/bi";
 import { GiMicrophone } from "react-icons/gi";
+import { setChosenSong } from "features/song/songSlice";
 
 const DetailSong = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -101,7 +102,7 @@ const DetailSong = () => {
         </div>
         <div className="flex flex-col gap-8 text-white w-[800px]">
           <div className="flex flex-col gap-2">
-            <h3 className="text-5xl font-bold truncate h-auto">
+            <h3 className="text-5xl font-bold truncate leading-normal">
               {songById.name}
             </h3>
             <span className="text-base">{joinSingers(songById.singers)}</span>
@@ -131,7 +132,10 @@ const DetailSong = () => {
         <button
           className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
         >
-          <BsFillPlayFill className="text-black text-3xl" />
+          <BsFillPlayFill
+            className="text-black text-3xl"
+            onClick={() => dispatch(setChosenSong(songById))}
+          />
         </button>
         <div
           className="flex flex-col"
@@ -186,8 +190,13 @@ const DetailSong = () => {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl text-white font-semibold mb-2">Lyric</h3>
-          <p className="text-justify text-base">
-            {songById.lyric || "Lyric not found"}
+          <p
+            className="text-justify text-base"
+            dangerouslySetInnerHTML={{
+              __html: songById.lyric || "Lyric not found",
+            }}
+          >
+            {/* {songById.lyric || "Lyric not found"} */}
           </p>
         </div>
       </div>

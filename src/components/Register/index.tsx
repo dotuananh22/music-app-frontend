@@ -6,8 +6,14 @@ import {
   AiOutlineTwitter,
 } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import MainLogo from "assets/images/logo/main-logo.png";
+import { FastField, Field, Form, Formik } from "formik";
+import { userSchema } from "schema";
+import InputFormik from "components/Common/InputFormik";
+import { useDispatch, useSelector } from "react-redux";
+import authThunk from "features/auth/authThunk";
+import { AppDispatch, IRootState } from "app/store";
 
 const Register = () => {
   const [registerBody, setRegisterBody] = useState({
@@ -15,9 +21,25 @@ const Register = () => {
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const auth = useSelector((state: IRootState) => state.auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterBody({ ...registerBody, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (values: userSchema.UserRegisterInput) => {
+    dispatch(
+      authThunk.register({
+        password: values.password,
+        username: values.username,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        navigate("/signin");
+      }
+    });
   };
 
   return (
@@ -34,71 +56,109 @@ const Register = () => {
           <div className="mb-8">
             <img src={MainLogo} alt="main-logo" className="h-[30px]" />
           </div>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-5">
-              {/* <Input
+          <Formik
+            initialValues={{
+              username: "",
+              password: "",
+              confirmPassword: "",
+              agreePolicy: false,
+            }}
+            validationSchema={userSchema.userRegisterSchema}
+            onSubmit={(values) => handleSubmit(values)}
+          >
+            {({ values, errors, touched }) => {
+              console.log(errors);
+              return (
+                <Form className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-5">
+                    {/* <Input
                 type="text"
                 name="fullName"
                 placeHolder="Name"
                 value={registerBody.fullName}
                 handleChange={handleChange}
               /> */}
-              {/* <Input
-                type="text"
-                name="username"
-                placeHolder="Username"
-                value={registerBody.username}
-                handleChange={handleChange}
-              />
-              <Input
-                type="password"
-                placeHolder="Password"
-                value={registerBody.password}
-                handleChange={handleChange}
-              /> */}
-            </div>
-            <div className="flex flex-row items-center">
-              <input
-                id="policy"
-                type="checkbox"
-                className="w-5 h-5 text-[#222227] bg-[#222227] rounded border-none outline-none"
-              />
-              <label htmlFor="policy" className="ml-2 cursor-pointer">
-                I agree to the
-              </label>
-              <NavLink
-                to={"/policy"}
-                className="text-[#25A56A] hover:underline ml-1"
-              >
-                Privacy Policy
-              </NavLink>
-            </div>
-            <div className="flex flex-col items-center gap-2 mt-4">
-              <div>
-                <button className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]">
-                  SIGN UP
-                </button>
-              </div>
-              <div>or</div>
-              <div className="flex flex-row items-center justify-between gap-4 w-[340px] mt-2">
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#3B5998] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#3B5998] hover:bg-[#C0C0C0]">
-                  <FaFacebookF />
-                </span>
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#55ACEE] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#55ACEE] hover:bg-[#C0C0C0]">
-                  <AiOutlineTwitter />
-                </span>
-                <span className="w-[100px] h-[46px] rounded-xl bg-[#DF4A32] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#DF4A32] hover:bg-[#C0C0C0]">
-                  <AiOutlineGoogle />
-                </span>
-              </div>
-              <div className="flex flex-row gap-1 items-center mt-6">
-                <span className="text-white">Already have an account?</span>
-                <div className="text-[#25A56A] hover:underline">
-                  <NavLink to={"/signin"}>Sign in!</NavLink>
-                </div>
-              </div>
-            </div>
-          </div>
+                    <FastField
+                      name="username"
+                      component={InputFormik}
+                      type="text"
+                      placeholder="Username"
+                      title={touched.username && errors.username}
+                    />
+                    <FastField
+                      name="password"
+                      component={InputFormik}
+                      type="password"
+                      placeholder="Password"
+                      title={touched.password && errors.password}
+                    />
+                    <FastField
+                      name="confirmPassword"
+                      component={InputFormik}
+                      type="password"
+                      placeholder="Confirm Password"
+                      title={touched.confirmPassword && errors.confirmPassword}
+                    />
+                  </div>
+                  <div className="flex flex-row items-center">
+                    <Field>
+                      {({ field }: { field: any }) => (
+                        <input
+                          name="agreePolicy"
+                          id="policy"
+                          onChange={field.onChange}
+                          type="checkbox"
+                          className="w-5 h-5 text-[#222227] bg-[#222227] rounded border-none outline-none"
+                        />
+                      )}
+                    </Field>
+                    <label htmlFor="policy" className="ml-2 cursor-pointer">
+                      I agree to the
+                    </label>
+                    <NavLink
+                      to={"/policy"}
+                      className="text-[#25A56A] hover:underline ml-1"
+                    >
+                      Privacy Policy
+                    </NavLink>
+                  </div>
+                  <span className="text-xs text-red-500">
+                    {errors.agreePolicy}
+                  </span>
+                  <div className="flex flex-col items-center gap-2 mt-4">
+                    <div>
+                      <button
+                        className="h-[52px] w-[340px] bg-[#25A56A] border-transparent rounded-xl font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                        type="submit"
+                      >
+                        {auth.loading.login ? "LOADING" : "SIGN UP"}
+                      </button>
+                    </div>
+                    <div>or</div>
+                    <div className="flex flex-row items-center justify-between gap-4 w-[340px] mt-2">
+                      <span className="w-[100px] h-[46px] rounded-xl bg-[#3B5998] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#3B5998] hover:bg-[#C0C0C0]">
+                        <FaFacebookF />
+                      </span>
+                      <span className="w-[100px] h-[46px] rounded-xl bg-[#55ACEE] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#55ACEE] hover:bg-[#C0C0C0]">
+                        <AiOutlineTwitter />
+                      </span>
+                      <span className="w-[100px] h-[46px] rounded-xl bg-[#DF4A32] grid place-items-center text-xl text-white cursor-pointer transition ease-linear delay-50 hover:text-[#DF4A32] hover:bg-[#C0C0C0]">
+                        <AiOutlineGoogle />
+                      </span>
+                    </div>
+                    <div className="flex flex-row gap-1 items-center mt-6">
+                      <span className="text-white">
+                        Already have an account?
+                      </span>
+                      <div className="text-[#25A56A] hover:underline">
+                        <NavLink to={"/signin"}>Sign in!</NavLink>
+                      </div>
+                    </div>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     </div>

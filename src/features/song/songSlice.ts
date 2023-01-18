@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import songApi from "api/songApi";
 import { toast } from "react-toastify";
 import PaginationResponse from "types/PaginationResponse";
 import Singer from "types/singer/Singer";
@@ -11,12 +12,16 @@ interface SongState {
     getAllSongs: boolean;
     getAllTopSingleSongs: boolean;
     getAllNewSingleSongs: boolean;
+    getSongsBySingerId: boolean;
     getSongById: boolean;
+    getReleaseSongsBySingerId: boolean;
   };
   songs: {
     allSongs: Song<Singer | string>[];
     topSingleSongs: Song<Singer | string>[];
     newSingleSongs: Song<Singer | string>[];
+    songsBySingerId: Song<Singer>[];
+    releaseSongsBySingerId: Song<Singer>[];
   };
   song: {
     chosenSong: Song<Singer> | null;
@@ -29,13 +34,17 @@ const initialState: SongState = {
   loading: {
     getAllSongs: false,
     getAllTopSingleSongs: false,
+    getSongsBySingerId: false,
     getAllNewSingleSongs: false,
     getSongById: false,
+    getReleaseSongsBySingerId: false,
   },
   songs: {
     allSongs: [],
     topSingleSongs: [],
     newSingleSongs: [],
+    songsBySingerId: [],
+    releaseSongsBySingerId: [],
   },
   song: {
     chosenSong: null,
@@ -56,7 +65,10 @@ const songSlice = createSlice({
   initialState,
   reducers: {
     setChosenSong(state, action) {
+      state.song.chosenSong?._id !== action.payload._id &&
+        songApi.addOneListen(action.payload._id);
       state.song.chosenSong = action.payload;
+      // call api
     },
   },
   extraReducers: (builder) => {
@@ -125,6 +137,41 @@ const songSlice = createSlice({
       state.loading.getSongById = false;
       toast.error(action.payload as string);
     });
+
+    //get songs by singer id
+    builder.addCase(
+      songThunk.getAllSongsBySingerId.pending,
+      (state, action) => {
+        state.loading.getSongsBySingerId = true;
+      }
+    );
+    builder.addCase(
+      songThunk.getAllSongsBySingerId.fulfilled,
+      (state, action) => {
+        state.loading.getSongsBySingerId = false;
+        state.songs.songsBySingerId = action.payload.data;
+      }
+    );
+
+    // get release songs by singer id
+    builder.addCase(
+      songThunk.getReleasesSongsBySingerId.pending,
+      (state, action) => {
+        state.loading.getReleaseSongsBySingerId = true;
+      }
+    );
+    builder.addCase(
+      songThunk.getReleasesSongsBySingerId.fulfilled,
+      (state, action) => {
+        state.loading.getReleaseSongsBySingerId = false;
+        state.songs.releaseSongsBySingerId = action.payload.data;
+        state.pagination = action.payload.pagination;
+      }
+    );
+
+    // add one listen
+    // builder.addCase(songThunk.addOneListen.pending, (state, action) => {});
+    // builder.addCase(songThunk.addOneListen.fulfilled, (state, action) => {});
   },
 });
 

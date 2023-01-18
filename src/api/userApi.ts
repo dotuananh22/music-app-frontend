@@ -24,8 +24,8 @@ const loginWithUsernameAndPassword = async (
 };
 
 const registerWithUsernameAndPassword = async (
-  body: userSchema.UserRegisterInput
-) => {
+  body: userSchema.UserLoginInput
+): Promise<ApiResponse<User>> => {
   return await axiosClient.post("/auth/register", body);
 };
 

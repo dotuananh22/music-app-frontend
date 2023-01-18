@@ -3,6 +3,8 @@ import ApiResponse from "types/ApiResponse";
 import QueryInput from "types/QueryInput";
 import Singer from "types/singer/Singer";
 import GetAllSongResponse from "types/song/GetAllSongResponse";
+import GetAllSongBySingerIdInput from "types/song/GetAllSongsBySingerIdInput";
+import GetSongsBySingerIdResponse from "types/song/GetSongsBySingerIdResponse";
 import Song from "types/song/Song";
 import axiosClient from "./axiosClient";
 
@@ -16,11 +18,38 @@ const getAllSongs = async (
   );
 };
 
+const getAllSongsBySingerId = async (
+  query: QueryInput<Song<string>>,
+  singerId: string
+): Promise<ApiResponse<GetSongsBySingerIdResponse>> => {
+  return await axiosClient.get(
+    `/song/singer/${singerId}?limit=${query?.limit}&skip=${
+      query.skip
+    }&sort=${JSON.stringify(query.sort)}&order=${JSON.stringify(query.order)}`
+  );
+};
+
 const getSongById = async (id: string): Promise<ApiResponse<Song<Singer>>> => {
   return await axiosClient.get(`/song/${id}`);
+};
+
+const addOneListen = async (id: string): Promise<ApiResponse<Song<string>>> => {
+  return await axiosClient.patch(`/song/listen/${id}`);
+};
+
+const updateLike = async (
+  id: string,
+  like: number
+): Promise<ApiResponse<Song<string>>> => {
+  return await axiosClient.patch(`/song/like/${id}`, {
+    likes: like,
+  });
 };
 
 export default {
   getAllSongs,
   getSongById,
+  getAllSongsBySingerId,
+  addOneListen,
+  updateLike,
 };

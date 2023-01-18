@@ -115,7 +115,7 @@ const SubPopularMusic = (props: SubPopularMusicProps) => {
           </div>
         </td>
         <td className="p-2">
-          {moment(props.song.createdAt).format("DD/MM/YYYY")}
+          {moment(props.song.publishTime).format("DD/MM/YYYY")}
         </td>
         <td>
           <div className="flex justify-center p-2 cursor-pointer">
