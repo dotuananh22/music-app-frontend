@@ -1,14 +1,18 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect } from "react";
 import noImage from "assets/images/no-image.png";
-import { BsFillPlayFill } from "react-icons/bs";
+import {
+  BsFillCloudArrowUpFill,
+  BsFillPlayFill,
+  BsMusicNoteBeamed,
+} from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineClockCircle, AiOutlineHeart } from "react-icons/ai";
 import { FaHeadphonesAlt, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import songThunk from "features/song/songThunk";
 import { AppDispatch, IRootState } from "app/store";
-import calculateHoursSongs from "utils/calculateHoursSongs";
 import moment from "moment";
 import FavoriteType from "types/favorite/FavoriteType";
 import favoriteThunk from "features/favorite/favoriteThunk";
@@ -16,6 +20,8 @@ import joinSingers from "utils/joinSingers";
 import Skeleton from "react-loading-skeleton";
 import colors from "constants/color";
 import playlistThunk from "features/playlist/playlistThunk";
+import { BiDownload } from "react-icons/bi";
+import { GiMicrophone } from "react-icons/gi";
 
 const DetailSong = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -94,28 +100,29 @@ const DetailSong = () => {
           />
         </div>
         <div className="flex flex-col gap-8 text-white w-[800px]">
-          <div>
-            <span className="font-semibold text-sm">SONG</span>
-            <h3 className="text-6xl font-bold uppercase cursor-pointer truncate">
+          <div className="flex flex-col gap-2">
+            <h3 className="text-5xl font-bold truncate h-auto">
               {songById.name}
             </h3>
-            <span>{joinSingers(songById.singers)}</span>
+            <span className="text-base">{joinSingers(songById.singers)}</span>
           </div>
           <div className="flex flex-col">
-            <div className="flex flex-col gap-2 text-sm">
-              <span className="">
+            <div className="flex flex-row gap-8 text-sm font-semibold">
+              <span className="flex flex-row items-center gap-1">
+                <AiOutlineClockCircle className="text-lg" />
                 {moment.unix(songById.songTime).utc().format("mm:ss")}
               </span>
-              <div className="flex flex-row items-center gap-4">
-                <span className="font-semibold flex flex-row items-center gap-2">
-                  <AiOutlineHeart className="text-lg" />
-                  {songById.likes}
-                </span>
-                <span className="text-[6px]">&#9898;</span>
-                <span className="flex flex-row items-center gap-2">
-                  <FaHeadphonesAlt /> {songById.listens}
-                </span>
-              </div>
+              <span className="flex flex-row items-center gap-1">
+                <AiOutlineHeart className="text-lg" />
+                {songById.likes}
+              </span>
+              <span className="flex flex-row items-center gap-1">
+                <FaHeadphonesAlt className="text-lg" /> {songById.listens}
+              </span>
+              <span className="flex flex-row items-center gap-1">
+                <BiDownload className="text-lg" />
+                {songById.downloads}
+              </span>
             </div>
           </div>
         </div>
@@ -132,9 +139,9 @@ const DetailSong = () => {
           onClick={() => setShowMoreOptionModal(!showMoreOptionModal)}
         >
           <FiMoreHorizontal className="relative text-3xl cursor-pointer" />
-          <div className="w-fit" onClick={(e) => e.stopPropagation()}>
+          <div className="w-52" onClick={(e) => e.stopPropagation()}>
             <ul
-              className={`bg-[#222227] w-40 rounded-sm text-sm ${
+              className={`bg-[#222227] w-52 rounded-sm text-sm ${
                 showMoreOptionModal ? "absolute" : "hidden"
               }`}
             >
@@ -143,30 +150,46 @@ const DetailSong = () => {
                 // onClick={handleChangeName}
                 onClick={() => onShowModal()}
               >
-                Add to Playlist
+                Add to your playlists
               </li>
               {!favoriteSongIds?.songs.includes(songById._id) ? (
                 <li
                   className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
                   onClick={handleAddToFavorite}
                 >
-                  Add to favorite
+                  Add to your Favourite
                 </li>
               ) : (
                 <li
                   className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
                   onClick={handleRemoveFromFavorite}
                 >
-                  Remove from favorite
+                  Remove from your Favourite
                 </li>
               )}
             </ul>
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <h3 className="text-xl text-white font-semibold mb-2">Lyrics</h3>
-        <p className="text-justify">{songById.lyric || "Lyrics not found"}</p>
+      <div className="mt-12 flex flex-col gap-4">
+        <div className="flex flex-row gap-4 items-center text-xl">
+          <BsMusicNoteBeamed />
+          <h3>{songById.name}</h3>
+        </div>
+        <div className="flex flex-row gap-4 items-center text-xl">
+          <GiMicrophone />
+          <h3>{joinSingers(songById.singers)}</h3>
+        </div>
+        <div className="flex flex-row gap-4 items-center text-xl">
+          <BsFillCloudArrowUpFill />
+          <h3>{moment(songById.publishTime).format("DD/MM/YYYY")}</h3>
+        </div>
+        <div className="mt-4">
+          <h3 className="text-2xl text-white font-semibold mb-2">Lyric</h3>
+          <p className="text-justify text-base">
+            {songById.lyric || "Lyric not found"}
+          </p>
+        </div>
       </div>
       <div
         id="defaultModal"

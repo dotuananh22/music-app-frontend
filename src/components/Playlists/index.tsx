@@ -166,7 +166,7 @@ const Playlists = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="text-base">
+            <div className="text-base mb-2 truncate">
               <h3>
                 <i>{playlist.playlists.onePlaylist?.description}</i>
               </h3>

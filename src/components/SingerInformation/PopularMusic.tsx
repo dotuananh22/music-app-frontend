@@ -1,45 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 // @ts-ignore
-import ProfileImage from "assets/images/no-image.png";
 import SubPopularMusic from "./SubPopularMusic";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
+import { useSelector } from "react-redux";
+import { IRootState } from "app/store";
+import { useParams } from "react-router-dom";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
-const PopularMusic = () => {
+interface popularMusicProp {
+  songs: Song<Singer>[] | undefined;
+}
+
+const PopularMusic = (props: popularMusicProp) => {
+  const favorite = useSelector((state: IRootState) => state.favorite);
+  const param = useParams();
+  const [indexDropdown, setIndexDropdown] = useState(0);
+
   return (
-    <div className="flex flex-col gap-8 py-2 pt-6 border-t border-t-[#222227]">
+    <>
       <h2 className="text-4xl text-white">Popular Music</h2>
-      <ul className={`flex flex-col`}>
-        <li className="py-3 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPopularMusic
-            rank={1}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            views="99,000,100"
-            songTime="5:01"
-            favorite={true}
-          />
-        </li>
-        <li className="py-3 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPopularMusic
-            rank={2}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            views="99,000,100"
-            songTime="5:01"
-            favorite={false}
-          />
-        </li>
-        <li className="py-3 hover:bg-[#2C2F32] px-4 rounded-md cursor-pointer">
-          <SubPopularMusic
-            rank={3}
-            image={ProfileImage}
-            songName="Chúng ta của hiện tại"
-            views="99,000,100"
-            songTime="5:01"
-            favorite={false}
-          />
-        </li>
-      </ul>
-    </div>
+      <table className="table-auto w-full mt-8">
+        <thead>
+          <tr className="border-b border-[#222227]">
+            <th className="w-[20px] p-2"></th>
+            <th className="text-left w-1/2 p-2 text-sm">TITLE</th>
+            <th className="p-2 text-left text-sm">DATE ADDED</th>
+            <th className="p-2 w-[20px]"></th>
+            <th className="w-[100px] p-2 text-lg">
+              <AiOutlineClockCircle className="m-auto" />
+            </th>
+            <th className="p-2 w-[30px]"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.songs &&
+            props.songs.map((song, index) => (
+              <SubPopularMusic
+                song={song}
+                playlistId={param.id as string}
+                rank={index + 1}
+                favorite={
+                  favorite.favorites.favoriteSongIds?.songs.includes(
+                    song._id
+                  ) as boolean
+                }
+                indexDropdown={indexDropdown}
+                setIndexDropdown={setIndexDropdown}
+              />
+            ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 
