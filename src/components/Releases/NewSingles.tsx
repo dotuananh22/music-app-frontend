@@ -42,8 +42,8 @@ const NewSingles = () => {
             <Skeleton height={"50px"} />
           </>
         ) : (
-          song.songs.newSingleSongs.map((song) => {
-            return <Single song={song} />;
+          song.songs.newSingleSongs.map((song, index) => {
+            return <Single song={song} index={index} />;
           })
         )}
       </div>

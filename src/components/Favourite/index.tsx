@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { AppDispatch, IRootState } from "app/store";
 import favoriteThunk from "features/favorite/favoriteThunk";
+import { setListChosenSong } from "features/song/songSlice";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
@@ -8,8 +9,6 @@ import { FaHeart } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import FavouriteSongs from "./FavouriteSongs";
-
-// @ts-ignore
 
 const Favourite = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,6 +46,18 @@ const Favourite = () => {
           <div className="flex flex-row gap-8 items-center mt-8 ml-8">
             <button
               className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+              onClick={() =>
+                dispatch(
+                  setListChosenSong({
+                    indexListChosenSong:
+                      favorite.favorites.favoriteSongs?.songs.length === 0
+                        ? -1
+                        : 0,
+                    listChosenSong:
+                      favorite.favorites.favoriteSongs?.songs || [],
+                  })
+                )
+              }
             >
               <BsFillPlayFill className="text-black text-3xl" />
             </button>

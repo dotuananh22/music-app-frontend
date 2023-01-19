@@ -8,8 +8,15 @@ import { AppDispatch, IRootState } from "app/store";
 import { useParams } from "react-router-dom";
 import singerThunk from "features/singer/singerThunk";
 import moment from "moment";
+import { setListChosenSong } from "features/song/songSlice";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
 
-const Information = () => {
+interface InformationProps {
+  songs: Song<Singer>[];
+}
+
+const Information = (props: InformationProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const singer = useSelector(
     (state: IRootState) => state.singer.singer.getOneSinger
@@ -45,7 +52,10 @@ const Information = () => {
             <p>Quốc gia: {singer?.country}</p>
           </div>
           <div className="text-xl mt-8">
-            <span className="font-semibold">{singer?.follower}</span> followers
+            <span className="font-semibold">
+              {singer?.follower.toLocaleString("en-US")}
+            </span>{" "}
+            followers
           </div>
         </div>
         <div className="basis-3/4">
@@ -62,6 +72,14 @@ const Information = () => {
       <div className="flex flex-row gap-10 items-center">
         <button
           className={`w-[50px] h-[50px] rounded-full bg-[#1ED760] grid place-items-center hover:scale-110 transition-all duration-200 ease-in-out`}
+          onClick={() =>
+            dispatch(
+              setListChosenSong({
+                listChosenSong: props.songs || [],
+                indexListChosenSong: props.songs?.length ? 0 : -1,
+              })
+            )
+          }
         >
           <BsFillPlayFill className="text-black text-3xl" />
         </button>

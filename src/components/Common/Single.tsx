@@ -7,15 +7,18 @@ import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import { setChosenSong } from "features/song/songSlice";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
+import { get } from "lodash";
 
 interface SingleProps {
   song: Song<Singer | string>;
+  handlePlayMusic?: (index: number) => void;
+  index: number;
 }
 
 const Single = (props: SingleProps) => {
-  const dispatch = useDispatch();
   const handlePlayMusic = () => {
-    dispatch(setChosenSong(props.song));
+    props.handlePlayMusic?.(props.index);
   };
   return (
     <div className="flex flex-row justify-between items-center border-t border-[#222227] py-2">
@@ -42,8 +45,19 @@ const Single = (props: SingleProps) => {
           <h5 className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear w-[200px]">
             {props.song.name}
           </h5>
-          <p className="text-sm hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear truncate w-[200px]">
-            {joinSingers(props.song.singers)}
+          <p className="text-sm cursor-pointer transition-all duration-300 ease-linear truncate w-[200px]">
+            {/* {joinSingers(props.song.singers)} */}
+            {props.song.singers.map((singer, index) => (
+              <>
+                <NavLink
+                  to={`/artist/${get(singer, "_id", "")}`}
+                  className="hover:text-[#25A56A]"
+                >
+                  {get(singer, "nickname", "")}
+                </NavLink>
+                {index < props.song.singers.length - 1 && ", "}
+              </>
+            ))}
           </p>
         </div>
       </div>

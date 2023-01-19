@@ -17,12 +17,14 @@ import moment from "moment";
 import { setChosenSong } from "features/song/songSlice";
 
 interface SubPlaylistSongsProps {
+  index: number;
   rank: number;
   song: Song<Singer | string>;
   playlistId: string;
   favorite: boolean;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
+  handlePlayMusic: (index: number) => void;
 }
 
 const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
@@ -91,7 +93,7 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
           props.setIndexDropdown(0);
         }}
         onClick={() => {
-          dispatch(setChosenSong(props.song));
+          props.handlePlayMusic(props.index);
         }}
       >
         <td className="p-2 rounded-l-md">{props.rank}</td>

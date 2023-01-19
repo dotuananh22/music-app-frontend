@@ -22,7 +22,7 @@ import colors from "constants/color";
 import playlistThunk from "features/playlist/playlistThunk";
 import { BiDownload } from "react-icons/bi";
 import { GiMicrophone } from "react-icons/gi";
-import { setChosenSong } from "features/song/songSlice";
+import { changeLikeSong, setChosenSong } from "features/song/songSlice";
 
 const DetailSong = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +53,11 @@ const DetailSong = () => {
         songId: songById._id,
         type: FavoriteType.AddToFavoriteIds,
       })
-    );
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(changeLikeSong(1));
+      }
+    });
   };
 
   const onShowModal = () => {
@@ -67,7 +71,11 @@ const DetailSong = () => {
         songId: songById._id,
         type: FavoriteType.RemoveFavoriteIds,
       })
-    );
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(changeLikeSong(-1));
+      }
+    });
   };
 
   const handleAddSongToPlaylists = () => {
@@ -115,14 +123,15 @@ const DetailSong = () => {
               </span>
               <span className="flex flex-row items-center gap-1">
                 <AiOutlineHeart className="text-lg" />
-                {songById.likes}
+                {songById.likes.toLocaleString("en-US")}
               </span>
               <span className="flex flex-row items-center gap-1">
-                <FaHeadphonesAlt className="text-lg" /> {songById.listens}
+                <FaHeadphonesAlt className="text-lg" />{" "}
+                {songById.listens.toLocaleString("en-US")}
               </span>
               <span className="flex flex-row items-center gap-1">
                 <BiDownload className="text-lg" />
-                {songById.downloads}
+                {songById.downloads.toLocaleString("en-US")}
               </span>
             </div>
           </div>
