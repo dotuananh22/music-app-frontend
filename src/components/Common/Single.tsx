@@ -42,9 +42,12 @@ const Single = (props: SingleProps) => {
           </div>
         </div>
         <div>
-          <h5 className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear w-[200px]">
+          <NavLink
+            to={`/song/${props.song._id}`}
+            className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear w-[200px]"
+          >
             {props.song.name}
-          </h5>
+          </NavLink>
           <p className="text-sm cursor-pointer transition-all duration-300 ease-linear truncate w-[200px]">
             {/* {joinSingers(props.song.singers)} */}
             {props.song.singers.map((singer, index) => (
