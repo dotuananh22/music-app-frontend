@@ -85,18 +85,6 @@ const Releases = () => {
                 />
               ))
             )}
-            {/* <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music /> */}
           </div>
           <Pagination
             currentPage={currentPage}

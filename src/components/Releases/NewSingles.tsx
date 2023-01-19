@@ -9,6 +9,7 @@ import joinSingers from "utils/joinSingers";
 import moment from "moment";
 import SongType from "types/song/SongType";
 import Skeleton from "react-loading-skeleton";
+import { setListChosenSong } from "features/song/songSlice";
 
 const NewSingles = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,15 @@ const NewSingles = () => {
     );
   }, []);
 
+  const handlePlayMusic = (index: number) => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: index,
+        listChosenSong: song.songs.newSingleSongs,
+      })
+    );
+  };
+
   return (
     <div className="mt-6">
       <div className="flex flex-row gap-3 items-center text-3xl mb-6">
@@ -43,7 +53,13 @@ const NewSingles = () => {
           </>
         ) : (
           song.songs.newSingleSongs.map((song, index) => {
-            return <Single song={song} index={index} />;
+            return (
+              <Single
+                song={song}
+                index={index}
+                handlePlayMusic={handlePlayMusic}
+              />
+            );
           })
         )}
       </div>

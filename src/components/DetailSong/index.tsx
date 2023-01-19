@@ -22,7 +22,11 @@ import colors from "constants/color";
 import playlistThunk from "features/playlist/playlistThunk";
 import { BiDownload } from "react-icons/bi";
 import { GiMicrophone } from "react-icons/gi";
-import { changeLikeSong, setChosenSong } from "features/song/songSlice";
+import {
+  changeLikeSong,
+  setChosenSong,
+  setListChosenSong,
+} from "features/song/songSlice";
 
 const DetailSong = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -95,6 +99,8 @@ const DetailSong = () => {
         setShowModal(false);
       });
   };
+
+  const handlePlayMusic = () => {};
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
@@ -143,7 +149,7 @@ const DetailSong = () => {
         >
           <BsFillPlayFill
             className="text-black text-3xl"
-            onClick={() => dispatch(setChosenSong(songById))}
+            onClick={handlePlayMusic}
           />
         </button>
         <div

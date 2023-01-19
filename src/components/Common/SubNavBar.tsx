@@ -21,7 +21,7 @@ const SubNavBar = (props: SubNavBarProps) => {
           />
           <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-xl hover:text-[#25A56A] cursor-pointer" />
         </div>
-        <div>
+        {/* <div>
           <button className="flex flex-row items-center text-white text-sm group">
             <span className="group-hover:text-[#25A56A] transition-all duration-300 ease-in-out">
               All artists
@@ -36,19 +36,9 @@ const SubNavBar = (props: SubNavBarProps) => {
             </span>{" "}
             <BiChevronDown className="text-xl" />
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-row gap-2 items-center bg-[#222227] rounded-xl px-1">
-        <button
-          className={`px-4 rounded-xl ${
-            props.sort[0] === "likes"
-              ? "bg-[#25A56A] text-white"
-              : "hover:text-white"
-          } text-center h-[32px]`}
-          onClick={() => props.handleSort("likes")}
-        >
-          Like
-        </button>
         <button
           className={`px-4 rounded-xl ${
             props.sort[0] === "listens"
@@ -58,6 +48,16 @@ const SubNavBar = (props: SubNavBarProps) => {
           onClick={() => props.handleSort("listens")}
         >
           Popular
+        </button>
+        <button
+          className={`px-4 rounded-xl ${
+            props.sort[0] === "likes"
+              ? "bg-[#25A56A] text-white"
+              : "hover:text-white"
+          } text-center h-[32px]`}
+          onClick={() => props.handleSort("likes")}
+        >
+          Like
         </button>
         <button
           className={`px-4 rounded-xl ${
