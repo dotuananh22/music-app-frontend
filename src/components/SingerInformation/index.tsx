@@ -4,7 +4,6 @@ import Information from "./Information";
 import PopularMusic from "./PopularMusic";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "app/store";
-import playlistThunk from "features/playlist/playlistThunk";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { useParams } from "react-router-dom";
 import songThunk from "features/song/songThunk";
@@ -39,7 +38,7 @@ const SingerInformation = () => {
       })
     );
     dispatch(favoriteThunk.getAllFavoriteSongIds());
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     dispatch(
@@ -53,13 +52,11 @@ const SingerInformation = () => {
         singerId: params.id as string,
       })
     );
-  }, [page, dispatch]);
-
-  console.log(song.songs.songsBySingerId);
+  }, [page, dispatch, params.id]);
 
   return (
     <div>
-      <Information />
+      <Information songs={song.songs.songsBySingerId} />
       <PopularMusic songs={song.songs.songsBySingerId} />
       <Releases
         songs={song.songs.releaseSongsBySingerId}

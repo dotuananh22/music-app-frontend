@@ -23,9 +23,12 @@ const Footer = () => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-2 pt-3">
               <AiOutlineMail className="text-lg text-[#25A56A]" />
-              <span className="hover:text-[#25A56A] cursor-pointer">
+              <a
+                href="mailto:suport@amusic.com"
+                className="hover:text-[#25A56A] cursor-pointer"
+              >
                 support@amusic.com
-              </span>
+              </a>
             </div>
             <div className="flex flex-row items-center gap-2">
               <BsTelephone className="text-[#25A56A]" />
@@ -96,11 +99,19 @@ const Footer = () => {
       <div className="flex flex-row justify-between items-center">
         <span>
           © AMusic, 2022. Created by{" "}
-          <a href="#" className="hover:text-[#25A56A]">
+          <a
+            href="https://www.facebook.com/tuananh2202"
+            target={"_blank"}
+            className="hover:text-[#25A56A]"
+          >
             Do Tuan Anh
           </a>
           ,{" "}
-          <a href="#" className="hover:text-[#25A56A]">
+          <a
+            href="https://www.facebook.com/profile.php?id=100034981484099"
+            target={"_blank"}
+            className="hover:text-[#25A56A]"
+          >
             Pham Quoc An
           </a>
           .

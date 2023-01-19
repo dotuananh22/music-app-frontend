@@ -15,6 +15,7 @@ import NoImage from "assets/images/no-image.png";
 import { FastField, Form, Formik } from "formik";
 import { playlistSchema } from "schema";
 import InputFormik from "components/Common/InputFormik";
+import { setListChosenSong } from "features/song/songSlice";
 
 const Playlists = () => {
   const param = useParams();
@@ -188,6 +189,17 @@ const Playlists = () => {
           <div className="flex flex-row gap-8 items-center mt-8 ml-8">
             <button
               className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+              onClick={() =>
+                dispatch(
+                  setListChosenSong({
+                    indexListChosenSong:
+                      playlist.playlists.onePlaylist?.songs.length === 0
+                        ? -1
+                        : 0,
+                    listChosenSong: playlist.playlists.onePlaylist?.songs || [],
+                  })
+                )
+              }
             >
               <BsFillPlayFill className="text-black text-3xl" />
             </button>

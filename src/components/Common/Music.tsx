@@ -6,18 +6,23 @@ import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import { useDispatch } from "react-redux";
 import { setChosenSong } from "features/song/songSlice";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { get } from "lodash";
 
 interface MusicProps {
   id: string;
   song: Song<Singer | string>;
+  index: number;
+  handlePlayMusic?: (index: number) => void;
 }
 
 const Music = (props: MusicProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChooseSong = () => {
-    dispatch(setChosenSong(props.song));
+    // dispatch(setChosenSong(props.song));
+    console.log(props.index);
+    props.handlePlayMusic?.(props.index);
   };
   return (
     <div className="flex flex-col gap-2">
@@ -47,7 +52,17 @@ const Music = (props: MusicProps) => {
           {props.song.name}
         </h5>
         <p className="truncate text-sm" title={joinSingers(props.song.singers)}>
-          {joinSingers(props.song.singers)}
+          {props.song.singers.map((singer, index) => (
+            <>
+              <NavLink
+                to={`/artist/${get(singer, "_id", "")}`}
+                className="hover:text-[#25A56A]"
+              >
+                {get(singer, "nickname", "")}
+              </NavLink>
+              {index < props.song.singers.length - 1 && ", "}
+            </>
+          ))}
         </p>
       </div>
     </div>

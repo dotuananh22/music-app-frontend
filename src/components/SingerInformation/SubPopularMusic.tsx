@@ -24,6 +24,7 @@ interface SubPopularMusicProps {
   favorite: boolean;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
+  handlePlayMusic: (index: number) => void;
 }
 
 const SubPopularMusic = (props: SubPopularMusicProps) => {
@@ -92,7 +93,7 @@ const SubPopularMusic = (props: SubPopularMusicProps) => {
           props.setIndexDropdown(0);
         }}
         onClick={() => {
-          dispatch(setChosenSong(props.song));
+          props.handlePlayMusic(props.rank - 1);
         }}
       >
         <td className="p-2 rounded-l-md">{props.rank}</td>

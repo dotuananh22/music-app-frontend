@@ -13,6 +13,8 @@ import { IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";
 import Skeleton from "react-loading-skeleton";
 import { ImSpinner2 } from "react-icons/im";
+import ReactPlayer, { ReactPlayerProps } from "react-player";
+import { BsExclamation } from "react-icons/bs";
 
 const BottomMusicBar = () => {
   const song = useSelector((state: IRootState) => state.song);
@@ -21,54 +23,66 @@ const BottomMusicBar = () => {
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const [error, setError] = useState(true);
+  const [index, setIndex] = useState(0);
+  const [audioKey, setAudioKey] = useState(0);
   const [loadingAudio, setLoadingAudio] = useState(false);
-  const [audio] = useState(new Audio(song.song.chosenSong?.songUrl));
+  const audioRef = useRef<ReactPlayer>(null);
+  const [playlist, setPlaylist] = useState<string[]>([]);
+  // const [audio] = useState(new Audio(song.song.chosenSong?.songUrl));
 
+  // set index = indexListChosenSong
   useEffect(() => {
-    setPlayClicked(false);
+    setIndex(song.song.indexListChosenSong);
+    setPlaylist(song.song.listChosenSong.map((song) => song.songUrl));
     setLoadingAudio(true);
-    audio.load();
-    audio.src = song.song.chosenSong?.songUrl || "";
-    audio.addEventListener("canplaythrough", () => {
-      setLoadingAudio(false);
-      audio.duration && audio.play();
-      audio.duration && setPlayClicked(true);
-    });
-    audio.addEventListener("error", () => setLoadingAudio(false));
-    setDuration(audio.duration ? audio.duration : 0);
-    return () => {
-      audio.removeEventListener("canplaythrough", () => setLoadingAudio(false));
-    };
-  }, [song.song.chosenSong?.songUrl]);
+    // audio.load();
+    // audio.src = song.song.chosenSong?.songUrl || "";
+    // audio.addEventListener("canplaythrough", () => {
+    //   setLoadingAudio(false);
+    //   audio.duration && audio.play();
+    //   audio.duration && setPlayClicked(true);
+    // });
+    // audio.addEventListener("error", () => setLoadingAudio(false));
+    // setDuration(audio.duration ? audio.duration : 0);
+    // return () => {
+    //   audio.removeEventListener("canplaythrough", () => setLoadingAudio(false));
+    // };
+  }, [song.song.listChosenSong, song.song.indexListChosenSong]);
+
+  // set time = 0 when index changes
+  useEffect(() => {
+    setTime(0);
+  }, [index]);
 
   useEffect(() => {
     const repeatStorage = localStorage.getItem("repeat");
     const volumeStorage = localStorage.getItem("volume");
     setVolume(volumeStorage ? parseFloat(volumeStorage) : 0.5);
     setRepeat(repeatStorage ? repeatStorage === "true" : false);
-    audio.loop = repeatStorage ? repeatStorage === "true" : false;
-    // audio.addEventListener("ended", () => setPlayClicked(false));
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("loadedmetadata", () => {
-      audio.volume = volume < 0 ? 0 : volume;
-      setDuration(audio.duration);
-    });
+    // audio.loop = repeatStorage ? repeatStorage === "true" : false;
+    // // audio.addEventListener("ended", () => setPlayClicked(false));
+    // audio.addEventListener("timeupdate", handleTimeUpdate);
+    // audio.addEventListener("loadedmetadata", () => {
+    //   audio.volume = volume < 0 ? 0 : volume;
+    //   setDuration(audio.duration);
+    // });
     // return () => {
     //   audio.removeEventListener("ended", () => setPlayClicked(false));
     // };
   }, []);
 
-  useEffect(() => {
-    playClicked ? audio.play() : audio.pause();
-  }, [playClicked]);
+  // useEffect(() => {
+  //   playClicked ? audio.play() : audio.pause();
+  // }, [playClicked]);
 
-  const handleTimeUpdate = () => {
-    setTime(audio.currentTime);
-    if (audio.currentTime >= audio.duration) {
-      audio.currentTime = 0;
-      setPlayClicked(repeat);
-    }
-  };
+  // const handleTimeUpdate = () => {
+  //   setTime(audio.currentTime);
+  //   if (audio.currentTime >= audio.duration) {
+  //     audio.currentTime = 0;
+  //     setPlayClicked(repeat);
+  //   }
+  // };
 
   const convertTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -78,21 +92,26 @@ const BottomMusicBar = () => {
   };
 
   const onChangeVolume = (e: any) => {
-    audio.volume = e.target.value;
+    audioRef.current?.setState({ volume: e.target.value });
     setVolume(e.target.value);
     localStorage.setItem("volume", e.target.value);
   };
 
   const setUnmute = () => {
-    audio.volume = -volume === 0.0 ? 0.5 : -volume;
+    // audi.volume = -volume === 0.0 ? 0.5 : -volume;
+    audioRef.current?.setState({ volume: -volume === 0.0 ? 0.5 : -volume });
     setVolume(-volume === 0.0 ? 0.5 : -volume);
-    localStorage.setItem("volume", audio.volume.toString());
+    localStorage.setItem(
+      "volume",
+      (-volume === 0.0 ? 0.5 : -volume).toString()
+    );
   };
 
   const setMute = () => {
     setVolume(-volume);
-    audio.volume = 0;
-    localStorage.setItem("volume", audio.volume.toString());
+    // audio.volume = 0;
+    audioRef.current?.setState({ volume: 0 });
+    localStorage.setItem("volume", (-volume).toString());
   };
 
   return (
@@ -100,19 +119,24 @@ const BottomMusicBar = () => {
       <div className="basis-1/3">
         <div className="flex flex-row gap-4 items-center">
           <img
-            src={song.song.chosenSong?.imageUrl || noImage}
+            src={
+              index !== -1 ? song.song.listChosenSong[index]?.imageUrl : noImage
+            }
             alt="test"
-            className="w-[58px]"
+            className={`w-[58px] h-[58px] ${
+              !loadingAudio && !error && playClicked && "animate-spin-slow"
+            } rounded-full`}
             onError={(e) => {
               e.currentTarget.src = noImage;
             }}
           />
           <div>
             <h3 className="text-white font-semibold">
-              {song.song.chosenSong?.name}
+              {index !== -1 && song.song.listChosenSong[index]?.name}
             </h3>
             <span className="text-xs">
-              {joinSingers(song.song.chosenSong?.singers || [])}
+              {index !== -1 &&
+                joinSingers(song.song.listChosenSong[index]?.singers || [])}
             </span>
           </div>
         </div>
@@ -120,13 +144,24 @@ const BottomMusicBar = () => {
       <div className={"flex flex-col gap-2 items-center basis-1/3 text-xl"}>
         <div className={"flex flex-row gap-8 items-center"}>
           <FaRandom className="w-[20px] h-[20px] cursor-pointer hover:text-[#25A56A]" />
-          <MdSkipPrevious className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
-          {!playClicked || loadingAudio ? (
+          <MdSkipPrevious
+            className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]"
+            onClick={() => {
+              index - 1 >= 0 && setLoadingAudio(true);
+              index - 1 >= 0 && setTime(0);
+              setIndex(index - 1 >= 0 ? index - 1 : playlist.length - 1);
+              setLoadingAudio(true);
+              setError(false);
+            }}
+          />
+          {!playClicked || loadingAudio || error ? (
             <div
               className="w-[36px] h-[36px] rounded-full bg-white grid place-items-center cursor-pointer"
               onClick={(e) => setPlayClicked(!playClicked)}
             >
-              {!loadingAudio ? (
+              {error ? (
+                <BsExclamation className="text-[#FF9494] text-4xl" />
+              ) : !loadingAudio ? (
                 <FaPlay className="w-[14px] h-[14px] text-black" />
               ) : (
                 <ImSpinner2 className="text-[#25A56A] animate-spin" />
@@ -140,13 +175,22 @@ const BottomMusicBar = () => {
               <GiPauseButton className="w-[18px] h-[18px] text-black" />
             </div>
           )}
-          <MdSkipNext className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]" />
+          <MdSkipNext
+            className="w-[32px] h-[32px] cursor-pointer hover:text-[#25A56A]"
+            onClick={() => {
+              index + 1 !== playlist.length && setLoadingAudio(true);
+              index + 1 !== playlist.length && setTime(0);
+              setIndex(index + 1 === playlist.length ? 0 : index + 1);
+              setLoadingAudio(true);
+              setError(false);
+            }}
+          />
           <RiRepeat2Fill
             className={`w-[22px] h-[22px] cursor-pointer hover:text-[#25A56A] ${
               repeat && " text-[#25A56A]"
             }`}
             onClick={() => {
-              audio.loop = !repeat;
+              // audio.loop = !repeat;
               setRepeat(!repeat);
               localStorage.setItem("repeat", (!repeat).toString());
             }}
@@ -161,16 +205,18 @@ const BottomMusicBar = () => {
             value={time}
             // pause audio when dragging
             onMouseDown={(e) => {
-              audio.pause();
+              // audio.pause();
               setPlayClicked(false);
             }}
             onChange={(e) => {
               setTime(parseFloat(e.target.value));
-              audio.currentTime = parseFloat(e.target.value);
+              // set current time of audio
+              audioRef.current?.seekTo(parseFloat(e.target.value));
+              // audio.currentTime = parseFloat(e.target.value);
             }}
             // play audio when dragging is done
             onMouseUp={(e) => {
-              audio.play();
+              // audio.play();
               setPlayClicked(true);
             }}
             disabled={duration === 0 || loadingAudio}
@@ -199,6 +245,49 @@ const BottomMusicBar = () => {
           step={0.01}
           className={"h-1 cursor-pointer"}
           onChange={onChangeVolume}
+        />
+        <ReactPlayer
+          url={playlist[index]}
+          playing={playClicked}
+          key={audioKey}
+          onError={(e) => {
+            setLoadingAudio(false);
+            console.log(playlist.length, index);
+            setIndex(index + 1 === playlist.length ? 0 : index + 1);
+            setDuration(0);
+            setTime(0);
+            audioRef.current?.seekTo(0);
+            setError(true);
+            setPlayClicked(false);
+          }}
+          // set on loading
+          ref={audioRef}
+          width={0}
+          height={0}
+          volume={volume < 0 ? 0 : volume}
+          onReady={(e) => {
+            setPlayClicked(true);
+            setDuration(e.getDuration());
+            setLoadingAudio(false);
+            setError(false);
+          }}
+          onProgress={(e) => {
+            setTime(e.playedSeconds);
+          }}
+          loop={repeat}
+          onEnded={() => {
+            setTime(0);
+            setAudioKey(audioKey + 1);
+            if (index + 1 === playlist.length) {
+              setLoadingAudio(true);
+              setIndex(0);
+              // pause audio
+              setPlayClicked(false);
+            } else {
+              setLoadingAudio(true);
+              setIndex(index + 1);
+            }
+          }}
         />
       </div>
     </nav>

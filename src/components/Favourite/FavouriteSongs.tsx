@@ -8,11 +8,21 @@ import favoriteThunk from "features/favorite/favoriteThunk";
 import { AppDispatch, IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
+import { setListChosenSong } from "features/song/songSlice";
 
 const FavouriteSongs = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favorite = useSelector((state: IRootState) => state.favorite);
   const [indexDropdown, setIndexDropdown] = useState(0);
+
+  const handlePlayMusic = (index: number) => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: index,
+        listChosenSong: favorite.favorites.favoriteSongs?.songs || [],
+      })
+    );
+  };
 
   useEffect(() => {
     dispatch(favoriteThunk.getAllFavoriteSongs());
@@ -41,6 +51,7 @@ const FavouriteSongs = () => {
             indexDropdown={indexDropdown}
             song={song}
             setIndexDropdown={setIndexDropdown}
+            handlePlayMusic={handlePlayMusic}
           />
         ))}
       </tbody>

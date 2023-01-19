@@ -24,6 +24,7 @@ interface SubFavouriteSongsProps {
   indexDropdown: number;
   song: Song<Singer>;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
+  handlePlayMusic: (index: number) => void;
 }
 
 const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
@@ -68,7 +69,7 @@ const SubFavouriteSongs = (props: SubFavouriteSongsProps) => {
   };
 
   const handleChosenSong = () => {
-    dispatch(setChosenSong(props.song));
+    props.handlePlayMusic(props.rank - 1);
   };
 
   return (

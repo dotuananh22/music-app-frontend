@@ -123,7 +123,7 @@ const Register = () => {
                     </NavLink>
                   </div>
                   <span className="text-xs text-red-500">
-                    {errors.agreePolicy}
+                    {touched.agreePolicy && errors.agreePolicy}
                   </span>
                   <div className="flex flex-col items-center gap-2 mt-4">
                     <div>

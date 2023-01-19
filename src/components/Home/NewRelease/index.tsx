@@ -1,13 +1,23 @@
 import { IRootState } from "app/store";
 import Music from "components/Common/Music";
-import React from "react";
+import { setListChosenSong } from "features/song/songSlice";
+import React, { useState } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 import Skeleton from "react-loading-skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const NewRelease = () => {
   const song = useSelector((state: IRootState) => state.song);
+  const dispatch = useDispatch();
+  const handlePlayMusic = (index: number) => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: index,
+        listChosenSong: song.songs.newSingleSongs,
+      })
+    );
+  };
   return (
     <div className="flex flex-col gap-8 mt-6">
       <div className="flex flex-row justify-between items-center">
@@ -28,7 +38,13 @@ const NewRelease = () => {
           </>
         ) : (
           song.songs.newSingleSongs.map((song, index) => (
-            <Music id={song._id} song={song} key={index} />
+            <Music
+              id={song._id}
+              song={song}
+              index={index}
+              key={index}
+              handlePlayMusic={handlePlayMusic}
+            />
           ))
         )}
       </div>

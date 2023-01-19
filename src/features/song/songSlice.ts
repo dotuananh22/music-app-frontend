@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import songApi from "api/songApi";
 import { toast } from "react-toastify";
 import PaginationResponse from "types/PaginationResponse";
@@ -18,14 +18,16 @@ interface SongState {
   };
   songs: {
     allSongs: Song<Singer | string>[];
-    topSingleSongs: Song<Singer | string>[];
-    newSingleSongs: Song<Singer | string>[];
+    topSingleSongs: Song<Singer>[];
+    newSingleSongs: Song<Singer>[];
     songsBySingerId: Song<Singer>[];
     releaseSongsBySingerId: Song<Singer>[];
   };
   song: {
     chosenSong: Song<Singer> | null;
     songById: Song<Singer> | null;
+    listChosenSong: Song<Singer>[];
+    indexListChosenSong: number;
   };
   pagination: PaginationResponse;
 }
@@ -49,6 +51,8 @@ const initialState: SongState = {
   song: {
     chosenSong: null,
     songById: null,
+    listChosenSong: [],
+    indexListChosenSong: -1,
   },
   pagination: {
     page: 0,
@@ -69,6 +73,24 @@ const songSlice = createSlice({
         songApi.addOneListen(action.payload._id);
       state.song.chosenSong = action.payload;
       // call api
+    },
+    setListChosenSong(
+      state,
+      action: PayloadAction<{
+        listChosenSong: Song<Singer>[];
+        indexListChosenSong: number;
+      }>
+    ) {
+      state.song.listChosenSong = action.payload.listChosenSong;
+      state.song.indexListChosenSong =
+        action.payload.listChosenSong.length > 0
+          ? action.payload.indexListChosenSong
+          : -1;
+      state.song.chosenSong = null;
+    },
+    changeLikeSong(state, action: PayloadAction<number>) {
+      if (!state.song.songById) return;
+      state.song.songById.likes += action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -175,5 +197,6 @@ const songSlice = createSlice({
   },
 });
 
-export const { setChosenSong } = songSlice.actions;
+export const { setChosenSong, changeLikeSong, setListChosenSong } =
+  songSlice.actions;
 export default songSlice.reducer;

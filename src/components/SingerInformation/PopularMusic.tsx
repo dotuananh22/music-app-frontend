@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import SubPopularMusic from "./SubPopularMusic";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "app/store";
 import { useParams } from "react-router-dom";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import { setListChosenSong } from "features/song/songSlice";
 
 interface popularMusicProp {
   songs: Song<Singer>[] | undefined;
@@ -14,8 +15,18 @@ interface popularMusicProp {
 
 const PopularMusic = (props: popularMusicProp) => {
   const favorite = useSelector((state: IRootState) => state.favorite);
+  const dispatch = useDispatch();
   const param = useParams();
   const [indexDropdown, setIndexDropdown] = useState(0);
+
+  const handlePlayMusic = (index: number) => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: index,
+        listChosenSong: props.songs ? (props.songs as Song<Singer>[]) : [],
+      })
+    );
+  };
 
   return (
     <>
@@ -47,6 +58,7 @@ const PopularMusic = (props: popularMusicProp) => {
                 }
                 indexDropdown={indexDropdown}
                 setIndexDropdown={setIndexDropdown}
+                handlePlayMusic={handlePlayMusic}
               />
             ))}
         </tbody>

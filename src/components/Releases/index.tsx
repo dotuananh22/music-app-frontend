@@ -12,6 +12,8 @@ import Skeleton from "react-loading-skeleton";
 import Song from "types/song/Song";
 import QueryInput from "types/QueryInput";
 import SongType from "types/song/SongType";
+import { setListChosenSong } from "features/song/songSlice";
+import Singer from "types/singer/Singer";
 
 const Releases = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,6 +26,15 @@ const Releases = () => {
     sort: ["likes"],
     order: [-1],
   });
+
+  const handlePlayMusic = (index: number) => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: index,
+        listChosenSong: song.songs.allSongs as Song<Singer>[],
+      })
+    );
+  };
 
   useEffect(() => {
     dispatch(
@@ -64,8 +75,14 @@ const Releases = () => {
                 <Skeleton height={"200px"} />
               </>
             ) : (
-              song.songs.allSongs.map((song) => (
-                <Music key={song._id} id={song._id} song={song} />
+              song.songs.allSongs.map((song, index) => (
+                <Music
+                  index={index}
+                  key={index}
+                  id={song._id}
+                  song={song}
+                  handlePlayMusic={handlePlayMusic}
+                />
               ))
             )}
             {/* <Music />
