@@ -14,7 +14,6 @@ import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
-import { setChosenSong } from "features/song/songSlice";
 
 interface SubPlaylistSongsProps {
   index: number;
@@ -220,7 +219,7 @@ const SubPlaylistSongs = (props: SubPlaylistSongsProps) => {
                 <Skeleton height={"20px"} />
                 <Skeleton height={"20px"} />
               </>
-            ) : playlist.playlists.playlistsNotContainSong.length == 0 ? (
+            ) : playlist.playlists.playlistsNotContainSong.length === 0 ? (
               <p>Already on all your playlists.</p>
             ) : (
               playlist.playlists.playlistsNotContainSong.map((item, index) => (

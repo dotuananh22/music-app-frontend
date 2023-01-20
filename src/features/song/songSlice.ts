@@ -28,6 +28,7 @@ interface SongState {
     songById: Song<Singer> | null;
     listChosenSong: Song<Singer>[];
     indexListChosenSong: number;
+    indexListeningSong: number;
   };
   pagination: PaginationResponse;
 }
@@ -53,6 +54,7 @@ const initialState: SongState = {
     songById: null,
     listChosenSong: [],
     indexListChosenSong: -1,
+    indexListeningSong: -1,
   },
   pagination: {
     page: 0,
@@ -68,10 +70,11 @@ const songSlice = createSlice({
   name: "song",
   initialState,
   reducers: {
-    setChosenSong(state, action) {
-      state.song.chosenSong?._id !== action.payload._id &&
-        songApi.addOneListen(action.payload._id);
-      state.song.chosenSong = action.payload;
+    setIndexListeningSong(state, action) {
+      state.song.indexListeningSong = action.payload;
+      songApi.addOneListen(
+        state.song.listChosenSong[state.song.indexListeningSong]._id
+      );
       // call api
     },
     setListChosenSong(
@@ -81,7 +84,7 @@ const songSlice = createSlice({
         indexListChosenSong: number;
       }>
     ) {
-      state.song.listChosenSong = action.payload.listChosenSong;
+      state.song.listChosenSong = [...action.payload.listChosenSong];
       state.song.indexListChosenSong =
         action.payload.listChosenSong.length > 0
           ? action.payload.indexListChosenSong
@@ -197,6 +200,6 @@ const songSlice = createSlice({
   },
 });
 
-export const { setChosenSong, changeLikeSong, setListChosenSong } =
+export const { setIndexListeningSong, changeLikeSong, setListChosenSong } =
   songSlice.actions;
 export default songSlice.reducer;

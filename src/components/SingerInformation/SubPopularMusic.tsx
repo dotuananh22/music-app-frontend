@@ -10,7 +10,6 @@ import { AppDispatch, IRootState } from "app/store";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import FavoriteType from "types/favorite/FavoriteType";
 import playlistThunk from "features/playlist/playlistThunk";
-import { setChosenSong } from "features/song/songSlice";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -220,7 +219,7 @@ const SubPopularMusic = (props: SubPopularMusicProps) => {
                 <Skeleton height={"20px"} />
                 <Skeleton height={"20px"} />
               </>
-            ) : playlist.playlists.playlistsNotContainSong.length == 0 ? (
+            ) : playlist.playlists.playlistsNotContainSong.length === 0 ? (
               <p>Already on all your playlists.</p>
             ) : (
               playlist.playlists.playlistsNotContainSong.map((item, index) => (

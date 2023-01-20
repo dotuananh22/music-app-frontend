@@ -8,13 +8,13 @@ import {
 } from "react-icons/ri";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import noImage from "assets/images/no-image.png";
-import { useSelector } from "react-redux";
-import { IRootState } from "app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "app/store";
 import joinSingers from "utils/joinSingers";
-import Skeleton from "react-loading-skeleton";
 import { ImSpinner2 } from "react-icons/im";
-import ReactPlayer, { ReactPlayerProps } from "react-player";
+import ReactPlayer from "react-player";
 import { BsExclamation } from "react-icons/bs";
+import { setIndexListeningSong } from "features/song/songSlice";
 
 const BottomMusicBar = () => {
   const song = useSelector((state: IRootState) => state.song);
@@ -24,17 +24,19 @@ const BottomMusicBar = () => {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const [error, setError] = useState(true);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(-1);
   const [audioKey, setAudioKey] = useState(0);
   const [loadingAudio, setLoadingAudio] = useState(false);
   const audioRef = useRef<ReactPlayer>(null);
   const [playlist, setPlaylist] = useState<string[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
   // const [audio] = useState(new Audio(song.song.chosenSong?.songUrl));
 
   // set index = indexListChosenSong
   useEffect(() => {
-    setIndex(song.song.indexListChosenSong);
+    setAudioKey(audioKey + 1);
     setPlaylist(song.song.listChosenSong.map((song) => song.songUrl));
+    setIndex(song.song.indexListChosenSong);
     setLoadingAudio(true);
     // audio.load();
     // audio.src = song.song.chosenSong?.songUrl || "";
@@ -251,13 +253,14 @@ const BottomMusicBar = () => {
           playing={playClicked}
           key={audioKey}
           onError={(e) => {
+            playlist.length > 1 && setAudioKey(audioKey + 1);
             setLoadingAudio(false);
-            console.log(playlist.length, index);
-            setIndex(index + 1 === playlist.length ? 0 : index + 1);
+            setError(true);
+            playlist.length > 1 &&
+              setIndex(index + 1 === playlist.length ? 0 : index + 1);
             setDuration(0);
             setTime(0);
             audioRef.current?.seekTo(0);
-            setError(true);
             setPlayClicked(false);
           }}
           // set on loading
@@ -270,22 +273,30 @@ const BottomMusicBar = () => {
             setDuration(e.getDuration());
             setLoadingAudio(false);
             setError(false);
+            index !== -1 &&
+              index < playlist.length &&
+              dispatch(setIndexListeningSong(index));
           }}
           onProgress={(e) => {
             setTime(e.playedSeconds);
+            console.log("progress");
           }}
           loop={repeat}
           onEnded={() => {
-            setTime(0);
-            setAudioKey(audioKey + 1);
-            if (index + 1 === playlist.length) {
-              setLoadingAudio(true);
-              setIndex(0);
-              // pause audio
-              setPlayClicked(false);
+            if (playlist.length > 1) {
+              setAudioKey(audioKey + 1);
+              setTime(0);
+              if (index + 1 === playlist.length) {
+                setLoadingAudio(true);
+                setIndex(0);
+                // pause audio
+                setPlayClicked(false);
+              } else {
+                setLoadingAudio(true);
+                setIndex(index + 1);
+              }
             } else {
-              setLoadingAudio(true);
-              setIndex(index + 1);
+              setPlayClicked(false);
             }
           }}
         />
