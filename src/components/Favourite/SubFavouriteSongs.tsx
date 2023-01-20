@@ -14,7 +14,6 @@ import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import moment from "moment";
-import { setChosenSong } from "features/song/songSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 
 interface SubFavouriteSongsProps {

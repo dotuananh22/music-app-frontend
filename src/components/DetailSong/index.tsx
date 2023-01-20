@@ -22,11 +22,7 @@ import colors from "constants/color";
 import playlistThunk from "features/playlist/playlistThunk";
 import { BiDownload } from "react-icons/bi";
 import { GiMicrophone } from "react-icons/gi";
-import {
-  changeLikeSong,
-  setChosenSong,
-  setListChosenSong,
-} from "features/song/songSlice";
+import { changeLikeSong, setListChosenSong } from "features/song/songSlice";
 
 const DetailSong = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -100,7 +96,14 @@ const DetailSong = () => {
       });
   };
 
-  const handlePlayMusic = () => {};
+  const handlePlayMusic = () => {
+    dispatch(
+      setListChosenSong({
+        indexListChosenSong: 0,
+        listChosenSong: [songById],
+      })
+    );
+  };
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
@@ -146,11 +149,9 @@ const DetailSong = () => {
       <div className="flex flex-row gap-8 items-center mt-8 ml-8">
         <button
           className={`w-[58px] h-[58px] rounded-full border-none outline-none hover:scale-105 bg-[#1ED760] grid place-items-center transition-all duration-200 ease-in-out`}
+          onClick={handlePlayMusic}
         >
-          <BsFillPlayFill
-            className="text-black text-3xl"
-            onClick={handlePlayMusic}
-          />
+          <BsFillPlayFill className="text-black text-3xl" />
         </button>
         <div
           className="flex flex-col"

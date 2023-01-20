@@ -5,7 +5,6 @@ import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
 import { useDispatch } from "react-redux";
-import { setChosenSong } from "features/song/songSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { get } from "lodash";
 
@@ -21,7 +20,6 @@ const Music = (props: MusicProps) => {
   const navigate = useNavigate();
   const handleChooseSong = () => {
     // dispatch(setChosenSong(props.song));
-    console.log(props.index);
     props.handlePlayMusic?.(props.index);
   };
   return (

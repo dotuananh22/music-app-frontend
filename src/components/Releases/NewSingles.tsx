@@ -5,8 +5,6 @@ import Single from "components/Common/Single";
 import { useDispatch, useSelector } from "react-redux";
 import songThunk from "features/song/songThunk";
 import { AppDispatch, IRootState } from "app/store";
-import joinSingers from "utils/joinSingers";
-import moment from "moment";
 import SongType from "types/song/SongType";
 import Skeleton from "react-loading-skeleton";
 import { setListChosenSong } from "features/song/songSlice";
@@ -27,7 +25,7 @@ const NewSingles = () => {
         type: SongType.NEW_SINGLE,
       })
     );
-  }, []);
+  }, [dispatch]);
 
   const handlePlayMusic = (index: number) => {
     dispatch(

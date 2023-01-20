@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
-import { setChosenSong } from "features/song/songSlice";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { get } from "lodash";

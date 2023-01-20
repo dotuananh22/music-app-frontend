@@ -43,7 +43,7 @@ const Releases = () => {
         type: SongType.ALL,
       })
     );
-  }, [pagination.skip, pagination.sort, pagination.order]);
+  }, [pagination, dispatch]);
 
   const handlePagination = (page: number) => {
     setPagination({
