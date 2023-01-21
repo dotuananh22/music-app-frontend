@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { BiChevronDown } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import Song from "types/song/Song";
 

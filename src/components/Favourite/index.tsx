@@ -36,7 +36,7 @@ const Favourite = () => {
               {moment
                 .unix(favorite.favorites.favoriteSongs?.totalTime || 0)
                 .utc()
-                .format("mm:ss")}
+                .format(`m[m] s[s]`)}
             </span>
           </div>
         </div>

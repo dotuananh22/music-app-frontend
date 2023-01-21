@@ -22,9 +22,18 @@ const Artists = () => {
       <div className="grid grid-cols-6 gap-8">
         {singer.loading.loadingSingers ? (
           <>
-            <Skeleton height={"200px"} />
-            <Skeleton height={"200px"} />
-            <Skeleton height={"200px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
+            <Skeleton height={"170px"} />
           </>
         ) : (
           singer.singers.getAllSingers.map((singer, index) => (

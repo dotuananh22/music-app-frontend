@@ -55,9 +55,8 @@ const Library = () => {
           </div>
           {playlist.loading.getAllPlaylists ? (
             <>
-              <Skeleton height={"250px"} />
-              <Skeleton height={"250px"} />
-              <Skeleton height={"250px"} />
+              <Skeleton height={"246px"} />
+              <Skeleton height={"246px"} />
             </>
           ) : (
             playlist.playlists.allPlaylists.map((playlist) => (

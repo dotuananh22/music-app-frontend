@@ -42,15 +42,17 @@ const TopSingles = () => {
     <div>
       <div className="flex flex-row gap-3 items-center text-3xl mb-6">
         <HiOutlineMusicNote className="text-[#25A56A] mt-1.5" />
-        <span className="text-white hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-in-out">
+        <span className="text-white transition-all duration-300 ease-in-out">
           Top singles
         </span>
       </div>
       {song.loading.getAllTopSingleSongs ? (
         <div className="flex flex-col gap-2">
-          <Skeleton height={"60px"} />
-          <Skeleton height={"60px"} />
-          <Skeleton height={"60px"} />
+          <Skeleton height={"53px"} />
+          <Skeleton height={"53px"} />
+          <Skeleton height={"53px"} />
+          <Skeleton height={"53px"} />
+          <Skeleton height={"53px"} />
         </div>
       ) : (
         song.songs.topSingleSongs.map((song, index) => {
