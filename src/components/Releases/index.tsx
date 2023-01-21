@@ -23,7 +23,7 @@ const Releases = () => {
   const [pagination, setPagination] = useState<QueryInput<Song<string>>>({
     limit: 12,
     skip: 0,
-    sort: ["likes"],
+    sort: ["listens"],
     order: [-1],
   });
 
@@ -70,9 +70,18 @@ const Releases = () => {
           <div className="grid grid-cols-6 gap-8">
             {song.loading.getAllSongs ? (
               <>
-                <Skeleton height={"200px"} />
-                <Skeleton height={"200px"} />
-                <Skeleton height={"200px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
+                <Skeleton height={"170px"} width={"170px"} />
               </>
             ) : (
               song.songs.allSongs.map((song, index) => (

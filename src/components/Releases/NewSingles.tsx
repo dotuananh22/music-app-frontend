@@ -45,9 +45,18 @@ const NewSingles = () => {
       <div className="grid grid-cols-3 grid-rows-5 gap-x-12">
         {song.loading.getAllNewSingleSongs ? (
           <>
-            <Skeleton height={"50px"} />
-            <Skeleton height={"50px"} />
-            <Skeleton height={"50px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
+            <Skeleton height={"53px"} />
           </>
         ) : (
           song.songs.newSingleSongs.map((song, index) => {

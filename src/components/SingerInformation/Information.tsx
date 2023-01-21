@@ -34,7 +34,7 @@ const Information = (props: InformationProps) => {
             <img
               src={singer?.imageUrl || noImage}
               alt="profile"
-              className="w-32 h-32 rounded-full"
+              className="w-32 h-32 rounded-full object-cover"
               onError={(e) => {
                 e.currentTarget.src = noImage;
               }}
@@ -62,7 +62,7 @@ const Information = (props: InformationProps) => {
           <img
             src={singer?.imageCover || noImage}
             alt="Banner"
-            className="w-full"
+            className="w-full object-cover"
             onError={(e) => {
               e.currentTarget.src = noImage;
             }}

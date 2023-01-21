@@ -28,7 +28,7 @@ const Music = (props: MusicProps) => {
         <img
           src={props.song.imageUrl || noImage}
           alt="demo"
-          className="group-hover:scale-110 transition-all duration-300 ease-linear"
+          className="group-hover:scale-110 transition-all duration-300 ease-linear h-[170px] w-[170px] object-cover"
           onError={(e) => {
             e.currentTarget.src = noImage;
           }}

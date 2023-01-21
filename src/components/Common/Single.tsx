@@ -29,7 +29,7 @@ const Single = (props: SingleProps) => {
               e.currentTarget.src = noImage;
             }}
             alt="demo"
-            className="group-hover:scale-110 transition-all duration-300 ease-linear"
+            className="group-hover:scale-110 transition-all duration-300 ease-linear w-[48px] h-[48px] object-cover"
           />
           <div className="absolute group-hover:grid w-full h-full group-hover:bg-black/30 top-0 left-0 hidden place-items-center text-3xl hover:scale-110 transition-all duration-300 ease-linear">
             <div

@@ -22,6 +22,7 @@ const Artist = (props: ArtistProps) => {
         <img
           src={props.singer.imageUrl || noImage}
           alt="demo"
+          className="w-[170px] h-[170px] object-cover"
           onError={(e) => {
             e.currentTarget.src = noImage;
           }}

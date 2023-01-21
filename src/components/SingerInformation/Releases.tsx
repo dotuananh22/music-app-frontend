@@ -39,18 +39,6 @@ const Releases = (props: ReleasesProps) => {
                 handlePlayMusic={handlePlayMusic}
               />
             ))}
-            {/* <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music />
-            <Music /> */}
           </div>
           <Pagination
             currentPage={props.pagination.page}

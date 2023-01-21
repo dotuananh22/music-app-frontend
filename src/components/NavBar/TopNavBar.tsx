@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { TbLogout } from "react-icons/tb";
 import { HiOutlineLogin } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -8,6 +9,8 @@ import { IRootState, AppDispatch } from "app/store";
 import { BsPersonCircle } from "react-icons/bs";
 import colors from "constants/color";
 import authThunk from "features/auth/authThunk";
+import { ImProfile } from "react-icons/im";
+import { BiHeart, BiLibrary } from "react-icons/bi";
 
 const TopNavBar = () => {
   const auth = useSelector((state: IRootState) => state.auth);
@@ -84,29 +87,28 @@ const TopNavBar = () => {
             } w-44 rounded-lg shadow overflow-hidden bg-[#222227]`}
           >
             <NavLink to={"/profile"}>
-              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+              <li className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                <ImProfile />
                 Profile
               </li>
             </NavLink>
             <NavLink to={"/library"}>
-              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+              <li className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                <BiLibrary />
                 My library
               </li>
             </NavLink>
             <NavLink to={"/favourite"}>
-              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+              <li className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                <BiHeart />
                 My favourite
               </li>
             </NavLink>
-            <NavLink to={"/playlists"}>
-              <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
-                Playlist
-              </li>
-            </NavLink>
             <li
-              className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+              className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
               onClick={() => handleLogout()}
             >
+              <TbLogout />
               Logout
             </li>
           </ul>
