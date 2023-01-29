@@ -57,9 +57,13 @@ const SingerInformation = () => {
   return (
     <div>
       <Information songs={song.songs.songsBySingerId} />
-      <PopularMusic songs={song.songs.songsBySingerId} />
+      <PopularMusic
+        songs={song.songs.songsBySingerId}
+        loading={song.loading.getSongsBySingerId}
+      />
       <Releases
         songs={song.songs.releaseSongsBySingerId}
+        loading={song.loading.getReleaseSongsBySingerId}
         pagination={song.pagination}
         setPage={setPage}
       />

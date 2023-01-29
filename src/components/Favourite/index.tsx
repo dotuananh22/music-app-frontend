@@ -83,7 +83,7 @@ const Favourite = () => {
               </div>
             </div>
           </div>
-          <FavouriteSongs />
+          <FavouriteSongs loading={favorite.loading.getFavoriteSongs} />
         </>
       ) : (
         <div className="pt-8 text-xl font-semibold">
