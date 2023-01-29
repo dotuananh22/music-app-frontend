@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import PlaylistSongs from "./PlaylistSongs";
@@ -228,7 +229,10 @@ const Playlists = () => {
               </div>
             </div>
           </div>
-          <PlaylistSongs songs={playlist.playlists.onePlaylist?.songs} />
+          <PlaylistSongs
+            songs={playlist.playlists.onePlaylist?.songs}
+            loading={playlist.loading.getOnePlaylist}
+          />
         </>
       ) : (
         <div className="pt-8 text-xl font-semibold">

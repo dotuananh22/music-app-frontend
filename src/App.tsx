@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -23,10 +23,14 @@ import { useDispatch } from "react-redux";
 import authThunk from "features/auth/authThunk";
 import { AppDispatch } from "app/store";
 import NotFoundPage from "pages/NotFoundPage";
-import songThunk from "features/song/songThunk";
 import { SkeletonTheme } from "react-loading-skeleton";
-import singerThunk from "features/singer/singerThunk";
 import DetailSongPage from "pages/DetailSongPage";
+import AdminRoute from "utils/AdminRoute";
+import AdminPage from "pages/Admin/AdminPage";
+import DashboardAdminPage from "pages/Admin/DashboardAdminPage";
+import ReleasesAdminPage from "pages/Admin/ReleaseAdminPage";
+import ArtistsAdminPage from "pages/Admin/ArtistsAdminPage";
+import UsersAdminPage from "pages/Admin/UsersAdminPage";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -82,6 +86,48 @@ function App() {
             />
             <Route path="/policy" element={<PolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />
+
+            {/* Admin */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <DashboardAdminPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/releases"
+              element={
+                <AdminRoute>
+                  <ReleasesAdminPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/artists"
+              element={
+                <AdminRoute>
+                  <ArtistsAdminPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <AdminRoute>
+                  <UsersAdminPage />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </div>
         <FooterSection />

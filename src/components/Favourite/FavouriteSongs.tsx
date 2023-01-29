@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-// @ts-ignore
 import SubFavouriteSongs from "./SubFavouriteSongs";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import favoriteThunk from "features/favorite/favoriteThunk";
 import { AppDispatch, IRootState } from "app/store";
-import joinSingers from "utils/joinSingers";
-import moment from "moment";
 import { setListChosenSong } from "features/song/songSlice";
+import Skeleton from "react-loading-skeleton";
 
-const FavouriteSongs = () => {
+interface FavouriteSongsProps {
+  loading: boolean;
+}
+
+const FavouriteSongs = (props: FavouriteSongsProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const favorite = useSelector((state: IRootState) => state.favorite);
   const [indexDropdown, setIndexDropdown] = useState(0);
@@ -43,17 +45,37 @@ const FavouriteSongs = () => {
         </tr>
       </thead>
       <tbody>
-        {favorite.favorites.favoriteSongs?.songs.map((song, index) => (
-          <SubFavouriteSongs
-            id={song._id}
-            rank={index + 1}
-            favorite={true}
-            indexDropdown={indexDropdown}
-            song={song}
-            setIndexDropdown={setIndexDropdown}
-            handlePlayMusic={handlePlayMusic}
-          />
-        ))}
+        {props.loading ? (
+          <>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"53px"} />
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"53px"} />
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"53px"} />
+              </td>
+            </tr>
+          </>
+        ) : (
+          favorite.favorites.favoriteSongs?.songs.map((song, index) => (
+            <SubFavouriteSongs
+              id={song._id}
+              rank={index + 1}
+              favorite={true}
+              indexDropdown={indexDropdown}
+              song={song}
+              setIndexDropdown={setIndexDropdown}
+              handlePlayMusic={handlePlayMusic}
+            />
+          ))
+        )}
       </tbody>
     </table>
   );
