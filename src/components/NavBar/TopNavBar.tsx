@@ -11,6 +11,7 @@ import colors from "constants/color";
 import authThunk from "features/auth/authThunk";
 import { ImProfile } from "react-icons/im";
 import { BiHeart, BiLibrary } from "react-icons/bi";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 const TopNavBar = () => {
   const auth = useSelector((state: IRootState) => state.auth);
@@ -104,6 +105,14 @@ const TopNavBar = () => {
                 My favourite
               </li>
             </NavLink>
+            {auth.user?.role === "admin" && (
+              <NavLink to={"/admin"}>
+                <li className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                  <MdOutlineAdminPanelSettings />
+                  Admin
+                </li>
+              </NavLink>
+            )}
             <li
               className="flex flex-row items-center gap-2 py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
               onClick={() => handleLogout()}

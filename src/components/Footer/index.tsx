@@ -101,7 +101,7 @@ const Footer = () => {
         <span>
           © AMusic, 2022. Created by{" "}
           <a
-            href="https://www.facebook.com/tuananh2202"
+            href="https://github.com/dotuananh22"
             target={"_blank"}
             className="hover:text-[#25A56A]"
           >
@@ -109,7 +109,7 @@ const Footer = () => {
           </a>
           ,{" "}
           <a
-            href="https://www.facebook.com/profile.php?id=100034981484099"
+            href="https://github.com/hello5423"
             target={"_blank"}
             className="hover:text-[#25A56A]"
           >
