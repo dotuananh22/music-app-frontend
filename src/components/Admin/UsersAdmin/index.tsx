@@ -1,5 +1,3 @@
-import colors from "constants/color";
-import { NavLink } from "react-router-dom";
 import Admin from "..";
 
 const UsersAdmin = () => {
