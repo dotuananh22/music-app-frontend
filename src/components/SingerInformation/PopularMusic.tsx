@@ -8,9 +8,11 @@ import { IRootState } from "app/store";
 import { useParams } from "react-router-dom";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { setListChosenSong } from "features/song/songSlice";
+import Skeleton from "react-loading-skeleton";
 
 interface popularMusicProp {
   songs: Song<Singer>[] | undefined;
+  loading: boolean;
 }
 
 const PopularMusic = (props: popularMusicProp) => {
@@ -45,7 +47,26 @@ const PopularMusic = (props: popularMusicProp) => {
           </tr>
         </thead>
         <tbody>
-          {props.songs &&
+          {props.loading ? (
+            <>
+              <tr>
+                <td colSpan={6}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={6}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={6}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+            </>
+          ) : (
+            props.songs &&
             props.songs.map((song, index) => (
               <SubPopularMusic
                 song={song}
@@ -60,7 +81,8 @@ const PopularMusic = (props: popularMusicProp) => {
                 setIndexDropdown={setIndexDropdown}
                 handlePlayMusic={handlePlayMusic}
               />
-            ))}
+            ))
+          )}
         </tbody>
       </table>
     </>

@@ -9,9 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "app/store";
 import { useParams } from "react-router-dom";
 import { setListChosenSong } from "features/song/songSlice";
+import Skeleton from "react-loading-skeleton";
 
 interface playlistSongsProp {
   songs: Song<Singer>[] | undefined;
+  loading: boolean;
 }
 
 const PlaylistSongs = (props: playlistSongsProp) => {
@@ -44,7 +46,26 @@ const PlaylistSongs = (props: playlistSongsProp) => {
         </tr>
       </thead>
       <tbody>
-        {props.songs &&
+        {props.loading ? (
+          <>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"52px"} />
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"52px"} />
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={6}>
+                <Skeleton height={"52px"} />
+              </td>
+            </tr>
+          </>
+        ) : (
+          props.songs &&
           props.songs.map((song, index) => (
             <SubPlaylistSongs
               song={song}
@@ -60,7 +81,8 @@ const PlaylistSongs = (props: playlistSongsProp) => {
               indexDropdown={indexDropdown}
               setIndexDropdown={setIndexDropdown}
             />
-          ))}
+          ))
+        )}
       </tbody>
     </table>
   );
