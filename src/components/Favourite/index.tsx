@@ -73,9 +73,9 @@ const Favourite = () => {
                     showMoreOptionModal ? "absolute" : "hidden"
                   }`}
                 >
-                  <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                  {/* <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
                     Edit favourite
-                  </li>
+                  </li> */}
                   <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
                     Remove favourite
                   </li>
@@ -83,7 +83,7 @@ const Favourite = () => {
               </div>
             </div>
           </div>
-          <FavouriteSongs />
+          <FavouriteSongs loading={favorite.loading.getFavoriteSongs} />
         </>
       ) : (
         <div className="pt-8 text-xl font-semibold">

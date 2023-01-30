@@ -63,9 +63,9 @@ const SingerInformation = () => {
       />
       <Releases
         songs={song.songs.releaseSongsBySingerId}
+        loading={song.loading.getReleaseSongsBySingerId}
         pagination={song.pagination}
         setPage={setPage}
-        loading={song.loading.getReleaseSongsBySingerId}
       />
     </div>
   );

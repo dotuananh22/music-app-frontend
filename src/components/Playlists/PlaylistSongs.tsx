@@ -3,8 +3,6 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import SubPlaylistSongs from "./SubPlaylistSongs";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
-import joinSingers from "utils/joinSingers";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "app/store";
 import { useParams } from "react-router-dom";
@@ -50,17 +48,17 @@ const PlaylistSongs = (props: playlistSongsProp) => {
           <>
             <tr>
               <td colSpan={6}>
-                <Skeleton height={"52px"} />
+                <Skeleton height={"53px"} />
               </td>
             </tr>
             <tr>
               <td colSpan={6}>
-                <Skeleton height={"52px"} />
+                <Skeleton height={"53px"} />
               </td>
             </tr>
             <tr>
               <td colSpan={6}>
-                <Skeleton height={"52px"} />
+                <Skeleton height={"53px"} />
               </td>
             </tr>
           </>
