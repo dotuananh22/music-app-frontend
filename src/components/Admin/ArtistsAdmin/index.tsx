@@ -1,6 +1,5 @@
 import colors from "constants/color";
 import { useState } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
 import Admin from "..";
 import SubAllArtists from "./SubAllArtists";
