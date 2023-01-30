@@ -3,6 +3,7 @@ import noImage from "assets/images/no-image.png";
 import { FiMoreHorizontal } from "react-icons/fi";
 import moment from "moment";
 import { FaTimes } from "react-icons/fa";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 interface SubFavouriteSongsProps {
   id: string;
@@ -11,7 +12,7 @@ interface SubFavouriteSongsProps {
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SubAllReleases = (props: SubFavouriteSongsProps) => {
+const SubAllArtists = (props: SubFavouriteSongsProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const onShowModal = () => {
@@ -41,18 +42,21 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              Chúng ta của hiện tại
+              Nguyễn Thanh Tùng
             </p>
-            <p className={`text-[#c0c0c0] truncate w-[300px]`}>Sơn Tùng MTP</p>
+            <p
+              className={`text-[#c0c0c0] truncate w-[300px] flex flex-row gap-2 items-center`}
+            >
+              Sơn Tùng MTP
+              <BsFillCheckCircleFill className="text-[#5489F2] text-sm" />
+            </p>
           </div>
         </td>
         <td className="p-2">
-          {moment("2022-09-15T08:51:52.799Z").format("DD/MM/YYYY")}
+          {moment("2001-02-22T08:51:52.799Z").format("DD/MM/YYYY")}
         </td>
         <td className="text-center p-2">
-          <span className="text-center">
-            {moment.unix(286).utc().format("mm:ss")}
-          </span>
+          <span className="text-center">2,000,000</span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
           <div className="justify-end items-center flex">
@@ -97,80 +101,160 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
         }}
       >
         <div
-          className="relative max-w-4xl max-h-screen w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
+          className="relative max-w-5xl max-h-screen w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
           id="modalContent"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
           <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold">Update Release</h2>
+            <h2 className="text-xl font-semibold">Update Artist</h2>
             <button onClick={() => setShowModal(false)}>
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-4 mb-4">
+          <div className="grid grid-cols-4 gap-4 mb-4">
             <div className="flex flex-col gap-2">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="fullName">Full name</label>
               <input
                 className="text-black border-none outline-none"
                 type="text"
-                name="name"
-                placeholder="Release name"
+                name="fullName"
+                placeholder="Full name"
               ></input>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="songTime">Song time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="number"
-                name="songTime"
-                placeholder="Song time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="singers">Singers</label>
+              <label htmlFor="nickname">Nickname</label>
               <input
                 className="text-black border-none outline-none"
                 type="text"
-                name="singers"
-                placeholder="Singers"
+                name="nickname"
+                placeholder="Nickname"
               ></input>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="publishTime">Publish Time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="date"
-                name="publishTime"
-                placeholder="Publish Time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="songUrl">Song Url</label>
+              <label htmlFor="bio">Bio</label>
               <input
                 className="text-black border-none outline-none"
                 type="text"
-                name="songUrl"
-                placeholder="Song Url"
+                name="bio"
+                placeholder="Bio"
               ></input>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="lyric">Lyric</label>
+              <label htmlFor="story">Story</label>
               <textarea
                 className="h-10 min-h-[40px] max-h-28 text-black border-none outline-none"
-                name="lyric"
-                placeholder="Lyric"
+                name="story"
+                placeholder="Story"
               ></textarea>
             </div>
             <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="imageUrl">
-                Image
+              <label htmlFor="birthday">Birthday</label>
+              <input
+                className="text-black border-none outline-none"
+                type="date"
+                name="birthday"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="country">Country</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="country"
+                placeholder="Country"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="debutyear">Debut year</label>
+              <input
+                className="text-black border-none outline-none"
+                type="number"
+                name="debutyear"
+                placeholder="Debut year"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="website">Website</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="website"
+                placeholder="Website"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="facebook">Facebook</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="facebook"
+                placeholder="Facebook"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="youtube">Youtube</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="youtube"
+                placeholder="Youtube"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="instagram">Instagram</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="instagram"
+                placeholder="Instagram"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="twitter">Twitter</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="twitter"
+                placeholder="Twitter"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="tick">Tick</label>
+              <select className="text-black" id="tick" name="tick">
+                <option value="false">False</option>
+                <option value="true">True</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="gender">Gender</label>
+              <select className="text-black" id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="block" htmlFor="avatar">
+                Avatar
               </label>
               <input
                 className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                id="imageUrl"
-                name="imageUrl"
+                id="avatar"
+                name="avatar"
+                type="file"
+                accept="image/*"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="block" htmlFor="imageCover">
+                Image cover
+              </label>
+              <input
+                className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                id="imageCover"
+                name="imageCover"
                 type="file"
                 accept="image/*"
               />
@@ -190,4 +274,4 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
   );
 };
 
-export default SubAllReleases;
+export default SubAllArtists;

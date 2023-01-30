@@ -198,7 +198,7 @@ const ReleasesAdmin = () => {
         }}
       >
         <div
-          className="relative max-w-xl w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
+          className="relative max-w-4xl max-h-screen w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 rounded-lg bg-[#2C2F32] text-white flex flex-col gap-4"
           id="modalContent"
           onClick={(e) => {
             e.stopPropagation();
@@ -210,14 +210,20 @@ const ReleasesAdmin = () => {
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-3 gap-4 mb-4">
             <div className="flex flex-col gap-2">
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" placeholder="Release name"></input>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="name"
+                placeholder="Release name"
+              ></input>
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="songTime">Song time</label>
               <input
+                className="text-black border-none outline-none"
                 type="number"
                 name="songTime"
                 placeholder="Song time"
@@ -225,30 +231,41 @@ const ReleasesAdmin = () => {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="singers">Singers</label>
-              <input type="text" name="singers" placeholder="Singers"></input>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="singers"
+                placeholder="Singers"
+              ></input>
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="publishTime">Publish Time</label>
               <input
+                className="text-black border-none outline-none"
                 type="date"
                 name="publishTime"
                 placeholder="Publish Time"
               ></input>
             </div>
             <div className="flex flex-col gap-2">
+              <label htmlFor="songUrl">Song Url</label>
+              <input
+                className="text-black border-none outline-none"
+                type="text"
+                name="songUrl"
+                placeholder="Song Url"
+              ></input>
+            </div>
+            <div className="flex flex-col gap-2">
               <label htmlFor="lyric">Lyric</label>
               <textarea
-                className="h-[42px]"
+                className="h-10 min-h-[40px] max-h-28 text-black border-none outline-none"
                 name="lyric"
                 placeholder="Lyric"
               ></textarea>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="songUrl">Song Url</label>
-              <input type="text" name="songUrl" placeholder="Song Url"></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="image">
+              <label className="block" htmlFor="imageUrl">
                 Image
               </label>
               <input
