@@ -1,87 +1,17 @@
-import colors from "constants/color";
-import { useState } from "react";
+import React, { useState } from "react";
+import noImage from "assets/images/no-image.png";
+import { FiMoreHorizontal } from "react-icons/fi";
+import moment from "moment";
 import { FaTimes } from "react-icons/fa";
-import Admin from "..";
-import SubAllUsers from "./SubAllUsers";
 
-const users = [
-  {
-    _id: "6390b068480bd289b00fd2da",
-    username: "hello5423",
-    role: "admin",
-    deleted: false,
-    createdAt: "2022-12-07T15:25:28.349Z",
-    updatedAt: "2023-01-17T08:45:31.482Z",
-    __v: 0,
-    birthday: "2022-12-07T17:00:00.000Z",
-    email: "123@example.com",
-    fullName: "Phạm Quốc Ấn",
-    imageUrl: "1234.png",
-    phoneNumber: "0123456778",
-  },
-  {
-    _id: "6391a84a133bdcf4e69fd57a",
-    username: "hello5424",
-    role: "user",
-    deleted: false,
-    createdAt: "2022-12-08T09:03:06.429Z",
-    updatedAt: "2022-12-08T09:03:06.429Z",
-    __v: 0,
-  },
-  {
-    _id: "6391a84e133bdcf4e69fd57d",
-    username: "hello5425",
-    role: "user",
-    deleted: false,
-    createdAt: "2022-12-08T09:03:10.542Z",
-    updatedAt: "2022-12-08T09:03:10.542Z",
-    __v: 0,
-  },
-  {
-    _id: "63c76ff4f1c34e41c39c2dd2",
-    username: "hello5426",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:05:08.364Z",
-    updatedAt: "2023-01-18T04:05:08.364Z",
-    __v: 0,
-  },
-  {
-    _id: "63c77034f1c34e41c39c2de0",
-    username: "hello5427",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:06:12.938Z",
-    updatedAt: "2023-01-18T04:06:12.938Z",
-    __v: 0,
-  },
-  {
-    _id: "63c771193ca07013a5df7314",
-    username: "hello5429",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:10:01.472Z",
-    updatedAt: "2023-01-18T04:10:01.472Z",
-    __v: 0,
-  },
-  {
-    _id: "6395253181f10e40fec69ef2",
-    username: "tuananhsky",
-    role: "admin",
-    deleted: false,
-    createdAt: "2022-12-11T00:32:49.721Z",
-    updatedAt: "2023-01-21T01:49:18.437Z",
-    __v: 0,
-    birthday: "2001-02-21T17:00:00.000Z",
-    email: "tuananhsky@gmail.com",
-    fullName: "Đỗ Tuấn Anh",
-    imageUrl: "123.png",
-    phoneNumber: "0123456779",
-  },
-];
+interface SubFavouriteSongsProps {
+  id: string;
+  rank: number;
+  indexDropdown: number;
+  setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const UsersAdmin = () => {
-  const [indexDropdown, setIndexDropdown] = useState(0);
+const SubAllUsers = (props: SubFavouriteSongsProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const onShowModal = () => {
@@ -89,14 +19,70 @@ const UsersAdmin = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <Admin active="Users" />
-      <button
-        className={`mr-auto px-4 py-1 text-base font-semibold hover:bg-[#222227] bg-[${colors.greenColor}] rounded-lg delay-100 transition-all ease-linear`}
-        onClick={onShowModal}
+    <>
+      <tr
+        className="hover:bg-[#2C2F32] cursor-pointer group"
+        onMouseLeave={() => {
+          props.setIndexDropdown(0);
+        }}
       >
-        Insert
-      </button>
+        <td className="p-2 rounded-l-md">{props.rank}</td>
+        <td className="flex flex-row gap-4 items-center p-2">
+          <img
+            src={
+              "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100" ||
+              noImage
+            }
+            alt="music"
+            className="h-10 w-10"
+            onError={(e) => {
+              e.currentTarget.src = noImage;
+            }}
+          />
+          <div>
+            <p className={`text-white font-semibold truncate w-[300px]`}>
+              tuananhsky
+            </p>
+            <p className={`text-[#c0c0c0] truncate w-[300px]`}>Đỗ Tuấn Anh</p>
+          </div>
+        </td>
+        <td className="p-2">
+          {moment("2022-09-15T08:51:52.799Z").format("DD/MM/YYYY")}
+        </td>
+        <td className="text-center p-2">
+          <span className="text-center">admin</span>
+        </td>
+        <td className="pr-2 py-2 rounded-r-md">
+          <div className="justify-end items-center flex">
+            <div className="hidden group-hover:inline-block relative">
+              <FiMoreHorizontal
+                className="text-xl cursor-pointer"
+                onClick={(e) => {
+                  if (props.indexDropdown !== props.rank)
+                    props.setIndexDropdown(props.rank);
+                  else props.setIndexDropdown(0);
+                  e.stopPropagation();
+                }}
+              />
+              <ul
+                className={`absolute right-0 bg-[#222227] w-[84px] rounded-sm text-sm ${
+                  props.indexDropdown !== props.rank && "hidden"
+                }`}
+              >
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={() => onShowModal()}
+                >
+                  Update
+                </li>
+                <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                  Delete
+                </li>
+              </ul>
+            </div>
+          </div>
+        </td>
+      </tr>
       <div
         id="defaultModal"
         tabIndex={-1}
@@ -116,7 +102,7 @@ const UsersAdmin = () => {
           }}
         >
           <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold">Insert User</h2>
+            <h2 className="text-xl font-semibold">Update User</h2>
             <button onClick={() => setShowModal(false)}>
               <FaTimes className="text-xl m-1" />
             </button>
@@ -180,34 +166,13 @@ const UsersAdmin = () => {
               className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
               type="submit"
             >
-              INSERT
+              UPDATE
             </button>
           </div>
         </div>
       </div>
-      <table className="table-auto w-full">
-        <thead>
-          <tr className="border-b border-[#222227]">
-            <th className="w-[20px] p-2"></th>
-            <th className="text-left w-1/2 p-2 text-sm">USER</th>
-            <th className="p-2 text-left text-sm">BIRTHDAY</th>
-            <th className="w-[150px] p-2 text-sm">ROLE</th>
-            <th className="p-2 w-[30px]"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <SubAllUsers
-              id={user._id}
-              rank={index + 1}
-              indexDropdown={indexDropdown}
-              setIndexDropdown={setIndexDropdown}
-            />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 };
 
-export default UsersAdmin;
+export default SubAllUsers;
