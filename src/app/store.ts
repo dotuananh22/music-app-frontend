@@ -5,6 +5,8 @@ import singerReducer from "features/singer/singerSlice";
 import playlistReducer from "features/playlist/playlistSlice";
 import favoriteReducer from "features/favorite/favoriteSlice";
 import emailReducer from "features/email/emailSlice";
+import songAdminReducer from "features/admin/song/songSlice";
+import singerAdminReducer from "features/admin/singer/singerSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   playlist: playlistReducer,
   favorite: favoriteReducer,
   email: emailReducer,
+  adminSong: songAdminReducer,
+  adminSinger: singerAdminReducer,
 });
 
 const store = configureStore({

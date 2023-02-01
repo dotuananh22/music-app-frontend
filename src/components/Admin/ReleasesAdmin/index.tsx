@@ -1,7 +1,12 @@
+import { AppDispatch, IRootState } from "app/store";
+
 import colors from "constants/color";
-import { useState } from "react";
+import songAdminThunk from "features/admin/song/songThunk";
+import { useState, useEffect } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
 import Admin from "..";
 import SubAllReleases from "./SubAllReleases";
 
@@ -172,10 +177,25 @@ const songs = [
 const ReleasesAdmin = () => {
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const songAdmin = useSelector((state: IRootState) => state.adminSong);
+
+  console.log(songAdmin.songs);
 
   const onShowModal = () => {
     setShowModal(true);
   };
+
+  useEffect(() => {
+    dispatch(
+      songAdminThunk.getAllSongs({
+        limit: 10,
+        skip: 0,
+        sort: ["publishTime"],
+        order: [-1],
+      })
+    );
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -300,14 +320,35 @@ const ReleasesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {songs.map((song, index) => (
-            <SubAllReleases
-              id={song._id}
-              rank={index + 1}
-              indexDropdown={indexDropdown}
-              setIndexDropdown={setIndexDropdown}
-            />
-          ))}
+          {songAdmin.loading.allSongs ? (
+            <>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+            </>
+          ) : (
+            songAdmin.songs.map((song, index) => (
+              <SubAllReleases
+                song={song}
+                id={song._id}
+                rank={index + 1}
+                indexDropdown={indexDropdown}
+                setIndexDropdown={setIndexDropdown}
+              />
+            ))
+          )}
         </tbody>
       </table>
     </div>

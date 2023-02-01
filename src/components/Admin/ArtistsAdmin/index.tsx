@@ -1,6 +1,10 @@
+import { AppDispatch, IRootState } from "app/store";
 import colors from "constants/color";
-import { useState } from "react";
+import singerAdminThunk from "features/admin/singer/singerThunk";
+import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
 import Admin from "..";
 import SubAllArtists from "./SubAllArtists";
 
@@ -262,6 +266,19 @@ const singers = [
 const ArtistsAdmin = () => {
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const singerAdmin = useSelector((state: IRootState) => state.adminSinger);
+
+  useEffect(() => {
+    dispatch(
+      singerAdminThunk.getAllSingers({
+        limit: 10,
+        skip: 0,
+        order: [-1],
+        sort: ["follower"],
+      })
+    );
+  }, [dispatch]);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -468,14 +485,35 @@ const ArtistsAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {singers.map((singer, index) => (
-            <SubAllArtists
-              id={singer._id}
-              rank={index + 1}
-              indexDropdown={indexDropdown}
-              setIndexDropdown={setIndexDropdown}
-            />
-          ))}
+          {singerAdmin.loading.allSingers ? (
+            <>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>{" "}
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>{" "}
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+            </>
+          ) : (
+            singerAdmin.singers.map((singer, index) => (
+              <SubAllArtists
+                id={singer._id}
+                singer={singer}
+                rank={index + 1}
+                indexDropdown={indexDropdown}
+                setIndexDropdown={setIndexDropdown}
+              />
+            ))
+          )}
         </tbody>
       </table>
     </div>

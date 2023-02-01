@@ -88,9 +88,27 @@ const removeFavoriteSong = createAsyncThunk(
   }
 );
 
+const removeAllFavoriteSong = createAsyncThunk(
+  "favorite/removeAllFavoriteSong",
+  async (_: void, thunkApi) => {
+    try {
+      const response = await favoriteApi.removeAllFavoriteSong();
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export default {
   getAllFavoriteSongIds,
   getAllFavoriteSongs,
   addFavoriteSong,
   removeFavoriteSong,
+  removeAllFavoriteSong,
 };

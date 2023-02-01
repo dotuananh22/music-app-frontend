@@ -3,10 +3,14 @@ import noImage from "assets/images/no-image.png";
 import { FiMoreHorizontal } from "react-icons/fi";
 import moment from "moment";
 import { FaTimes } from "react-icons/fa";
+import Song from "types/song/Song";
+import Singer from "types/singer/Singer";
+import joinSingers from "utils/joinSingers";
 
 interface SubFavouriteSongsProps {
   id: string;
   rank: number;
+  song: Song<Singer>;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -29,10 +33,7 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
         <td className="p-2 rounded-l-md">{props.rank}</td>
         <td className="flex flex-row gap-4 items-center p-2">
           <img
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100" ||
-              noImage
-            }
+            src={props.song.imageUrl || noImage}
             alt="music"
             className="h-10 w-10"
             onError={(e) => {
@@ -41,17 +42,19 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              Chúng ta của hiện tại
+              {props.song.name}
             </p>
-            <p className={`text-[#c0c0c0] truncate w-[300px]`}>Sơn Tùng MTP</p>
+            <p className={`text-[#c0c0c0] truncate w-[300px]`}>
+              {joinSingers(props.song.singers)}
+            </p>
           </div>
         </td>
         <td className="p-2">
-          {moment("2022-09-15T08:51:52.799Z").format("DD/MM/YYYY")}
+          {moment(props.song.createdAt).format("DD/MM/YYYY")}
         </td>
         <td className="text-center p-2">
           <span className="text-center">
-            {moment.unix(286).utc().format("mm:ss")}
+            {moment.unix(props.song.songTime).utc().format("mm:ss")}
           </span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
