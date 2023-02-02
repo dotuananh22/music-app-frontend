@@ -28,11 +28,18 @@ const removeFavoriteSong = async (
   return await axiosClient.delete("/favorite/song", { data: { songId } });
 };
 
+const removeAllFavoriteSong = async (): Promise<
+  ApiResponse<Favorite<Song<Singer>>>
+> => {
+  return await axiosClient.delete("/favorite/all-songs");
+};
+
 const favoriteApi = {
   getAllFavoriteSongIds,
   getAllFavoriteSongs,
   addFavoriteSong,
   removeFavoriteSong,
+  removeAllFavoriteSong,
 };
 
 export default favoriteApi;

@@ -19,6 +19,10 @@ const Favourite = () => {
     dispatch(favoriteThunk.getAllFavoriteSongs());
   }, []);
 
+  const handleRemoveAllFavoriteSongs = () => {
+    dispatch(favoriteThunk.removeAllFavoriteSong());
+  };
+
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
@@ -76,7 +80,10 @@ const Favourite = () => {
                   {/* <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
                     Edit favourite
                   </li> */}
-                  <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                  <li
+                    className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                    onClick={handleRemoveAllFavoriteSongs}
+                  >
                     Remove favourite
                   </li>
                 </ul>

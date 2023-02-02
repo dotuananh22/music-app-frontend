@@ -4,10 +4,12 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import moment from "moment";
 import { FaTimes } from "react-icons/fa";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import Singer from "types/singer/Singer";
 
 interface SubFavouriteSongsProps {
   id: string;
   rank: number;
+  singer: Singer;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -30,10 +32,7 @@ const SubAllArtists = (props: SubFavouriteSongsProps) => {
         <td className="p-2 rounded-l-md">{props.rank}</td>
         <td className="flex flex-row gap-4 items-center p-2">
           <img
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100" ||
-              noImage
-            }
+            src={props.singer.imageUrl || noImage}
             alt="music"
             className="h-10 w-10"
             onError={(e) => {
@@ -42,21 +41,23 @@ const SubAllArtists = (props: SubFavouriteSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              Nguyễn Thanh Tùng
+              {props.singer.fullName}
             </p>
             <p
               className={`text-[#c0c0c0] truncate w-[300px] flex flex-row gap-2 items-center`}
             >
-              Sơn Tùng MTP
-              <BsFillCheckCircleFill className="text-[#5489F2] text-sm" />
+              {props.singer.nickname}
+              {props.singer.tick && (
+                <BsFillCheckCircleFill className="text-[#5489F2] text-sm" />
+              )}
             </p>
           </div>
         </td>
         <td className="p-2">
-          {moment("2001-02-22T08:51:52.799Z").format("DD/MM/YYYY")}
+          {moment(props.singer.birthday).format("DD/MM/YYYY")}
         </td>
         <td className="text-center p-2">
-          <span className="text-center">2,000,000</span>
+          <span className="text-center">{props.singer.follower}</span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
           <div className="justify-end items-center flex">

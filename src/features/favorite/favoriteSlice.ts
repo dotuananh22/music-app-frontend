@@ -129,6 +129,21 @@ const favoriteSlice = createSlice({
         toast.error(action.payload as string);
       }
     );
+
+    // remove all favorite
+    builder.addCase(
+      favoriteThunk.removeAllFavoriteSong.fulfilled,
+      (state, action) => {
+        state.favorites.favoriteSongs = action.payload;
+        toast.success("Remove all favorite song success");
+      }
+    );
+    builder.addCase(
+      favoriteThunk.removeAllFavoriteSong.rejected,
+      (state, action) => {
+        toast.error(action.payload as string);
+      }
+    );
   },
 });
 

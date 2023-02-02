@@ -45,37 +45,17 @@ const FavouriteSongs = (props: FavouriteSongsProps) => {
         </tr>
       </thead>
       <tbody>
-        {props.loading ? (
-          <>
-            <tr>
-              <td colSpan={6}>
-                <Skeleton height={"53px"} />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={6}>
-                <Skeleton height={"53px"} />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={6}>
-                <Skeleton height={"53px"} />
-              </td>
-            </tr>
-          </>
-        ) : (
-          favorite.favorites.favoriteSongs?.songs.map((song, index) => (
-            <SubFavouriteSongs
-              id={song._id}
-              rank={index + 1}
-              favorite={true}
-              indexDropdown={indexDropdown}
-              song={song}
-              setIndexDropdown={setIndexDropdown}
-              handlePlayMusic={handlePlayMusic}
-            />
-          ))
-        )}
+        {favorite.favorites.favoriteSongs?.songs.map((song, index) => (
+          <SubFavouriteSongs
+            id={song._id}
+            rank={index + 1}
+            favorite={true}
+            indexDropdown={indexDropdown}
+            song={song}
+            setIndexDropdown={setIndexDropdown}
+            handlePlayMusic={handlePlayMusic}
+          />
+        ))}
       </tbody>
     </table>
   );
