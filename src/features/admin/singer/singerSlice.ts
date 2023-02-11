@@ -18,7 +18,7 @@ const initialState: SingerState = {
 };
 
 const singerSlice = createSlice({
-  name: "singer",
+  name: "adminSinger",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

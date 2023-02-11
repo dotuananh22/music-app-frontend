@@ -4,7 +4,7 @@ import QueryInput from "types/QueryInput";
 import Singer from "types/singer/Singer";
 
 const getAllSingers = createAsyncThunk(
-  "singer/getAllSingers",
+  "adminSinger/getAllSingers",
   async (query: QueryInput<Singer>, thunkApi) => {
     try {
       const response = await singerApi.getAllSingers(query);
