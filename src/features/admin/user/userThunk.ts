@@ -1,15 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import songApi from "api/songApi";
+import userApi from "api/userApi";
 import QueryInput from "types/QueryInput";
-import Song from "types/song/Song";
+import User from "types/user/User";
 
-const getAllSongs = createAsyncThunk(
-  "adminSong/getAllSongs",
-  async (query: QueryInput<Song<string>>, thunkApi) => {
+const getAllUsers = createAsyncThunk(
+  "adminUser/getAllUsers",
+  async (query: QueryInput<User>, thunkApi) => {
     try {
-      const response = await songApi.getAllSongs(query);
-
-      console.log(response.data);
+      const response = await userApi.getAll(query);
 
       if (!response.success || !response.data) {
         return thunkApi.rejectWithValue(response.message);
@@ -22,11 +20,11 @@ const getAllSongs = createAsyncThunk(
   }
 );
 
-const deleteSongById = createAsyncThunk(
-  "adminSong/deleteSongById",
-  async (songId: string, thunkApi) => {
+const deleteUser = createAsyncThunk(
+  "adminUser/deleteUser",
+  async (userId: string, thunkApi) => {
     try {
-      const response = await songApi.deleteSongById(songId);
+      const response = await userApi.deleteUser(userId);
 
       if (!response.success) {
         return thunkApi.rejectWithValue(response.message);
@@ -39,9 +37,9 @@ const deleteSongById = createAsyncThunk(
   }
 );
 
-const songAdminThunk = {
-  getAllSongs,
-  deleteSongById,
+const userAdminThunk = {
+  getAllUsers,
+  deleteUser,
 };
 
-export default songAdminThunk;
+export default userAdminThunk;
