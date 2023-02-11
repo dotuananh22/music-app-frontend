@@ -1,6 +1,10 @@
+import { AppDispatch, IRootState } from "app/store";
 import colors from "constants/color";
-import { useState } from "react";
+import userAdminThunk from "features/admin/user/userThunk";
+import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
 import Admin from "..";
 import SubAllUsers from "./SubAllUsers";
 
@@ -81,8 +85,22 @@ const users = [
 ];
 
 const UsersAdmin = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      userAdminThunk.getAllUsers({
+        limit: 10,
+        skip: 0,
+        sort: ["createdAt"],
+        order: [-1],
+      })
+    );
+  }, [dispatch]);
+
+  const userAdmin = useSelector((state: IRootState) => state.adminUser);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -196,14 +214,35 @@ const UsersAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <SubAllUsers
-              id={user._id}
-              rank={index + 1}
-              indexDropdown={indexDropdown}
-              setIndexDropdown={setIndexDropdown}
-            />
-          ))}
+          {userAdmin.loading.getAllUsers ? (
+            <>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={5}>
+                  <Skeleton height={"52px"} />
+                </td>
+              </tr>
+            </>
+          ) : (
+            userAdmin.users.map((user, index) => (
+              <SubAllUsers
+                id={user._id}
+                rank={index + 1}
+                user={user}
+                indexDropdown={indexDropdown}
+                setIndexDropdown={setIndexDropdown}
+              />
+            ))
+          )}
         </tbody>
       </table>
     </div>

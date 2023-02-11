@@ -6,6 +6,9 @@ import { FaTimes } from "react-icons/fa";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "app/store";
+import songAdminThunk from "features/admin/song/songThunk";
 
 interface SubFavouriteSongsProps {
   id: string;
@@ -17,9 +20,14 @@ interface SubFavouriteSongsProps {
 
 const SubAllReleases = (props: SubFavouriteSongsProps) => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onShowModal = () => {
     setShowModal(true);
+  };
+
+  const handleDeleteSong = () => {
+    dispatch(songAdminThunk.deleteSongById(props.song._id));
   };
 
   return (
@@ -80,7 +88,10 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
                 >
                   Update
                 </li>
-                <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={handleDeleteSong}
+                >
                   Delete
                 </li>
               </ul>

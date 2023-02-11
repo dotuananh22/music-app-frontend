@@ -3,21 +3,33 @@ import noImage from "assets/images/no-image.png";
 import { FiMoreHorizontal } from "react-icons/fi";
 import moment from "moment";
 import { FaTimes } from "react-icons/fa";
+import User from "types/user/User";
+import { FastField, Form, Formik } from "formik";
+import { userSchema } from "schema";
+import InputFormik from "components/Common/InputFormik";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "app/store";
+import userAdminThunk from "features/admin/user/userThunk";
 
 interface SubFavouriteSongsProps {
   id: string;
   rank: number;
+  user: User;
   indexDropdown: number;
   setIndexDropdown: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SubAllUsers = (props: SubFavouriteSongsProps) => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onShowModal = () => {
     setShowModal(true);
   };
 
+  const handleDeleteUser = () => {
+    dispatch(userAdminThunk.deleteUser(props.user._id));
+  };
   return (
     <>
       <tr
@@ -29,11 +41,8 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
         <td className="p-2 rounded-l-md">{props.rank}</td>
         <td className="flex flex-row gap-4 items-center p-2">
           <img
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100" ||
-              noImage
-            }
-            alt="music"
+            src={props.user.imageUrl || noImage}
+            alt="avatar"
             className="h-10 w-10"
             onError={(e) => {
               e.currentTarget.src = noImage;
@@ -41,16 +50,18 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
           />
           <div>
             <p className={`text-white font-semibold truncate w-[300px]`}>
-              tuananhsky
+              {props.user.username}
             </p>
-            <p className={`text-[#c0c0c0] truncate w-[300px]`}>Đỗ Tuấn Anh</p>
+            <p className={`text-[#c0c0c0] truncate w-[300px]`}>
+              {props.user.fullName}
+            </p>
           </div>
         </td>
         <td className="p-2">
-          {moment("2022-09-15T08:51:52.799Z").format("DD/MM/YYYY")}
+          {moment(props.user.birthday).format("DD/MM/YYYY")}
         </td>
         <td className="text-center p-2">
-          <span className="text-center">admin</span>
+          <span className="text-center">{props.user.role}</span>
         </td>
         <td className="pr-2 py-2 rounded-r-md">
           <div className="justify-end items-center flex">
@@ -75,7 +86,10 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
                 >
                   Update
                 </li>
-                <li className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer">
+                <li
+                  className="py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-600 cursor-pointer"
+                  onClick={handleDeleteUser}
+                >
                   Delete
                 </li>
               </ul>
@@ -101,74 +115,104 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
             e.stopPropagation();
           }}
         >
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold">Update User</h2>
-            <button onClick={() => setShowModal(false)}>
-              <FaTimes className="text-xl m-1" />
-            </button>
-          </div>
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="username">Username</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="username"
-                placeholder="Username"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="fullName">Full name</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="fullName"
-                placeholder="Full name"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="birthday">Birthday</label>
-              <input
-                className="text-black border-none outline-none"
-                type="date"
-                name="birthday"
-                placeholder="Birthday"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email">Email</label>
-              <input
-                className="text-black border-none outline-none"
-                type="email"
-                name="email"
-                placeholder="Email"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="phonenumber">Phone number</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="phonenumber"
-                placeholder="Phone number"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="role">Role</label>
-              <select className="text-black" id="role" name="role">
-                <option value="user">user</option>
-                <option value="admin">admin</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
-              type="submit"
-            >
-              UPDATE
-            </button>
-          </div>
+          <Formik
+            initialValues={{
+              username: props.user.username,
+              fullName: props.user.fullName,
+              birthday: props.user.birthday,
+              email: props.user.email,
+              phoneNumber: props.user.phoneNumber,
+            }}
+            validationSchema={userSchema.userUpdateSchema}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            {(formikProps) => {
+              const { values, errors, touched } = formikProps;
+
+              return (
+                <Form>
+                  <div className="flex justify-between items-center mb-2">
+                    <h2 className="text-xl font-semibold">Update User</h2>
+                    <button onClick={() => setShowModal(false)}>
+                      <FaTimes className="text-xl m-1" />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">Username</label>
+                      <FastField
+                        name="username"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Username"
+                        title={touched.username && errors.username}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="fullName">Full Name</label>
+                      <FastField
+                        name="fullName"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Full Name"
+                        title={touched.fullName && errors.fullName}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="birthday">Birthday</label>
+                      <FastField
+                        name="birthday"
+                        component={InputFormik}
+                        type="date"
+                        placeholder="Birthday"
+                        value={values.birthday}
+                        patern="dd/MM/yyyy"
+                        title={touched.birthday && errors.birthday}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="email">Email</label>
+                      <FastField
+                        name="email"
+                        component={InputFormik}
+                        type="email"
+                        placeholder="Email"
+                        title={touched.email && errors.email}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="phoneNumber">Phone Number</label>
+                      <FastField
+                        name="phoneNumber"
+                        component={InputFormik}
+                        type="tel"
+                        placeholder="Phone Number"
+                        title={touched.phoneNumber && errors.phoneNumber}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="role">Role</label>
+                      <select className="text-black" id="role" name="role">
+                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                      type="submit"
+                    >
+                      UPDATE
+                    </button>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     </>
