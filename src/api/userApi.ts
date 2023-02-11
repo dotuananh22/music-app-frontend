@@ -4,10 +4,15 @@ import axiosClient from "./axiosClient";
 import { userSchema } from "schema";
 import ApiResponse from "types/ApiResponse";
 import User from "types/user/User";
+import GetAllUserResponse from "types/user/GetAllUserResponse";
 
-const getAll = async (query: QueryInput<User>) => {
+const getAll = async (
+  query: QueryInput<User>
+): Promise<ApiResponse<GetAllUserResponse>> => {
   return await axiosClient.get(
-    `/admin/user?limit=${query.limit}&skip=${query.skip}&sort=${query.sort}`
+    `/admin/user?limit=${query.limit}&skip=${query.skip}&sort=${JSON.stringify(
+      query.sort
+    )}&order=${JSON.stringify(query.order)}`
   );
 };
 
@@ -41,6 +46,10 @@ const updateUserPassword = async (
   return await axiosClient.put("/auth/password", body);
 };
 
+const deleteUser = async (userId: string): Promise<ApiResponse<undefined>> => {
+  return await axiosClient.delete(`/admin/user/${userId}`);
+};
+
 const logout = async (): Promise<ApiResponse<User>> => {
   return await axiosClient.post("/auth/logout");
 };
@@ -60,6 +69,7 @@ export default {
   registerWithUsernameAndPassword,
   updateUser,
   updateUserPassword,
+  deleteUser,
   logout,
   // deleteUser,
   // restoreUser,

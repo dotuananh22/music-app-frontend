@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import ApiResponse from "types/ApiResponse";
+import PaginationResponse from "types/PaginationResponse";
 import QueryInput from "types/QueryInput";
 import Singer from "types/singer/Singer";
 import GetAllSongResponse from "types/song/GetAllSongResponse";
@@ -46,10 +47,17 @@ const updateLike = async (
   });
 };
 
+const deleteSongById = async (
+  songId: string
+): Promise<ApiResponse<Song<Singer>>> => {
+  return await axiosClient.delete(`/admin/song/${songId}`);
+};
+
 export default {
   getAllSongs,
   getSongById,
   getAllSongsBySingerId,
   addOneListen,
   updateLike,
+  deleteSongById,
 };
