@@ -6,6 +6,7 @@ import singerAdminThunk from "./singerThunk";
 interface SingerState {
   loading: {
     allSingers: boolean;
+    searchSingers: boolean;
   };
   singers: Singer[];
 }
@@ -13,6 +14,7 @@ interface SingerState {
 const initialState: SingerState = {
   loading: {
     allSingers: false,
+    searchSingers: false,
   },
   singers: [],
 };

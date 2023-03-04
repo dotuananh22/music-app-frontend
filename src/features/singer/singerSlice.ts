@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import PaginationResponse from "types/PaginationResponse";
 import Singer from "types/singer/Singer";
@@ -8,9 +8,11 @@ interface SingerState {
   loading: {
     loadingSingers: boolean;
     loadingSinger: boolean;
+    searchSingers: boolean;
   };
   singers: {
     getAllSingers: Singer[];
+    searchSingers: Singer[];
   };
   singer: {
     getOneSinger: Singer | null;
@@ -22,9 +24,11 @@ const initialState: SingerState = {
   loading: {
     loadingSingers: false,
     loadingSinger: false,
+    searchSingers: false,
   },
   singers: {
     getAllSingers: [],
+    searchSingers: [],
   },
   singer: {
     getOneSinger: null,
@@ -66,6 +70,22 @@ const singerSlice = createSlice({
     });
     builder.addCase(singerThunk.getOneSinger.rejected, (state, action) => {
       state.loading.loadingSinger = false;
+      toast.error(action.payload as string);
+    });
+
+    //search singers
+    builder.addCase(singerThunk.searchSingers.pending, (state) => {
+      state.loading.searchSingers = true;
+    });
+    builder.addCase(
+      singerThunk.searchSingers.fulfilled,
+      (state, action: PayloadAction<Singer[]>) => {
+        state.loading.searchSingers = false;
+        state.singers.searchSingers = action.payload;
+      }
+    );
+    builder.addCase(singerThunk.searchSingers.rejected, (state, action) => {
+      state.loading.searchSingers = false;
       toast.error(action.payload as string);
     });
   },
