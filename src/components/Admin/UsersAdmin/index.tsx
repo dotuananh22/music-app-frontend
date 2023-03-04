@@ -8,86 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Admin from "..";
 import SubAllUsers from "./SubAllUsers";
 
-const users = [
-  {
-    _id: "6390b068480bd289b00fd2da",
-    username: "hello5423",
-    role: "admin",
-    deleted: false,
-    createdAt: "2022-12-07T15:25:28.349Z",
-    updatedAt: "2023-01-17T08:45:31.482Z",
-    __v: 0,
-    birthday: "2022-12-07T17:00:00.000Z",
-    email: "123@example.com",
-    fullName: "Phạm Quốc Ấn",
-    imageUrl: "1234.png",
-    phoneNumber: "0123456778",
-  },
-  {
-    _id: "6391a84a133bdcf4e69fd57a",
-    username: "hello5424",
-    role: "user",
-    deleted: false,
-    createdAt: "2022-12-08T09:03:06.429Z",
-    updatedAt: "2022-12-08T09:03:06.429Z",
-    __v: 0,
-  },
-  {
-    _id: "6391a84e133bdcf4e69fd57d",
-    username: "hello5425",
-    role: "user",
-    deleted: false,
-    createdAt: "2022-12-08T09:03:10.542Z",
-    updatedAt: "2022-12-08T09:03:10.542Z",
-    __v: 0,
-  },
-  {
-    _id: "63c76ff4f1c34e41c39c2dd2",
-    username: "hello5426",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:05:08.364Z",
-    updatedAt: "2023-01-18T04:05:08.364Z",
-    __v: 0,
-  },
-  {
-    _id: "63c77034f1c34e41c39c2de0",
-    username: "hello5427",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:06:12.938Z",
-    updatedAt: "2023-01-18T04:06:12.938Z",
-    __v: 0,
-  },
-  {
-    _id: "63c771193ca07013a5df7314",
-    username: "hello5429",
-    role: "user",
-    deleted: false,
-    createdAt: "2023-01-18T04:10:01.472Z",
-    updatedAt: "2023-01-18T04:10:01.472Z",
-    __v: 0,
-  },
-  {
-    _id: "6395253181f10e40fec69ef2",
-    username: "tuananhsky",
-    role: "admin",
-    deleted: false,
-    createdAt: "2022-12-11T00:32:49.721Z",
-    updatedAt: "2023-01-21T01:49:18.437Z",
-    __v: 0,
-    birthday: "2001-02-21T17:00:00.000Z",
-    email: "tuananhsky@gmail.com",
-    fullName: "Đỗ Tuấn Anh",
-    imageUrl: "123.png",
-    phoneNumber: "0123456779",
-  },
-];
-
 const UsersAdmin = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    username: "",
+    fullName: "",
+    birthday: "",
+    email: "",
+    role: "",
+    phoneNumber: "",
+  });
 
   useEffect(() => {
     dispatch(
@@ -104,6 +36,10 @@ const UsersAdmin = () => {
 
   const onShowModal = () => {
     setShowModal(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
   return (
@@ -147,6 +83,7 @@ const UsersAdmin = () => {
                 type="text"
                 name="username"
                 placeholder="Username"
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col gap-2">
@@ -156,6 +93,7 @@ const UsersAdmin = () => {
                 type="text"
                 name="fullName"
                 placeholder="Full name"
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col gap-2">
@@ -165,6 +103,7 @@ const UsersAdmin = () => {
                 type="date"
                 name="birthday"
                 placeholder="Birthday"
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col gap-2">
@@ -174,20 +113,29 @@ const UsersAdmin = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="phonenumber">Phone number</label>
+              <label htmlFor="phoneNumber">Phone number</label>
               <input
                 className="text-black border-none outline-none"
                 type="text"
-                name="phonenumber"
+                name="phoneNumber"
                 placeholder="Phone number"
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="role">Role</label>
-              <select className="text-black" id="role" name="role">
+              <select
+                className="text-black"
+                id="role"
+                name="role"
+                onChange={(e) => {
+                  setUserInfo({ ...userInfo, role: e.target.value });
+                }}
+              >
                 <option value="user">user</option>
                 <option value="admin">admin</option>
               </select>
