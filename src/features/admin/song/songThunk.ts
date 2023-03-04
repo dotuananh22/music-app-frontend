@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import songApi from "api/songApi";
+import { songSchema } from "schema";
 import QueryInput from "types/QueryInput";
 import Song from "types/song/Song";
 
@@ -10,6 +11,29 @@ const getAllSongs = createAsyncThunk(
       const response = await songApi.getAllSongs(query);
 
       console.log(response.data);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+const updateSongById = createAsyncThunk(
+  "adminSong/updateSongById",
+  async (
+    {
+      id,
+      updateInput,
+    }: { id: string; updateInput: songSchema.UpdateSongInput },
+    thunkApi
+  ) => {
+    try {
+      const response = await songApi.updateSongById(id, updateInput);
 
       if (!response.success || !response.data) {
         return thunkApi.rejectWithValue(response.message);
@@ -41,6 +65,7 @@ const deleteSongById = createAsyncThunk(
 
 const songAdminThunk = {
   getAllSongs,
+  updateSongById,
   deleteSongById,
 };
 

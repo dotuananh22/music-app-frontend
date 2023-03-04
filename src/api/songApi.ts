@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
+import { songSchema } from "schema";
 import ApiResponse from "types/ApiResponse";
 import PaginationResponse from "types/PaginationResponse";
 import QueryInput from "types/QueryInput";
@@ -38,6 +39,13 @@ const addOneListen = async (id: string): Promise<ApiResponse<Song<string>>> => {
   return await axiosClient.patch(`/song/listen/${id}`);
 };
 
+const updateSongById = async (
+  id: string,
+  body: songSchema.UpdateSongInput
+): Promise<ApiResponse<Song<Singer>>> => {
+  return await axiosClient.put(`/admin/song/${id}`, body);
+};
+
 const updateLike = async (
   id: string,
   like: number
@@ -58,6 +66,7 @@ export default {
   getSongById,
   getAllSongsBySingerId,
   addOneListen,
+  updateSongById,
   updateLike,
   deleteSongById,
 };
