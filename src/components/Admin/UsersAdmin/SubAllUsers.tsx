@@ -115,6 +115,12 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
             e.stopPropagation();
           }}
         >
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold">Update User</h2>
+            <button onClick={() => setShowModal(false)}>
+              <FaTimes className="text-xl m-1" />
+            </button>
+          </div>
           <Formik
             initialValues={{
               username: props.user.username,
@@ -122,10 +128,17 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
               birthday: props.user.birthday,
               email: props.user.email,
               phoneNumber: props.user.phoneNumber,
+              role: props.user.role,
             }}
-            validationSchema={userSchema.userUpdateSchema}
+            validationSchema={userSchema.adminUpdateUserSchema}
             onSubmit={(values) => {
-              console.log(values);
+              dispatch(
+                userAdminThunk.updateUser({
+                  userId: props.user._id,
+                  updateBody: values,
+                })
+              );
+              setShowModal(false);
             }}
           >
             {(formikProps) => {
@@ -133,12 +146,6 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
 
               return (
                 <Form>
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-xl font-semibold">Update User</h2>
-                    <button onClick={() => setShowModal(false)}>
-                      <FaTimes className="text-xl m-1" />
-                    </button>
-                  </div>
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="flex flex-col gap-2">
                       <label htmlFor="username">Username</label>
@@ -168,7 +175,6 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
                         component={InputFormik}
                         type="date"
                         placeholder="Birthday"
-                        value={values.birthday}
                         patern="dd/MM/yyyy"
                         title={touched.birthday && errors.birthday}
                       />
@@ -195,10 +201,16 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
                     </div>
                     <div className="flex flex-col gap-2">
                       <label htmlFor="role">Role</label>
-                      <select className="text-black" id="role" name="role">
-                        <option value="user">user</option>
-                        <option value="admin">admin</option>
-                      </select>
+                      <FastField name="role">
+                        {({ field }: { field: any }) => {
+                          return (
+                            <select className="text-black" {...field}>
+                              <option value="user">user</option>
+                              <option value="admin">admin</option>
+                            </select>
+                          );
+                        }}
+                      </FastField>
                     </div>
                   </div>
                   <div className="flex justify-end">

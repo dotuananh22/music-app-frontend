@@ -24,10 +24,18 @@ const userRegisterSchema = userLoginSchema.shape({
 });
 const userUpdateSchema = object({
   fullName: string().required(),
-  imageUrl: string().required(),
+  imageUrl: string(),
   birthday: string().required(),
   email: string().email().required(),
   phoneNumber: string().required(),
+});
+
+const adminUpdateUserSchema = object({
+  fullName: string(),
+  birthday: date(),
+  email: string().email(),
+  phoneNumber: string(),
+  role: string().oneOf(["admin", "user"]),
 });
 
 const updateUserPasswordSchema = object({
@@ -53,12 +61,14 @@ type UserLoginInput = TypeOf<typeof userLoginSchema>;
 type UserRegisterInput = TypeOf<typeof userRegisterSchema>;
 type UserUpdateInput = TypeOf<typeof userUpdateSchema>;
 type UserUpdatePasswordInput = TypeOf<typeof updateUserPasswordSchema>;
+type AdminUpdateUserInput = TypeOf<typeof adminUpdateUserSchema>;
 
 export {
   userLoginSchema,
   userRegisterSchema,
   userUpdateSchema,
   updateUserPasswordSchema,
+  adminUpdateUserSchema,
 };
 
 export type {
@@ -66,4 +76,5 @@ export type {
   UserRegisterInput,
   UserUpdateInput,
   UserUpdatePasswordInput,
+  AdminUpdateUserInput,
 };

@@ -7,6 +7,7 @@ interface UserState {
   loading: {
     getAllUsers: boolean;
     deleteUser: boolean;
+    updateUser: boolean;
   };
   users: User[];
 }
@@ -14,6 +15,7 @@ interface UserState {
 const initialState: UserState = {
   loading: {
     getAllUsers: false,
+    updateUser: false,
     deleteUser: false,
   },
   users: [],
@@ -33,6 +35,22 @@ const userSlice = createSlice({
     });
     builder.addCase(userAdminThunk.getAllUsers.rejected, (state) => {
       state.loading.getAllUsers = false;
+    });
+
+    builder.addCase(userAdminThunk.updateUser.pending, (state) => {
+      state.loading.updateUser = true;
+    });
+    builder.addCase(userAdminThunk.updateUser.fulfilled, (state, action) => {
+      state.loading.updateUser = false;
+      const index = state.users.findIndex(
+        (user) => user._id === action.meta.arg.userId
+      );
+
+      if (index !== -1) {
+        Object.assign(state.users[index], action.meta.arg.updateBody);
+      }
+
+      toast.success("Update user successfully");
     });
 
     builder.addCase(userAdminThunk.deleteUser.pending, (state) => {

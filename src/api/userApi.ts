@@ -40,6 +40,13 @@ const updateUser = async (
   return await axiosClient.put("/auth", body);
 };
 
+const adminUpdateUser = async (
+  userId: string,
+  body: userSchema.AdminUpdateUserInput
+): Promise<ApiResponse<User>> => {
+  return await axiosClient.put(`/admin/user/${userId}`, body);
+};
+
 const updateUserPassword = async (
   body: userSchema.UserUpdatePasswordInput
 ): Promise<ApiResponse<undefined>> => {
@@ -69,6 +76,7 @@ export default {
   registerWithUsernameAndPassword,
   updateUser,
   updateUserPassword,
+  adminUpdateUser,
   deleteUser,
   logout,
   // deleteUser,
