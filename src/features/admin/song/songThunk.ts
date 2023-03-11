@@ -23,6 +23,23 @@ const getAllSongs = createAsyncThunk(
   }
 );
 
+const createSong = createAsyncThunk(
+  "adminSong/createSong",
+  async (songInput: songSchema.CreateSongInput, thunkApi) => {
+    try {
+      const response = await songApi.createSong(songInput);
+
+      if (!response.success || !response.data) {
+        return thunkApi.rejectWithValue(response.message);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 const updateSongById = createAsyncThunk(
   "adminSong/updateSongById",
   async (
@@ -65,6 +82,7 @@ const deleteSongById = createAsyncThunk(
 
 const songAdminThunk = {
   getAllSongs,
+  createSong,
   updateSongById,
   deleteSongById,
 };

@@ -1,20 +1,41 @@
+import { Select } from "antd";
+import { Option } from "antd/es/mentions";
 import { AppDispatch, IRootState } from "app/store";
+import InputFormik from "components/Common/InputFormik";
+import storageFirebaseApi from "config/storage";
 
 import colors from "constants/color";
 import songAdminThunk from "features/admin/song/songThunk";
+import singerThunk from "features/singer/singerThunk";
+import { FastField, Form, Formik } from "formik";
+import moment from "moment";
 import { useState, useEffect } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import {
+  AiOutlineClockCircle,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
+import { songSchema } from "schema";
 import Admin from "..";
 import SubAllReleases from "./SubAllReleases";
 
 const ReleasesAdmin = () => {
+  const singers = useSelector((state: IRootState) => state.singer);
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const songAdmin = useSelector((state: IRootState) => state.adminSong);
+  const [songAudio, setSongAudio] = useState<File>();
+  const [songImage, setSongImage] = useState<File>();
+  const [query, setQuery] = useState("");
+  const [singerOptions, setSingerOptions] = useState<
+    {
+      value: string;
+      label: string;
+    }[]
+  >([]);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -30,6 +51,27 @@ const ReleasesAdmin = () => {
       })
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      singerThunk.searchSingers({
+        query: query,
+        limit: 10,
+        sort: ["createdAt"],
+        order: [-1],
+      })
+    ).then((res) => {
+      setSingerOptions(
+        // @ts-ignore
+        res.payload.map((singer) => {
+          return {
+            value: singer._id,
+            label: singer.nickname,
+          };
+        })
+      );
+    });
+  }, [dispatch, query]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -64,81 +106,178 @@ const ReleasesAdmin = () => {
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name">Name</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="name"
-                placeholder="Release name"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="songTime">Song time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="number"
-                name="songTime"
-                placeholder="Song time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="singers">Singers</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="singers"
-                placeholder="Singers"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="publishTime">Publish Time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="date"
-                name="publishTime"
-                placeholder="Publish Time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="songUrl">Song Url</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="songUrl"
-                placeholder="Song Url"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="lyric">Lyric</label>
-              <textarea
-                className="h-10 min-h-[40px] max-h-28 text-black border-none outline-none"
-                name="lyric"
-                placeholder="Lyric"
-              ></textarea>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="imageUrl">
-                Image
-              </label>
-              <input
-                className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                id="imageUrl"
-                name="imageUrl"
-                type="file"
-                accept="image/*"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
-              type="submit"
-            >
-              INSERT
-            </button>
-          </div>
+          <Formik
+            initialValues={{
+              name: "",
+              songTime: 0,
+              singers: [],
+              imageUrl: "",
+              songUrl: "",
+              publishTime: moment(Date.now()).format("YYYY-MM-DD"),
+              lyric: "",
+            }}
+            validationSchema={songSchema.createSongSchema}
+            onSubmit={async (values) => {
+              console.log(values);
+              if (songImage && songAudio) {
+                const getSongImageUrl = storageFirebaseApi
+                  .uploadFileToFirebase("song/images", songImage)
+                  .then((res) => {
+                    values = { ...values, imageUrl: res as string };
+                  });
+                const getSongAudioUrl = storageFirebaseApi
+                  .uploadFileToFirebase("song/audio", songAudio)
+                  .then((res) => {
+                    values = { ...values, songUrl: res as string };
+                  });
+
+                await Promise.all([getSongImageUrl, getSongAudioUrl]);
+              }
+
+              values = {
+                ...values,
+                lyric: values.lyric ? values.lyric.replace(/\n/g, "<br/>") : "",
+              };
+
+              dispatch(
+                songAdminThunk.createSong({
+                  ...values,
+                  publishTime: moment(values.publishTime).toDate(),
+                })
+              );
+            }}
+          >
+            {({ errors, touched, setFieldValue }) => (
+              <Form>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="name">Name</label>
+                    <FastField
+                      name="name"
+                      component={InputFormik}
+                      type="text"
+                      placeholder="Name"
+                      title={touched.name && errors.name}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="songTime">Song time</label>
+                    <FastField
+                      name="songTime"
+                      component={InputFormik}
+                      type="number"
+                      placeholder="Song time"
+                      title={touched.songTime && errors.songTime}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="singers">Singers</label>
+                    <Select
+                      mode="multiple"
+                      size="large"
+                      placeholder="Singers"
+                      // loading={singers.loading.searchSingers}
+                      onSearch={(value) => {
+                        setTimeout(() => {
+                          setQuery(value);
+                        }, 1000);
+                      }}
+                      onChange={(value) => {
+                        setFieldValue("singers", value);
+                      }}
+                    >
+                      {singers.singers.searchSingers.map((singer) => (
+                        <Option key={singer._id} value={singer._id}>
+                          {singer.nickname}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="publishTime">Publish Time</label>
+                    <FastField
+                      name="publishTime"
+                      component={InputFormik}
+                      type="date"
+                      placeholder="Publish Time"
+                      title={touched.publishTime && errors.publishTime}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="songUrl">Song File</label>
+                    <input
+                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                      id="songUrl"
+                      name="songUrl"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          setSongAudio(e.target.files[0]);
+                        }
+                      }}
+                      // onChange={(e) => {
+                      //   console.log(e.target.files);
+                      //   if (e.target.files) {
+                      //     setImageFile(e.target.files[0]);
+                      //   }
+                      // }}
+                      type="file"
+                      // accept audio
+                      accept="audio/*"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="block" htmlFor="imageUrl">
+                      Image
+                    </label>
+                    <input
+                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                      id="imageUrl"
+                      name="imageUrl"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          setSongImage(e.target.files[0]);
+                        }
+                      }}
+                      type="file"
+                      accept="image/*"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 col-span-3">
+                    <label htmlFor="lyric">Lyric</label>
+                    <FastField name="lyric">
+                      {({
+                        field,
+                        form,
+                        meta,
+                      }: {
+                        field: any;
+                        form: any;
+                        meta: any;
+                      }) => (
+                        <textarea
+                          {...field}
+                          placeholder="lyric"
+                          className="block pl-5 w-full h-[100px] text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
+                        />
+                      )}
+                    </FastField>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                    type="submit"
+                  >
+                    {songAdmin.loading.createSong ? (
+                      <AiOutlineLoading3Quarters />
+                    ) : (
+                      "INSERT"
+                    )}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
       <table className="table-auto w-full">

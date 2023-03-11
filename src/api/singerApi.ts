@@ -1,3 +1,4 @@
+import { singerSchema } from "schema";
 import ApiResponse from "types/ApiResponse";
 import QueryInput from "types/QueryInput";
 import SearchQuery from "types/SearchQuery";
@@ -15,6 +16,12 @@ const getAllSingers = async (
   );
 };
 
+const createSinger = async (
+  data: singerSchema.SingerCreateInput["body"]
+): Promise<ApiResponse<Singer>> => {
+  return await axiosClient.post(`/singer/create`, data);
+};
+
 const searchSingers = async (
   query: SearchQuery<Singer>
 ): Promise<ApiResponse<Singer[]>> => {
@@ -29,10 +36,19 @@ const getOneSinger = async (id: string): Promise<ApiResponse<Singer>> => {
   return await axiosClient.get(`/singer/${id}`);
 };
 
+const updateSinger = async (
+  id: string,
+  data: singerSchema.SingerUpdateInput["body"]
+): Promise<ApiResponse<Singer>> => {
+  return await axiosClient.put(`/singer/${id}`, data);
+};
+
 const singerApi = {
   getAllSingers,
   searchSingers,
+  createSinger,
   getOneSinger,
+  updateSinger,
 };
 
 export default singerApi;

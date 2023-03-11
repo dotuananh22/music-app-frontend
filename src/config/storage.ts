@@ -1,6 +1,9 @@
 import { storage } from "./firebase";
 
-const uploadFileToFirebase = async (folderName: string, file: File) => {
+const uploadFileToFirebase = async (
+  folderName: string,
+  file: File
+): Promise<string | undefined> => {
   try {
     const storageRef = storage.ref();
     // get file extension

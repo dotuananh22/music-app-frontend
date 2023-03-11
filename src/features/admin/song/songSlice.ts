@@ -9,6 +9,7 @@ interface SongState {
     allSongs: boolean;
     deleteSong: boolean;
     updateSong: boolean;
+    createSong: boolean;
   };
   songs: Song<Singer>[];
 }
@@ -18,6 +19,7 @@ const initialState: SongState = {
     allSongs: false,
     deleteSong: false,
     updateSong: false,
+    createSong: false,
   },
   songs: [],
 };
@@ -38,6 +40,19 @@ const songSlice = createSlice({
     builder.addCase(songAdminThunk.getAllSongs.rejected, (state) => {
       state.loading.allSongs = false;
       toast.error("Failed to get all songs");
+    });
+
+    // Create song
+    builder.addCase(songAdminThunk.createSong.pending, (state) => {
+      state.loading.createSong = true;
+    });
+    builder.addCase(songAdminThunk.createSong.fulfilled, (state, action) => {
+      state.loading.createSong = false;
+      toast.success("Create song successfully");
+    });
+    builder.addCase(songAdminThunk.createSong.rejected, (state, action) => {
+      state.loading.createSong = false;
+      toast.error(action.payload as string);
     });
 
     // Update song by id

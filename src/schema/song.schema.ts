@@ -10,7 +10,13 @@ const updateSongSchema = object({
   lyric: string(),
 });
 
-type UpdateSongInput = InferType<typeof updateSongSchema>;
+const createSongSchema = updateSongSchema.shape({
+  imageUrl: string(),
+  songUrl: string(),
+});
 
-export type { UpdateSongInput };
-export { updateSongSchema };
+type UpdateSongInput = InferType<typeof updateSongSchema>;
+type CreateSongInput = InferType<typeof createSongSchema>;
+
+export type { UpdateSongInput, CreateSongInput };
+export { updateSongSchema, createSongSchema };

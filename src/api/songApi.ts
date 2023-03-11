@@ -31,6 +31,12 @@ const getAllSongsBySingerId = async (
   );
 };
 
+const createSong = async (
+  input: songSchema.CreateSongInput
+): Promise<ApiResponse<Song<string>>> => {
+  return await axiosClient.post("/admin/song", input);
+};
+
 const getSongById = async (id: string): Promise<ApiResponse<Song<Singer>>> => {
   return await axiosClient.get(`/song/${id}`);
 };
@@ -64,6 +70,7 @@ const deleteSongById = async (
 export default {
   getAllSongs,
   getSongById,
+  createSong,
   getAllSongsBySingerId,
   addOneListen,
   updateSongById,

@@ -172,7 +172,7 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
               singers: props.song.singers.map((singer) => singer._id),
               imageUrl: props.song.imageUrl,
               songUrl: props.song.songUrl,
-              publishTime: props.song.publishTime,
+              publishTime: moment(props.song.publishTime).format("YYYY-MM-DD"),
               lyric: props.song.lyric,
             }}
             validationSchema={songSchema.updateSongSchema}
@@ -194,13 +194,16 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
 
               values = {
                 ...values,
-                lyric: values.lyric.replace(/\n/g, "<br/>"),
+                lyric: values.lyric ? values.lyric.replace(/\n/g, "<br/>") : "",
               };
 
               dispatch(
                 songAdminThunk.updateSongById({
                   id: props.song._id,
-                  updateInput: values,
+                  updateInput: {
+                    ...values,
+                    publishTime: moment(values.publishTime).toDate(),
+                  },
                 })
               );
             }}
@@ -255,7 +258,7 @@ const SubAllReleases = (props: SubFavouriteSongsProps) => {
                   <div className="flex flex-col gap-2">
                     <label htmlFor="publishTime">Publish Time</label>
                     <FastField
-                      name="date"
+                      name="publishTime"
                       component={InputFormik}
                       type="date"
                       placeholder="Publish Time"

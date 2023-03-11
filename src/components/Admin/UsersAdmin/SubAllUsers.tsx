@@ -125,7 +125,7 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
             initialValues={{
               username: props.user.username,
               fullName: props.user.fullName,
-              birthday: props.user.birthday,
+              birthday: moment(props.user.birthday).format("YYYY-MM-DD"),
               email: props.user.email,
               phoneNumber: props.user.phoneNumber,
               role: props.user.role,
@@ -135,7 +135,10 @@ const SubAllUsers = (props: SubFavouriteSongsProps) => {
               dispatch(
                 userAdminThunk.updateUser({
                   userId: props.user._id,
-                  updateBody: values,
+                  updateBody: {
+                    ...values,
+                    birthday: new Date(values.birthday),
+                  },
                 })
               );
               setShowModal(false);

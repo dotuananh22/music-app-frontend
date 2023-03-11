@@ -6,13 +6,13 @@ const singerGetAllQuery = object({
   sort: string().default(""),
 });
 
-const createSingerBody = object({
+export const createSingerBody = object({
   fullName: string().required("Fullname is required").default(""),
   nickname: string().required("Nickname is required").default(""),
   bio: string(),
   story: string(),
-  imageUrl: string().required("Image is required").default(""),
-  imageCover: string().required("Image cover is required").default(""),
+  imageUrl: string().default(""),
+  imageCover: string().default(""),
   tick: boolean().required("Tick is required").default(false),
   gender: number().required("Gender is required").default(0),
   birthday: date().required("Birthday is required").default(new Date()),
@@ -26,7 +26,7 @@ const createSingerBody = object({
   twitter: string(),
 });
 
-const updateSingerBody = createSingerBody
+export const updateSingerBody = createSingerBody
   .omit(["follower"])
   .noUnknown(false, "Invalid field");
 

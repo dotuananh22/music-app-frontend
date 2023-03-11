@@ -1,10 +1,15 @@
 import { AppDispatch, IRootState } from "app/store";
+import InputFormik from "components/Common/InputFormik";
+import storageFirebaseApi from "config/storage";
 import colors from "constants/color";
 import singerAdminThunk from "features/admin/singer/singerThunk";
+import { FastField, Form, Formik } from "formik";
+import moment from "moment";
 import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
+import { singerSchema } from "schema";
 import Admin from "..";
 import SubAllArtists from "./SubAllArtists";
 
@@ -268,6 +273,13 @@ const ArtistsAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const singerAdmin = useSelector((state: IRootState) => state.adminSinger);
+  const [file, setFile] = useState<{
+    avatar: File | null;
+    imageCover: File | null;
+  }>({
+    avatar: null,
+    imageCover: null,
+  });
 
   useEffect(() => {
     dispatch(
@@ -317,161 +329,264 @@ const ArtistsAdmin = () => {
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
-          <div className="grid grid-cols-4 gap-4 mb-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="fullName">Full name</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="fullName"
-                placeholder="Full name"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="nickname">Nickname</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="nickname"
-                placeholder="Nickname"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="bio">Bio</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="bio"
-                placeholder="Bio"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="story">Story</label>
-              <textarea
-                className="h-10 min-h-[40px] max-h-28 text-black border-none outline-none"
-                name="story"
-                placeholder="Story"
-              ></textarea>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="birthday">Birthday</label>
-              <input
-                className="text-black border-none outline-none"
-                type="date"
-                name="birthday"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="country">Country</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="country"
-                placeholder="Country"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="debutyear">Debut year</label>
-              <input
-                className="text-black border-none outline-none"
-                type="number"
-                name="debutyear"
-                placeholder="Debut year"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="website">Website</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="website"
-                placeholder="Website"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="facebook">Facebook</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="facebook"
-                placeholder="Facebook"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="youtube">Youtube</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="youtube"
-                placeholder="Youtube"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="instagram">Instagram</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="instagram"
-                placeholder="Instagram"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="twitter">Twitter</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="twitter"
-                placeholder="Twitter"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="tick">Tick</label>
-              <select className="text-black" id="tick" name="tick">
-                <option value="false">False</option>
-                <option value="true">True</option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="gender">Gender</label>
-              <select className="text-black" id="gender" name="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="avatar">
-                Avatar
-              </label>
-              <input
-                className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                id="avatar"
-                name="avatar"
-                type="file"
-                accept="image/*"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="imageCover">
-                Image cover
-              </label>
-              <input
-                className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                id="imageCover"
-                name="imageCover"
-                type="file"
-                accept="image/*"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
-              type="submit"
-            >
-              INSERT
-            </button>
-          </div>
+          <Formik
+            validationSchema={singerSchema.createSingerBody}
+            initialValues={{
+              fullName: "",
+              nickname: "",
+              bio: "",
+              story: "",
+              birthday: moment(Date.now()).format("yyyy-MM-DD"),
+              country: "",
+              debutYear: 0,
+              website: "",
+              facebook: "",
+              twitter: "",
+              instagram: "",
+              youtube: "",
+              tick: false,
+              gender: 0,
+              imageUrl: "",
+              imageCover: "",
+            }}
+            onSubmit={async (values) => {
+              let imageUrl, imageCover;
+              if (file.avatar) {
+                imageUrl = await storageFirebaseApi.uploadFileToFirebase(
+                  "singerAvatar",
+                  file.avatar
+                );
+              }
+
+              if (file.imageCover) {
+                imageCover = await storageFirebaseApi.uploadFileToFirebase(
+                  "singerCover",
+                  file.imageCover
+                );
+              }
+
+              dispatch(
+                singerAdminThunk.createSinger({
+                  ...values,
+                  imageUrl: imageUrl || "",
+                  imageCover: imageCover || "",
+                  birthday: moment(values.birthday).toDate(),
+                  follower: 0,
+                })
+              );
+            }}
+          >
+            {({ errors, touched }) => {
+              return (
+                <Form>
+                  <div className="grid grid-cols-4 gap-4 mb-4">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="fullName">Full name</label>
+                      <FastField
+                        name="fullName"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Name"
+                        title={touched.fullName && errors.fullName}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="nickname">Nickname</label>
+                      <FastField
+                        name="nickname"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Nickname"
+                        title={touched.nickname && errors.nickname}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="bio">Bio</label>
+                      <FastField
+                        name="bio"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Bio"
+                        title={touched.bio && errors.bio}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="story">Story</label>
+                      <FastField name="story">
+                        {({
+                          field,
+                          form,
+                          meta,
+                        }: {
+                          field: any;
+                          form: any;
+                          meta: any;
+                        }) => (
+                          <textarea
+                            {...field}
+                            placeholder="story"
+                            className="block pl-5 h-[42px] w-full text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
+                          />
+                        )}
+                      </FastField>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="birthday">Birthday</label>
+                      <FastField
+                        name="birthday"
+                        component={InputFormik}
+                        type="date"
+                        title={touched.birthday && errors.birthday}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="country">Country</label>
+                      <FastField
+                        name="country"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Country"
+                        title={touched.country && errors.country}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="debutyear">Debut year</label>
+                      <FastField
+                        name="debutYear"
+                        component={InputFormik}
+                        type="number"
+                        placeholder="Debut Year"
+                        title={touched.debutYear && errors.debutYear}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="website">Website</label>
+                      <FastField
+                        name="website"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Website"
+                        title={touched.website && errors.website}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="facebook">Facebook</label>
+                      <FastField
+                        name="facebook"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Facebook"
+                        title={touched.facebook && errors.facebook}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="youtube">Youtube</label>
+                      <FastField
+                        name="youtube"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Youtube"
+                        title={touched.youtube && errors.youtube}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="instagram">Instagram</label>
+                      <FastField
+                        name="instagram"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Instagram"
+                        title={touched.instagram && errors.instagram}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="twitter">Twitter</label>
+                      <FastField
+                        name="twitter"
+                        component={InputFormik}
+                        type="text"
+                        placeholder="Twitter"
+                        title={touched.twitter && errors.twitter}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="tick">Tick</label>
+                      <FastField name="tick">
+                        {({ field }: { field: any }) => {
+                          return (
+                            <select className="text-black" {...field}>
+                              <option value="false">False</option>
+                              <option value="true">True</option>
+                            </select>
+                          );
+                        }}
+                      </FastField>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="gender">Gender</label>
+                      <FastField name="gender">
+                        {({ field }: { field: any }) => {
+                          return (
+                            <select className="text-black" {...field}>
+                              <option value="0">Male</option>
+                              <option value="1">Female</option>
+                              <option value="2">Other</option>
+                            </select>
+                          );
+                        }}
+                      </FastField>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="block" htmlFor="avatar">
+                        Avatar
+                      </label>
+                      <input
+                        className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          setFile({
+                            ...file,
+                            avatar: e.target.files ? e.target.files[0] : null,
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="block" htmlFor="imageCover">
+                        Image cover
+                      </label>
+                      <input
+                        className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                        id="imageCover"
+                        name="imageCover"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          setFile({
+                            ...file,
+                            imageCover: e.target.files
+                              ? e.target.files[0]
+                              : null,
+                          });
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                      type="submit"
+                    >
+                      INSERT
+                    </button>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
       <table className="table-auto w-full">
