@@ -9,6 +9,8 @@ type User = {
   email: string;
   phoneNumber: string;
   following: number;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export default User;

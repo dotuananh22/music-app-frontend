@@ -18,6 +18,8 @@ import { playlistSchema } from "schema";
 import InputFormik from "components/Common/InputFormik";
 import { setListChosenSong } from "features/song/songSlice";
 import Skeleton from "react-loading-skeleton";
+import { read } from "fs";
+import storageFirebaseApi from "config/storage";
 
 const Playlists = () => {
   const param = useParams();
@@ -25,6 +27,8 @@ const Playlists = () => {
   const playlist = useSelector((state: IRootState) => state.playlist);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [showMoreOptionModal, setShowMoreOptionModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState();
+  const [image, setImage] = useState<File>();
 
   useEffect(() => {
     dispatch(playlistThunk.getOnePlaylist(param.id as string));
@@ -36,6 +40,21 @@ const Playlists = () => {
   };
 
   const handleSubmit = (values: any) => {
+    if (image) {
+      storageFirebaseApi
+        .uploadFileToFirebase("playlists", image)
+        .then((res) => {
+          dispatch(
+            playlistThunk.updatePlaylist({
+              id: values.id,
+              name: values.name,
+              description: values.description,
+              imageUrl: res as string,
+            })
+          );
+          return;
+        });
+    }
     dispatch(
       playlistThunk.updatePlaylist({
         id: values.id,
@@ -47,6 +66,16 @@ const Playlists = () => {
     !playlist.loading.updatePlaylist && setShowPlaylistModal(false);
   };
 
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      setImageUrl(event.target?.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div>
       <div className="gradient-green-color w-full h-[300px] flex flex-row items-end gap-6 pl-8 pb-6">
@@ -54,7 +83,7 @@ const Playlists = () => {
           <img
             src={playlist.playlists.onePlaylist?.imageUrl || noImage}
             alt="image"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
             onError={(e) => {
               e.currentTarget.src = noImage;
             }}
@@ -114,13 +143,23 @@ const Playlists = () => {
                         </div>
                         <div className="flex flex-row gap-4 h-[180px]">
                           <div>
-                            <img
-                              src={values.imageUrl || NoImage}
-                              alt="no image"
-                              className={"h-[180px] rounded-xl"}
-                              onError={(e) => {
-                                e.currentTarget.src = NoImage;
-                              }}
+                            <label htmlFor="imageInput">
+                              <img
+                                src={imageUrl || values.imageUrl || NoImage}
+                                alt="no image"
+                                className={"h-[180px] w-[180px] rounded-xl"}
+                                onError={(e) => {
+                                  e.currentTarget.src = NoImage;
+                                }}
+                              />
+                            </label>
+                            <input
+                              type="file"
+                              id="imageInput"
+                              className="hidden"
+                              onChange={handleImageChange}
+                              accept="image/*"
+                              name="imageInput"
                             />
                           </div>
                           <div className="flex flex-col gap-4 flex-1">

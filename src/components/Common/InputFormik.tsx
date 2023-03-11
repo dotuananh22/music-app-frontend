@@ -10,6 +10,7 @@ interface InputTestProps {
   placeholder: string;
   disabled: boolean;
   title: string;
+  value: any;
 }
 
 const InputFormik = (props: InputTestProps) => {

@@ -4,3 +4,4 @@ export * as tokenSchema from "./token.schema";
 export * as playlistSchema from "./playlist.schema";
 export * as contactSchema from "./contact.schema";
 export * as emailSchema from "./email.schema";
+export * as songSchema from "./song.schema";

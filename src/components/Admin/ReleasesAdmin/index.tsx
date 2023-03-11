@@ -1,186 +1,41 @@
+import { Select } from "antd";
+import { Option } from "antd/es/mentions";
 import { AppDispatch, IRootState } from "app/store";
+import InputFormik from "components/Common/InputFormik";
+import storageFirebaseApi from "config/storage";
 
 import colors from "constants/color";
 import songAdminThunk from "features/admin/song/songThunk";
+import singerThunk from "features/singer/singerThunk";
+import { FastField, Form, Formik } from "formik";
+import moment from "moment";
 import { useState, useEffect } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import {
+  AiOutlineClockCircle,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
+import { songSchema } from "schema";
 import Admin from "..";
 import SubAllReleases from "./SubAllReleases";
 
-const songs = [
-  {
-    _id: "6322e7a86671e669eda0462a",
-    name: "Chúng ta của hiện tại",
-    singers: [
-      {
-        _id: "638fe0178909719d8a30ab8e",
-        nickname: "Sơn Tùng MTP",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/singers%2Fsontungmtp.jpg?alt=media&token=fe8d3382-5b84-4f40-a579-c7111eef7a18",
-      },
-    ],
-    songTime: 286,
-    publishTime: "2022-01-01T00:00:00.000Z",
-    likes: 1000002,
-    listens: 200087,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.mp3?alt=media&token=fc4aa098-4ce9-4304-977a-b3737a011c6e",
-    mvUrl: "",
-    deleted: false,
-    createdAt: "2022-09-15T08:51:52.799Z",
-    updatedAt: "2023-01-27T02:03:43.060Z",
-    slug: "chung-ta-cua-hien-tai",
-    __v: 0,
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100",
-  },
-  {
-    _id: "6322e7ac6671e669eda0462d",
-    name: "Waiting for you",
-    singers: [
-      {
-        _id: "638fe0178909719d8a30ab8e",
-        nickname: "Sơn Tùng MTP",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/singers%2Fsontungmtp.jpg?alt=media&token=fe8d3382-5b84-4f40-a579-c7111eef7a18",
-      },
-      {
-        _id: "638ff35c259a9d01ff88c4d5",
-        nickname: "VAnh",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/singers%2Fvanh.jpg?alt=media&token=c42480c6-0486-4095-a251-06601c017e63",
-      },
-    ],
-    songTime: 305,
-    publishTime: "2021-12-20T00:00:00.000Z",
-    likes: 1000000,
-    listens: 15000026,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FWaitingForYou.mp3?alt=media&token=65c6ab2f-f03f-4f80-b743-a0df22e15d8b",
-    mvUrl: "",
-    deleted: false,
-    createdAt: "2022-09-15T08:51:56.233Z",
-    updatedAt: "2023-01-27T01:53:06.615Z",
-    slug: "chung-ta-cua-hien-tai-5LRuhCHgF",
-    __v: 0,
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FWaitingForYou.jpg?alt=media&token=de215713-74c5-4e26-81e2-f0540f4765e6",
-  },
-  {
-    _id: "6322e7d30537eccc3cbcc9a2",
-    name: "Muộn rồi mà sao còn",
-    singers: [
-      {
-        _id: "638ff35c259a9d01ff88c4d5",
-        nickname: "VAnh",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/singers%2Fvanh.jpg?alt=media&token=c42480c6-0486-4095-a251-06601c017e63",
-      },
-    ],
-    songTime: 310,
-    publishTime: "1970-01-01T00:00:02.020Z",
-    likes: 2500000,
-    listens: 11000060,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FMuonRoiMaSaoCon.mp3?alt=media&token=31a387b4-3af9-409a-af66-f9e10727ae8c",
-    mvUrl: "",
-    deleted: false,
-    createdAt: "2022-09-15T08:51:52.799Z",
-    updatedAt: "2023-01-21T16:12:58.995Z",
-    slug: "chung-ta-cua-hien-tai-aa",
-    __v: 0,
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FMuonRoiMaSaoCon.png?alt=media&token=20d98e08-f605-4659-9cf4-823b31b68da4",
-  },
-  {
-    _id: "6322e7d80537eccc3cbcc9a3",
-    name: "Nơi này có anh",
-    singers: [
-      {
-        _id: "638fe0178909719d8a30ab8e",
-        nickname: "Sơn Tùng MTP",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/singers%2Fsontungmtp.jpg?alt=media&token=fe8d3382-5b84-4f40-a579-c7111eef7a18",
-      },
-    ],
-    songTime: 308,
-    publishTime: "2020-05-06T00:00:00.000Z",
-    likes: 1500000,
-    listens: 500030,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FNoiNayCoAnh.mp3?alt=media&token=c7ab85e9-21dc-4fd2-86e9-b43d8b076399",
-    mvUrl: "",
-    deleted: false,
-    createdAt: "2022-09-15T08:51:52.799Z",
-    updatedAt: "2023-01-27T01:53:09.091Z",
-    slug: "chung-ta-cua-hien-tai-aaa",
-    __v: 0,
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FNoiNayCoAnh.jpg?alt=media&token=41f5a885-57dc-4392-a8d7-bffe0ebcd769",
-    deletedAt: null,
-  },
-  {
-    _id: "639c3fcc621f2820343f2c38",
-    name: "Quên anh đi",
-    singers: [],
-    songTime: 300,
-    publishTime: "2022-12-16T09:51:58.777Z",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FQuenAnhDi.jpg?alt=media&token=007e9749-819b-479e-a305-2531c0c61120",
-    likes: 1,
-    listens: 31,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FQuenAnhDi.mp3?alt=media&token=256bbea1-6674-43b2-b271-07d1887245f8",
-    deleted: false,
-    deletedAt: null,
-    createdAt: "2022-12-16T09:52:12.314Z",
-    updatedAt: "2023-01-27T01:52:58.460Z",
-    __v: 0,
-  },
-  {
-    _id: "63cb536457fbe4f16e8c0439",
-    name: "Chúng ta của hiện tại",
-    singers: [
-      {
-        _id: "6390b17b480bd289b00fd2fd",
-        nickname: "Tuấn Anh Skyyy",
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FQuenAnhDi.jpg?alt=media&token=007e9749-819b-479e-a305-2531c0c61120",
-      },
-    ],
-    songTime: 294,
-    publishTime: "1970-01-01T00:00:02.020Z",
-    likes: 1000000,
-    listens: 800049,
-    downloads: 0,
-    songUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.mp3?alt=media&token=fc4aa098-4ce9-4304-977a-b3737a011c6e",
-    mvUrl: "",
-    deleted: false,
-    createdAt: "2022-09-15T08:51:52.799Z",
-    updatedAt: "2023-01-21T03:23:52.381Z",
-    slug: "chung-ta-cua-hien-tai-aaaa",
-    __v: 0,
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/music2507-4a63a.appspot.com/o/songs%2FChungTaCuaHienTai.jpg?alt=media&token=333ffb63-c912-4df4-ba5f-cb5fa48d6100",
-  },
-];
-
 const ReleasesAdmin = () => {
+  const singers = useSelector((state: IRootState) => state.singer);
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const songAdmin = useSelector((state: IRootState) => state.adminSong);
-
-  console.log(songAdmin.songs);
+  const [songAudio, setSongAudio] = useState<File>();
+  const [songImage, setSongImage] = useState<File>();
+  const [query, setQuery] = useState("");
+  const [singerOptions, setSingerOptions] = useState<
+    {
+      value: string;
+      label: string;
+    }[]
+  >([]);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -196,6 +51,27 @@ const ReleasesAdmin = () => {
       })
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      singerThunk.searchSingers({
+        query: query,
+        limit: 10,
+        sort: ["createdAt"],
+        order: [-1],
+      })
+    ).then((res) => {
+      setSingerOptions(
+        // @ts-ignore
+        res.payload.map((singer) => {
+          return {
+            value: singer._id,
+            label: singer.nickname,
+          };
+        })
+      );
+    });
+  }, [dispatch, query]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -230,81 +106,178 @@ const ReleasesAdmin = () => {
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name">Name</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="name"
-                placeholder="Release name"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="songTime">Song time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="number"
-                name="songTime"
-                placeholder="Song time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="singers">Singers</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="singers"
-                placeholder="Singers"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="publishTime">Publish Time</label>
-              <input
-                className="text-black border-none outline-none"
-                type="date"
-                name="publishTime"
-                placeholder="Publish Time"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="songUrl">Song Url</label>
-              <input
-                className="text-black border-none outline-none"
-                type="text"
-                name="songUrl"
-                placeholder="Song Url"
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="lyric">Lyric</label>
-              <textarea
-                className="h-10 min-h-[40px] max-h-28 text-black border-none outline-none"
-                name="lyric"
-                placeholder="Lyric"
-              ></textarea>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="block" htmlFor="imageUrl">
-                Image
-              </label>
-              <input
-                className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                id="imageUrl"
-                name="imageUrl"
-                type="file"
-                accept="image/*"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
-              type="submit"
-            >
-              INSERT
-            </button>
-          </div>
+          <Formik
+            initialValues={{
+              name: "",
+              songTime: 0,
+              singers: [],
+              imageUrl: "",
+              songUrl: "",
+              publishTime: moment(Date.now()).format("YYYY-MM-DD"),
+              lyric: "",
+            }}
+            validationSchema={songSchema.createSongSchema}
+            onSubmit={async (values) => {
+              console.log(values);
+              if (songImage && songAudio) {
+                const getSongImageUrl = storageFirebaseApi
+                  .uploadFileToFirebase("song/images", songImage)
+                  .then((res) => {
+                    values = { ...values, imageUrl: res as string };
+                  });
+                const getSongAudioUrl = storageFirebaseApi
+                  .uploadFileToFirebase("song/audio", songAudio)
+                  .then((res) => {
+                    values = { ...values, songUrl: res as string };
+                  });
+
+                await Promise.all([getSongImageUrl, getSongAudioUrl]);
+              }
+
+              values = {
+                ...values,
+                lyric: values.lyric ? values.lyric.replace(/\n/g, "<br/>") : "",
+              };
+
+              dispatch(
+                songAdminThunk.createSong({
+                  ...values,
+                  publishTime: moment(values.publishTime).toDate(),
+                })
+              );
+            }}
+          >
+            {({ errors, touched, setFieldValue }) => (
+              <Form>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="name">Name</label>
+                    <FastField
+                      name="name"
+                      component={InputFormik}
+                      type="text"
+                      placeholder="Name"
+                      title={touched.name && errors.name}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="songTime">Song time</label>
+                    <FastField
+                      name="songTime"
+                      component={InputFormik}
+                      type="number"
+                      placeholder="Song time"
+                      title={touched.songTime && errors.songTime}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="singers">Singers</label>
+                    <Select
+                      mode="multiple"
+                      size="large"
+                      placeholder="Singers"
+                      // loading={singers.loading.searchSingers}
+                      onSearch={(value) => {
+                        setTimeout(() => {
+                          setQuery(value);
+                        }, 1000);
+                      }}
+                      onChange={(value) => {
+                        setFieldValue("singers", value);
+                      }}
+                    >
+                      {singers.singers.searchSingers.map((singer) => (
+                        <Option key={singer._id} value={singer._id}>
+                          {singer.nickname}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="publishTime">Publish Time</label>
+                    <FastField
+                      name="publishTime"
+                      component={InputFormik}
+                      type="date"
+                      placeholder="Publish Time"
+                      title={touched.publishTime && errors.publishTime}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="songUrl">Song File</label>
+                    <input
+                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                      id="songUrl"
+                      name="songUrl"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          setSongAudio(e.target.files[0]);
+                        }
+                      }}
+                      // onChange={(e) => {
+                      //   console.log(e.target.files);
+                      //   if (e.target.files) {
+                      //     setImageFile(e.target.files[0]);
+                      //   }
+                      // }}
+                      type="file"
+                      // accept audio
+                      accept="audio/*"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="block" htmlFor="imageUrl">
+                      Image
+                    </label>
+                    <input
+                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                      id="imageUrl"
+                      name="imageUrl"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          setSongImage(e.target.files[0]);
+                        }
+                      }}
+                      type="file"
+                      accept="image/*"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 col-span-3">
+                    <label htmlFor="lyric">Lyric</label>
+                    <FastField name="lyric">
+                      {({
+                        field,
+                        form,
+                        meta,
+                      }: {
+                        field: any;
+                        form: any;
+                        meta: any;
+                      }) => (
+                        <textarea
+                          {...field}
+                          placeholder="lyric"
+                          className="block pl-5 w-full h-[100px] text-white bg-[#222227] rounded-xl outline-none border-none resize-none"
+                        />
+                      )}
+                    </FastField>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    className="px-8 py-2 ml-auto bg-[#25A56A] border-transparent rounded-full font-semibold text-white text-sm transition ease-linear delay-50 hover:text-[#25A56A] hover:bg-[#222227]"
+                    type="submit"
+                  >
+                    {songAdmin.loading.createSong ? (
+                      <AiOutlineLoading3Quarters />
+                    ) : (
+                      "INSERT"
+                    )}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
       <table className="table-auto w-full">
@@ -320,7 +293,7 @@ const ReleasesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {songAdmin.loading.allSongs ? (
+          {songAdmin.loading.allSongs && !songAdmin.songs ? (
             <>
               <tr>
                 <td colSpan={5}>

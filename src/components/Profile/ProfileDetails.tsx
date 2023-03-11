@@ -1,22 +1,44 @@
 import { AppDispatch, IRootState } from "app/store";
 import Input from "components/Common/Input";
 import InputFormik from "components/Common/InputFormik";
+import storageFirebaseApi from "config/storage";
 import colors from "constants/color";
 import authThunk from "features/auth/authThunk";
 import { FastField, Form, Formik } from "formik";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userSchema } from "schema";
 
 const ProfileDetails = () => {
   const auth = useSelector((state: IRootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
+  const [imageFile, setImageFile] = useState<File>();
 
   if (auth.loading.getUser) return <div>Loading</div>;
 
-  const handleSubmit = (values: userSchema.UserUpdateInput) => {
-    dispatch(authThunk.update(values));
+  const handleSubmit = (
+    values: Omit<userSchema.UserUpdateInput, "imageUrl">
+  ) => {
+    if (imageFile) {
+      storageFirebaseApi
+        .uploadFileToFirebase("users", imageFile)
+        .then((res) => {
+          dispatch(
+            authThunk.update({
+              ...values,
+              imageUrl: res,
+            })
+          );
+        });
+    } else {
+      dispatch(
+        authThunk.update({
+          ...values,
+          imageUrl: auth.user?.imageUrl,
+        })
+      );
+    }
   };
 
   return (
@@ -27,7 +49,6 @@ const ProfileDetails = () => {
         email: auth.user?.email,
         // convert birthday to mm/dd/yyyy format
         birthday: moment(auth.user?.birthday).format("yyyy-MM-DD"),
-        imageUrl: auth.user?.imageUrl,
       }}
       validationSchema={userSchema.userUpdateSchema}
       onSubmit={(values) => {
@@ -106,19 +127,19 @@ const ProfileDetails = () => {
                   Avatar
                 </label>
                 {/* File must be image */}
-                <FastField name="imageUrl">
-                  {/*@ts-ignore*/}
-                  {({ field, form, meta }) => (
-                    <input
-                      className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
-                      id="imageUrl"
-                      name="imageUrl"
-                      onChange={field.onChange}
-                      type="file"
-                      accept="image/*"
-                    />
-                  )}
-                </FastField>
+                <input
+                  className="block w-full text-[#C0C0C0] bg-[#222227] border-none rounded-lg cursor-pointer focus:outline-none"
+                  id="imageUrl"
+                  name="imageUrl"
+                  onChange={(e) => {
+                    console.log(e.target.files);
+                    if (e.target.files) {
+                      setImageFile(e.target.files[0]);
+                    }
+                  }}
+                  type="file"
+                  accept="image/*"
+                />
               </div>
             </div>
             <button

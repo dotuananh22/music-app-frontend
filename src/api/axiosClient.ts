@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "https://music-api-plb6.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
