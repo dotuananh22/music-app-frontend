@@ -111,7 +111,7 @@ const DetailSong = () => {
           <img
             src={songById.imageUrl || noImage}
             alt="image"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover overflow-hidden"
             onError={(e) => {
               e.currentTarget.src = noImage;
             }}
