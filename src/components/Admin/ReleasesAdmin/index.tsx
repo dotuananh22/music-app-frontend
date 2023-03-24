@@ -2,12 +2,14 @@ import { Select } from "antd";
 import { Option } from "antd/es/mentions";
 import { AppDispatch, IRootState } from "app/store";
 import InputFormik from "components/Common/InputFormik";
+import Pagination from "components/Common/Pagination";
 import storageFirebaseApi from "config/storage";
 
 import colors from "constants/color";
 import songAdminThunk from "features/admin/song/songThunk";
 import singerThunk from "features/singer/singerThunk";
 import { FastField, Form, Formik } from "formik";
+import { values } from "lodash";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import {
@@ -18,7 +20,10 @@ import { FaTimes } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { songSchema } from "schema";
+import QueryInput from "types/QueryInput";
+import Song from "types/song/Song";
 import Admin from "..";
+import Modal from "./Modal";
 import SubAllReleases from "./SubAllReleases";
 
 const ReleasesAdmin = () => {
@@ -30,6 +35,8 @@ const ReleasesAdmin = () => {
   const [songAudio, setSongAudio] = useState<File>();
   const [songImage, setSongImage] = useState<File>();
   const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [songId, setSongId] = useState<string>();
   const [singerOptions, setSingerOptions] = useState<
     {
       value: string;
@@ -37,20 +44,20 @@ const ReleasesAdmin = () => {
     }[]
   >([]);
 
+  const [pagination, setPagination] = useState<QueryInput<Song<string>>>({
+    limit: 12,
+    skip: 0,
+    sort: ["publishTime"],
+    order: [-1],
+  });
+
   const onShowModal = () => {
     setShowModal(true);
   };
 
   useEffect(() => {
-    dispatch(
-      songAdminThunk.getAllSongs({
-        limit: 10,
-        skip: 0,
-        sort: ["publishTime"],
-        order: [-1],
-      })
-    );
-  }, [dispatch]);
+    dispatch(songAdminThunk.getAllSongs(pagination));
+  }, [pagination, dispatch]);
 
   useEffect(() => {
     dispatch(
@@ -72,6 +79,14 @@ const ReleasesAdmin = () => {
       );
     });
   }, [dispatch, query]);
+
+  const handlePagination = (page: number) => {
+    setPagination({
+      ...pagination,
+      skip: (page - 1) * pagination.limit,
+    });
+    setCurrentPage(page);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -147,7 +162,7 @@ const ReleasesAdmin = () => {
               );
             }}
           >
-            {({ errors, touched, setFieldValue }) => (
+            {({ errors, touched, setFieldValue, values }) => (
               <Form>
                 <div className="grid grid-cols-3 gap-4 mb-4">
                   <div className="flex flex-col gap-2">
@@ -312,18 +327,32 @@ const ReleasesAdmin = () => {
               </tr>
             </>
           ) : (
-            songAdmin.songs.map((song, index) => (
-              <SubAllReleases
-                song={song}
-                id={song._id}
-                rank={index + 1}
-                indexDropdown={indexDropdown}
-                setIndexDropdown={setIndexDropdown}
-              />
-            ))
+            <>
+              {songAdmin.songs.map((song, index) => (
+                <SubAllReleases
+                  song={song}
+                  id={song._id}
+                  rank={index + 1}
+                  indexDropdown={indexDropdown}
+                  setIndexDropdown={setIndexDropdown}
+                  setShowModal={setShowModal}
+                  setSongId={setSongId}
+                />
+              ))}
+            </>
           )}
         </tbody>
       </table>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        songId={songId as string}
+      />
+      <Pagination
+        totalPage={songAdmin.pagination.totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePagination}
+      />
     </div>
   );
 };
