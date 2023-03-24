@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import PaginationResponse from "types/PaginationResponse";
 import Singer from "types/singer/Singer";
 import Song from "types/song/Song";
 import songAdminThunk from "./songThunk";
@@ -11,6 +12,7 @@ interface SongState {
     updateSong: boolean;
     createSong: boolean;
   };
+  pagination: PaginationResponse;
   songs: Song<Singer>[];
 }
 
@@ -20,6 +22,14 @@ const initialState: SongState = {
     deleteSong: false,
     updateSong: false,
     createSong: false,
+  },
+  pagination: {
+    page: 0,
+    limit: 0,
+    total: 0,
+    skip: 0,
+    sort: {},
+    totalPages: 0,
   },
   songs: [],
 };
@@ -36,6 +46,7 @@ const songSlice = createSlice({
     builder.addCase(songAdminThunk.getAllSongs.fulfilled, (state, action) => {
       state.loading.allSongs = false;
       state.songs = action.payload?.data;
+      state.pagination = action.payload?.pagination;
     });
     builder.addCase(songAdminThunk.getAllSongs.rejected, (state) => {
       state.loading.allSongs = false;

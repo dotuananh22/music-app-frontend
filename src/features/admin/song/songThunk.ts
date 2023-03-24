@@ -10,8 +10,6 @@ const getAllSongs = createAsyncThunk(
     try {
       const response = await songApi.getAllSongs(query);
 
-      console.log(response.data);
-
       if (!response.success || !response.data) {
         return thunkApi.rejectWithValue(response.message);
       }
