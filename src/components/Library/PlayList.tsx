@@ -17,7 +17,7 @@ const PlayList = (props: PlaylistProps) => {
         <img
           src={props.image || noImage}
           alt="playlist"
-          className="rounded-md w-full"
+          className="rounded-md w-full h-44 object-cover"
           onError={(e) => {
             e.currentTarget.src = noImage;
           }}
