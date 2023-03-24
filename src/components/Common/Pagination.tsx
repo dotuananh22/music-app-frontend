@@ -11,7 +11,7 @@ interface PaginationProps {
 
 const Pagination = (props: PaginationProps) => {
   return (
-    <nav aria-label="Page navigation example" className="mt-8">
+    <nav aria-label="Page navigation example" className="mt-8 mx-auto">
       <ul className="inline-flex items-center -space-x-px">
         <li
           onClick={() =>
