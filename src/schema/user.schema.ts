@@ -1,4 +1,4 @@
-import { boolean, date, object, ref, string, TypeOf } from "yup";
+import { boolean, date, InferType, object, ref, string, TypeOf } from "yup";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,32}$/;
 
@@ -17,6 +17,7 @@ const userRegisterSchema = userLoginSchema.shape({
   confirmPassword: string()
     .required("Confirm password is required")
     .oneOf([ref("password"), null], "Passwords must match"),
+  email: string().email().required("Email is required"),
 
   agreePolicy: boolean()
     .required("Agree policy is required")
@@ -58,7 +59,7 @@ const updateUserPasswordSchema = object({
 });
 
 type UserLoginInput = TypeOf<typeof userLoginSchema>;
-type UserRegisterInput = TypeOf<typeof userRegisterSchema>;
+type UserRegisterInput = InferType<typeof userRegisterSchema>;
 type UserUpdateInput = TypeOf<typeof userUpdateSchema>;
 type UserUpdatePasswordInput = TypeOf<typeof updateUserPasswordSchema>;
 type AdminUpdateUserInput = TypeOf<typeof adminUpdateUserSchema>;

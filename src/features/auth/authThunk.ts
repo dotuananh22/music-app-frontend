@@ -42,7 +42,13 @@ const login = createAsyncThunk(
 
 const register = createAsyncThunk(
   "auth/register",
-  async (registerBody: userSchema.UserLoginInput, thunkAPI) => {
+  async (
+    registerBody: Omit<
+      userSchema.UserRegisterInput,
+      "agreePolicy" | "confirmPassword"
+    >,
+    thunkAPI
+  ) => {
     try {
       const response: ApiResponse<User> =
         await userApi.registerWithUsernameAndPassword(registerBody);
