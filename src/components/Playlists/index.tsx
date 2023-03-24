@@ -83,7 +83,7 @@ const Playlists = () => {
           <img
             src={playlist.playlists.onePlaylist?.imageUrl || noImage}
             alt="image"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover overflow-hidden"
             onError={(e) => {
               e.currentTarget.src = noImage;
             }}
