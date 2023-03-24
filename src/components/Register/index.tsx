@@ -1,5 +1,3 @@
-import Input from "components/Common/InputFormik";
-import React, { useState } from "react";
 import {
   AiOutlineGoogle,
   AiOutlineRight,
@@ -16,24 +14,16 @@ import authThunk from "features/auth/authThunk";
 import { AppDispatch, IRootState } from "app/store";
 
 const Register = () => {
-  const [registerBody, setRegisterBody] = useState({
-    fullName: "",
-    username: "",
-    password: "",
-  });
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const auth = useSelector((state: IRootState) => state.auth);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterBody({ ...registerBody, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = (values: userSchema.UserRegisterInput) => {
     dispatch(
       authThunk.register({
         password: values.password,
         username: values.username,
+        email: values.email,
       })
     ).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -61,6 +51,7 @@ const Register = () => {
               username: "",
               password: "",
               confirmPassword: "",
+              email: "",
               agreePolicy: false,
             }}
             validationSchema={userSchema.userRegisterSchema}
@@ -84,6 +75,13 @@ const Register = () => {
                       type="text"
                       placeholder="Username"
                       title={touched.username && errors.username}
+                    />
+                    <FastField
+                      name="email"
+                      component={InputFormik}
+                      type="email"
+                      placeholder="Email"
+                      title={touched.email && errors.email}
                     />
                     <FastField
                       name="password"
