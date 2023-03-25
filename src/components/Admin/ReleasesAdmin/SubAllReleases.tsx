@@ -2,21 +2,13 @@ import React, { useState, useEffect } from "react";
 import noImage from "assets/images/no-image.png";
 import { FiMoreHorizontal } from "react-icons/fi";
 import moment from "moment";
-import { FaTimes } from "react-icons/fa";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
 import joinSingers from "utils/joinSingers";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, IRootState } from "app/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "app/store";
 import songAdminThunk from "features/admin/song/songThunk";
-import { FastField, Form, Formik } from "formik";
-import { songSchema } from "schema";
-import InputFormik from "components/Common/InputFormik";
-import { Select } from "antd";
-import singerAdminThunk from "features/admin/singer/singerThunk";
 import singerThunk from "features/singer/singerThunk";
-import storageFirebaseApi from "config/storage";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface SubFavouriteSongsProps {
   id: string;
