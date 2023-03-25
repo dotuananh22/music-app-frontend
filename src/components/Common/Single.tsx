@@ -1,10 +1,7 @@
-import React from "react";
 import { IoPlayOutline } from "react-icons/io5";
 import noImage from "assets/images/no-image.png";
-import { useDispatch } from "react-redux";
 import Song from "types/song/Song";
 import Singer from "types/singer/Singer";
-import joinSingers from "utils/joinSingers";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { get } from "lodash";
@@ -41,12 +38,12 @@ const Single = (props: SingleProps) => {
           </div>
         </div>
         <div>
-          <NavLink
-            to={`/song/${props.song._id}`}
-            className="text-white text-base truncate mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear w-[200px]"
+          <p
+            className="w-[200px] truncate text-white text-base mb-1 hover:text-[#25A56A] cursor-pointer transition-all duration-300 ease-linear"
+            title={props.song.name}
           >
-            {props.song.name}
-          </NavLink>
+            <NavLink to={`/song/${props.song._id}`}>{props.song.name}</NavLink>
+          </p>
           <p className="text-sm cursor-pointer transition-all duration-300 ease-linear truncate w-[200px]">
             {/* {joinSingers(props.song.singers)} */}
             {props.song.singers.map((singer, index) => (
