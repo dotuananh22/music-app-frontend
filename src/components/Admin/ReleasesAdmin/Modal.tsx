@@ -1,11 +1,9 @@
 import { AppDispatch, IRootState } from "app/store";
 import { FastField, Form, Formik } from "formik";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import Singer from "types/singer/Singer";
-import Song from "types/song/Song";
 import songThunk from "features/song/songThunk";
 import moment from "moment";
 import { songSchema } from "schema";
@@ -33,8 +31,6 @@ const Modal = ({ showModal, setShowModal, songId }: ModalProps) => {
       dispatch(songThunk.getSongById(songId));
     }
   }, [songId, dispatch]);
-
-  console.log(songId);
 
   return (
     <div

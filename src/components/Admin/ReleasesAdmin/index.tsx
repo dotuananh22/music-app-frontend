@@ -9,7 +9,6 @@ import colors from "constants/color";
 import songAdminThunk from "features/admin/song/songThunk";
 import singerThunk from "features/singer/singerThunk";
 import { FastField, Form, Formik } from "formik";
-import { values } from "lodash";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import {
@@ -30,6 +29,7 @@ const ReleasesAdmin = () => {
   const singers = useSelector((state: IRootState) => state.singer);
   const [indexDropdown, setIndexDropdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showInsertModal, setShowInsertModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const songAdmin = useSelector((state: IRootState) => state.adminSong);
   const [songAudio, setSongAudio] = useState<File>();
@@ -93,7 +93,9 @@ const ReleasesAdmin = () => {
       <Admin active="Releases" />
       <button
         className={`mr-auto px-4 py-1 text-base font-semibold hover:bg-[#222227] bg-[${colors.greenColor}] rounded-lg delay-100 transition-all ease-linear`}
-        onClick={onShowModal}
+        onClick={() => {
+          setShowInsertModal(true);
+        }}
       >
         Insert
       </button>
@@ -102,10 +104,10 @@ const ReleasesAdmin = () => {
         tabIndex={-1}
         aria-hidden="true"
         className={`${
-          showModal ? "fixed" : "hidden"
+          showInsertModal ? "fixed" : "hidden"
         } top-0 left-0 right-0 bottom-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-black/20`}
         onClick={(e) => {
-          setShowModal(false);
+          setShowInsertModal(false);
         }}
       >
         <div
@@ -117,7 +119,7 @@ const ReleasesAdmin = () => {
         >
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-semibold">Insert Release</h2>
-            <button onClick={() => setShowModal(false)}>
+            <button onClick={() => setShowInsertModal(false)}>
               <FaTimes className="text-xl m-1" />
             </button>
           </div>
