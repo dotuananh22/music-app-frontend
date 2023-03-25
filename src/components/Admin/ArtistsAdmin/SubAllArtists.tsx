@@ -8,7 +8,6 @@ import Singer from "types/singer/Singer";
 import { FastField, Form, Formik } from "formik";
 import { singerSchema } from "schema";
 import InputFormik from "components/Common/InputFormik";
-import { toast } from "react-toastify";
 import storageFirebaseApi from "config/storage";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "app/store";
