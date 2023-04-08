@@ -310,7 +310,7 @@ const ReleasesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {songAdmin.loading.allSongs && !songAdmin.songs ? (
+          {songAdmin.loading.allSongs || !songAdmin.songs ? (
             <>
               <tr>
                 <td colSpan={5}>
